@@ -78,6 +78,7 @@ const CodeEditor = () => {
         </div>
         <Editor
           id="code-editor"
+          textareaId="code-editor-textarea"
           value={code}
           onValueChange={(code) => setCode(code)}
           highlight={(code) => (

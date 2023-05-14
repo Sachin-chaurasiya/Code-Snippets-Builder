@@ -76,6 +76,12 @@
   border-top-right-radius: 0px !important;
 }
 
-#code-editor textarea {
-  outline: none;
+#code-editor-textarea {
+  outline: transparent solid 2px;
+  outline-offset: 2px;
+  caret-color: white;
+  font-family: inherit !important;
+  color: transparent !important;
+  padding-left: 21px !important;
+  padding-right: 21px !important;
 }
