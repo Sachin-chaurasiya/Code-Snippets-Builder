@@ -1,38 +1,20 @@
-import * as React from "react"
+import * as React from 'react';
 import {
-  ChakraProvider,
   Box,
-  Text,
-  Link,
-  VStack,
-  Code,
-  Grid,
+  ChakraProvider,
   theme,
-} from "@chakra-ui/react"
-import { ColorModeSwitcher } from "./ColorModeSwitcher"
-import { Logo } from "./Logo"
+  useColorModeValue,
+} from '@chakra-ui/react';
+import CodeEditor from './components/CodeEditor/CodeEditor';
+import Sidebar from './components/Sidebar/Sidebar';
 
 export const App = () => (
   <ChakraProvider theme={theme}>
-    <Box textAlign="center" fontSize="xl">
-      <Grid minH="100vh" p={3}>
-        <ColorModeSwitcher justifySelf="flex-end" />
-        <VStack spacing={8}>
-          <Logo h="40vmin" pointerEvents="none" />
-          <Text>
-            Edit <Code fontSize="xl">src/App.tsx</Code> and save to reload.
-          </Text>
-          <Link
-            color="teal.500"
-            href="https://chakra-ui.com"
-            fontSize="2xl"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn Chakra
-          </Link>
-        </VStack>
-      </Grid>
+    <Box minH="100vh" bg={useColorModeValue('gray.100', 'gray.900')}>
+      <Sidebar />
+      <Box ml={{ base: 0, md: 60 }} p="4">
+        <CodeEditor />
+      </Box>
     </Box>
   </ChakraProvider>
-)
+);
