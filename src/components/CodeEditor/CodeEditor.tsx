@@ -3,21 +3,37 @@ import './code-editor.css';
 import Editor from 'react-simple-code-editor';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import * as prismStyles from 'react-syntax-highlighter/dist/esm/styles/prism';
-import { Grid, GridItem, Select } from '@chakra-ui/react';
-import languages from 'react-syntax-highlighter/dist/esm/languages/prism/supported-languages';
-import { map, startCase, toNumber } from 'lodash';
-import { CODE_SNIPPET, FONT_SIZES } from '../../constants';
+import { CODE_SNIPPET } from '../../constants';
+import { useAppProvider } from '../../AppProvider';
+import { HiPlus } from 'react-icons/hi';
+import { IoMdClose } from 'react-icons/io';
+import {
+  Box,
+  Flex,
+  IconButton,
+  Input,
+  InputGroup,
+  InputLeftElement,
+  InputRightElement,
+} from '@chakra-ui/react';
+import { last } from 'lodash';
+import {
+  getIconByFileExtension,
+  getIconColorByFileExtension,
+} from '../../Utils/icon-utils';
 
 const CodeEditor = () => {
   const [code, setCode] = useState<string>(CODE_SNIPPET);
+  const {
+    data: { theme, fontSize, language },
+  } = useAppProvider();
 
-  const [currentStyle, setCurrentStyle] = useState<string>('dracula');
-  const [currentLanguage, setCurrentLanguage] = useState<string>('javascript');
-  const [currentFontSize, setCurrentFontSize] = useState<number>(14);
+  const [showFileName, setShowFileName] = useState<boolean>(false);
+  const [fileName, setFileName] = useState<string>('');
 
   const selectedStyle = useMemo(
-    () => prismStyles[currentStyle as keyof typeof prismStyles],
-    [currentStyle]
+    () => prismStyles[theme as keyof typeof prismStyles],
+    [theme]
   );
 
   const backgroundColor = useMemo(
@@ -25,73 +41,112 @@ const CodeEditor = () => {
     [selectedStyle]
   );
 
+  const FileNameIcon = useMemo(
+    () => getIconByFileExtension(last(fileName.split('.')) ?? ''),
+    [fileName]
+  );
+
+  const fileNameIconColor = useMemo(
+    () => getIconColorByFileExtension(last(fileName.split('.')) ?? ''),
+    [fileName]
+  );
+
   return (
     <>
-      <Grid mb={4} templateColumns="repeat(3, 1fr)" gap={8}>
-        <GridItem>
-          <Select
-            value={currentLanguage}
-            onChange={(e) => setCurrentLanguage(e.target.value)}
-          >
-            {languages.map((language: string) => (
-              <option key={language} value={language}>
-                {startCase(language)}
-              </option>
-            ))}
-          </Select>
-        </GridItem>
-        <GridItem>
-          <Select
-            value={currentStyle}
-            onChange={(e) => setCurrentStyle(e.target.value)}
-          >
-            {map(prismStyles, (_, name) => (
-              <option key={name} value={name}>
-                {startCase(name)}
-              </option>
-            ))}
-          </Select>
-        </GridItem>
-        <GridItem>
-          <Select
-            value={currentFontSize}
-            onChange={(e) => setCurrentFontSize(toNumber(e.target.value))}
-          >
-            {map(FONT_SIZES, (size) => (
-              <option key={size} value={size}>
-                {`${size}px`}
-              </option>
-            ))}
-          </Select>
-        </GridItem>
-      </Grid>
-      <div className="window">
-        <div
+      <Box className="window">
+        <Box
           className="title-bar"
+          as={Flex}
           style={{ background: `${backgroundColor}e6` }}
         >
-          <div className="title-buttons">
-            <div className="title-button"></div>
-            <div className="title-button"></div>
-            <div className="title-button"></div>
-          </div>
-        </div>
+          <Flex alignItems="center" gap={2}>
+            <Box className="title-buttons">
+              <Box className="title-button"></Box>
+              <Box className="title-button"></Box>
+              <Box className="title-button"></Box>
+            </Box>
+            {showFileName ? (
+              <Flex>
+                <InputGroup>
+                  <Input
+                    placeholder="untitled"
+                    color="white"
+                    _hover={{ outline: 'none', border: 'none' }}
+                    _focusVisible={{ outline: 'none', border: 'none' }}
+                    outline="none"
+                    border="none"
+                    spellCheck={false}
+                    style={{
+                      background: backgroundColor,
+                      marginTop: '12px',
+                      width: 'auto',
+                      maxWidth: '200px',
+                      textOverflow: 'ellipsis',
+                    }}
+                    value={fileName}
+                    onChange={(e) => setFileName(e.target.value)}
+                  />
+                  {FileNameIcon ? (
+                    <InputLeftElement>
+                      <IconButton
+                        alignItems="end"
+                        _hover={{ background: 'none' }}
+                        aria-label="remove-button"
+                        variant="ghost"
+                        icon={
+                          <FileNameIcon
+                            fontSize={16}
+                            color={fileNameIconColor}
+                          />
+                        }
+                      />
+                    </InputLeftElement>
+                  ) : null}
+                  <InputRightElement>
+                    <IconButton
+                      alignItems="end"
+                      _hover={{ background: 'none' }}
+                      aria-label="remove-button"
+                      variant="ghost"
+                      icon={
+                        <IoMdClose
+                          fontWeight="bold"
+                          color="white"
+                          fontSize={18}
+                        />
+                      }
+                      onClick={() => setShowFileName(false)}
+                    />
+                  </InputRightElement>
+                </InputGroup>
+              </Flex>
+            ) : (
+              <IconButton
+                _hover={{ background: 'none' }}
+                aria-label="add-button"
+                variant="ghost"
+                icon={<HiPlus fontWeight="bold" color="white" fontSize={18} />}
+                onClick={() => setShowFileName(true)}
+              />
+            )}
+          </Flex>
+        </Box>
         <Editor
           id="code-editor"
           textareaId="code-editor-textarea"
           value={code}
           onValueChange={(code) => setCode(code)}
           highlight={(code) => (
-            <SyntaxHighlighter language={currentLanguage} style={selectedStyle}>
+            <SyntaxHighlighter language={language} style={selectedStyle}>
               {code}
             </SyntaxHighlighter>
           )}
           padding={10}
           style={{
-            fontSize: currentFontSize,
+            fontSize,
           }}
         />
-      </div>
+      </Box>
     </>
   );
 };

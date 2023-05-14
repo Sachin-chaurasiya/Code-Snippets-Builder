@@ -6,15 +6,17 @@ import { BiCodeBlock, BiImage, BiText } from 'react-icons/bi';
 interface ToolBarItemsProps {
   label: string;
   icon: IconType;
+  nodeType: string;
 }
 
 export const ToolBarItems: ToolBarItemsProps[] = [
   {
     label: 'Editor',
     icon: BiCodeBlock,
+    nodeType: 'editorNode',
   },
-  { label: 'Text', icon: BiText },
-  { label: 'Image', icon: BiImage },
+  { label: 'Text', icon: BiText, nodeType: 'default' },
+  { label: 'Image', icon: BiImage, nodeType: 'default' },
 ];
 
 const ToolBar = () => {
@@ -37,7 +39,7 @@ const ToolBar = () => {
       marginRight="auto"
     >
       <Flex gap={8} alignItems="center">
-        {ToolBarItems.map(({ label, icon }) => (
+        {ToolBarItems.map(({ label, icon, nodeType }) => (
           <Box
             key={label}
             as={Flex}
@@ -45,7 +47,7 @@ const ToolBar = () => {
             alignItems="center"
             draggable
             cursor="grab"
-            onDragStart={(event) => onDragStart(event, `default`)}
+            onDragStart={(event) => onDragStart(event, nodeType)}
           >
             <Icon fontSize={32} as={icon} />
             {label}

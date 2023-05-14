@@ -1,5 +1,5 @@
 import { Box } from '@chakra-ui/react';
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import ReactFlow, {
   Connection,
   Node,
@@ -9,18 +9,15 @@ import ReactFlow, {
   useEdgesState,
   useNodesState,
 } from 'reactflow';
-
 import 'reactflow/dist/style.css';
+
 import ToolBar from '../../components/ToolBar/ToolBar';
 import { uniqueId } from 'lodash';
-
-const initialNodes = [
-  { id: '1', position: { x: 0, y: 0 }, data: { label: '1' } },
-  { id: '2', position: { x: 0, y: 100 }, data: { label: '2' } },
-];
+import EditorNode from '../../components/CustomNodes/EditorNode';
+import { CUSTOM_NODES, INITIAL_NODES } from '../../constants';
 
 const EditorPage = () => {
-  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
+  const [nodes, setNodes, onNodesChange] = useNodesState(INITIAL_NODES);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
 
   const reactFlowWrapper = useRef<HTMLDivElement>(null);
@@ -65,6 +62,13 @@ const EditorPage = () => {
     [setEdges]
   );
 
+  const nodeTypes = useMemo(
+    () => ({
+      [CUSTOM_NODES.EDITOR_NODE]: EditorNode,
+    }),
+    []
+  );
+
   return (
     <>
       <ToolBar />
@@ -76,6 +80,7 @@ const EditorPage = () => {
           ref={reactFlowWrapper}
         >
           <ReactFlow
+            nodeTypes={nodeTypes}
             onNodesChange={onNodesChange}
             onEdgesChange={onEdgesChange}
             proOptions={{ hideAttribution: true }}

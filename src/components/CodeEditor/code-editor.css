@@ -2,6 +2,7 @@
 .window {
   position: relative;
   border-radius: 4px;
+  min-width: 150px;
 }
 
 .title-bar {
@@ -41,16 +42,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  position: absolute;
-  left: 10px;
-  top: 50%;
-  transform: translateY(-50%);
 }
 
 .title-button {
   background-color: #3a3a3a;
-  width: 10px;
-  height: 10px;
+  width: 12px;
+  height: 12px;
   border-radius: 50px;
   margin: 0 5px;
 }
