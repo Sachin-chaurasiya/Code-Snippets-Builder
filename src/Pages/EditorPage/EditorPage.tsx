@@ -15,6 +15,7 @@ import ToolBar from '../../components/ToolBar/ToolBar';
 import { uniqueId } from 'lodash';
 import EditorNode from '../../components/CustomNodes/EditorNode';
 import { CUSTOM_NODES, INITIAL_NODES } from '../../constants';
+import TextNode from '../../components/CustomNodes/TextNode';
 
 const EditorPage = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState(INITIAL_NODES);
@@ -65,6 +66,7 @@ const EditorPage = () => {
   const nodeTypes = useMemo(
     () => ({
       [CUSTOM_NODES.EDITOR_NODE]: EditorNode,
+      [CUSTOM_NODES.TEXT_NODE]: TextNode,
     }),
     []
   );

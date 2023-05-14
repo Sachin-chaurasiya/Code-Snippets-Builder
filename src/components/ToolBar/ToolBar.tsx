@@ -2,6 +2,7 @@ import { Box, Flex, Icon, useColorModeValue } from '@chakra-ui/react';
 import React from 'react';
 import { IconType } from 'react-icons';
 import { BiCodeBlock, BiImage, BiText } from 'react-icons/bi';
+import { CUSTOM_NODES } from '../../constants';
 
 interface ToolBarItemsProps {
   label: string;
@@ -13,9 +14,9 @@ export const ToolBarItems: ToolBarItemsProps[] = [
   {
     label: 'Editor',
     icon: BiCodeBlock,
-    nodeType: 'editorNode',
+    nodeType: CUSTOM_NODES.EDITOR_NODE,
   },
-  { label: 'Text', icon: BiText, nodeType: 'default' },
+  { label: 'Text', icon: BiText, nodeType: CUSTOM_NODES.TEXT_NODE },
   { label: 'Image', icon: BiImage, nodeType: 'default' },
 ];
 
