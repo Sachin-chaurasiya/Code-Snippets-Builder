@@ -17,7 +17,7 @@ export const ToolBarItems: ToolBarItemsProps[] = [
     nodeType: CUSTOM_NODES.EDITOR_NODE,
   },
   { label: 'Text', icon: BiText, nodeType: CUSTOM_NODES.TEXT_NODE },
-  { label: 'Image', icon: BiImage, nodeType: 'default' },
+  { label: 'Image', icon: BiImage, nodeType: CUSTOM_NODES.IMAGE_NODE },
 ];
 
 const ToolBar = () => {
