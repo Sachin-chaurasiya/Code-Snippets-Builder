@@ -1,21 +1,23 @@
-import React from 'react';
-import { Box, Flex, useColorModeValue, Text } from '@chakra-ui/react';
+import React, { FC } from 'react';
+import { Box, Flex, useColorModeValue, Text, BoxProps } from '@chakra-ui/react';
 import { FiHome, FiEdit } from 'react-icons/fi';
 import { BiCodeBlock } from 'react-icons/bi';
 import { IconType } from 'react-icons';
 import NavItem from './NavItem';
+import { ROUTES } from '../../constants';
 
 interface LinkItemProps {
   name: string;
   icon: IconType;
+  path: string;
 }
 
 const LinkItems: Array<LinkItemProps> = [
-  { name: 'Home', icon: FiHome },
-  { name: 'Editor', icon: FiEdit },
+  { name: 'Home', icon: FiHome, path: ROUTES.HOME },
+  { name: 'Editor', icon: FiEdit, path: ROUTES.EDITOR },
 ];
 
-export default function Sidebar() {
+const RightSidebar: FC<BoxProps> = () => {
   return (
     <Box
       bg={useColorModeValue('white', 'gray.900')}
@@ -24,6 +26,7 @@ export default function Sidebar() {
       w="60"
       pos="fixed"
       h="full"
+      shadow="md"
     >
       <Flex h="20" alignItems="center" mx="8" gap={2}>
         <BiCodeBlock fontSize={32} />
@@ -32,10 +35,12 @@ export default function Sidebar() {
         </Text>
       </Flex>
       {LinkItems.map((link) => (
-        <NavItem key={link.name} icon={link.icon}>
+        <NavItem path={link.path} key={link.name} icon={link.icon}>
           {link.name}
         </NavItem>
       ))}
     </Box>
   );
-}
+};
+
+export default RightSidebar;

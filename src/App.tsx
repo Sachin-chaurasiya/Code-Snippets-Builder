@@ -5,16 +5,18 @@ import {
   theme,
   useColorModeValue,
 } from '@chakra-ui/react';
-import CodeEditor from './components/CodeEditor/CodeEditor';
-import Sidebar from './components/Sidebar/Sidebar';
+import LeftSidebar from './components/Sidebar/LeftSideBar';
+import AppRoutes from './AppRoutes';
+import RightSidebar from './components/Sidebar/RightSidebar';
 
 export const App = () => (
   <ChakraProvider theme={theme}>
     <Box minH="100vh" bg={useColorModeValue('gray.100', 'gray.900')}>
-      <Sidebar />
-      <Box ml={{ base: 0, md: 60 }} p="4">
-        <CodeEditor />
+      <LeftSidebar />
+      <Box ml={60} mr={80} p="4">
+        <AppRoutes />
       </Box>
+      <RightSidebar />
     </Box>
   </ChakraProvider>
 );

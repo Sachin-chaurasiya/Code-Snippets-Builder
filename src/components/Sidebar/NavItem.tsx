@@ -1,17 +1,26 @@
 import { Flex, FlexProps, Icon, Link } from '@chakra-ui/react';
-import { ReactNode } from 'react';
+import { ReactNode, useMemo } from 'react';
 import { IconType } from 'react-icons';
+import { useLocation } from 'react-router-dom';
 
 interface NavItemProps extends FlexProps {
   icon: IconType;
   children: ReactNode;
+  path: string;
 }
 
-const NavItem = ({ icon, children, ...rest }: NavItemProps) => {
+const NavItem = ({ icon, children, path, ...rest }: NavItemProps) => {
+  const location = useLocation();
+
+  const isActiveItem = useMemo(
+    () => location.pathname === path,
+    [path, location]
+  );
+
   return (
     <Link
-      href="#"
-      style={{ textDecoration: 'none' }}
+      href={path}
+      style={{ textDecoration: 'none', marginBottom: '4px', display: 'block' }}
       _focus={{ boxShadow: 'none' }}
     >
       <Flex
@@ -25,6 +34,8 @@ const NavItem = ({ icon, children, ...rest }: NavItemProps) => {
           bg: 'gray.700',
           color: 'white',
         }}
+        bg={isActiveItem ? 'gray.700' : ''}
+        color={isActiveItem ? 'white' : ''}
         {...rest}
       >
         {icon && (

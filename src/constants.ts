@@ -16,3 +16,8 @@ const ResizableNodeSelected = ({ data, selected }) => {
 
 export default memo(ResizableNodeSelected)
 `;
+
+export const ROUTES = {
+  HOME: '/',
+  EDITOR: '/editor',
+};
