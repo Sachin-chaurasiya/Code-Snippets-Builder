@@ -2,7 +2,7 @@ import { Box, Flex, Icon, useColorModeValue } from '@chakra-ui/react';
 import React from 'react';
 import { IconType } from 'react-icons';
 import { BiCodeBlock, BiImage, BiText } from 'react-icons/bi';
-import { CUSTOM_NODES } from '../../constants';
+import { CUSTOM_NODES } from 'constant';
 
 interface ToolBarItemsProps {
   label: string;

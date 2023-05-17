@@ -11,12 +11,12 @@ import ReactFlow, {
 } from 'reactflow';
 import 'reactflow/dist/style.css';
 
-import ToolBar from '../../components/ToolBar/ToolBar';
+import ToolBar from 'components/ToolBar/ToolBar';
 import { uniqueId } from 'lodash';
-import EditorNode from '../../components/CustomNodes/EditorNode';
-import { CUSTOM_NODES, INITIAL_NODES } from '../../constants';
-import TextNode from '../../components/CustomNodes/TextNode';
-import ImageNode from '../../components/CustomNodes/ImageNode';
+import EditorNode from 'components/CustomNodes/EditorNode';
+import { CUSTOM_NODES, INITIAL_NODES } from 'constant';
+import TextNode from 'components/CustomNodes/TextNode';
+import ImageNode from 'components/CustomNodes/ImageNode';
 
 const EditorPage = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState(INITIAL_NODES);

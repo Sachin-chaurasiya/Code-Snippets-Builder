@@ -3,8 +3,8 @@ import './code-editor.css';
 import Editor from 'react-simple-code-editor';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import * as prismStyles from 'react-syntax-highlighter/dist/esm/styles/prism';
-import { CODE_SNIPPET } from '../../constants';
-import { useAppProvider } from '../../AppProvider';
+import { CODE_SNIPPET } from 'constant';
+import { useAppProvider } from 'AppProvider';
 import { HiPlus } from 'react-icons/hi';
 import { IoMdClose } from 'react-icons/io';
 import {
@@ -20,7 +20,7 @@ import { last } from 'lodash';
 import {
   getIconByFileExtension,
   getIconColorByFileExtension,
-} from '../../Utils/icon-utils';
+} from 'Utils/icon-utils';
 
 const CodeEditor = () => {
   const [code, setCode] = useState<string>(CODE_SNIPPET);

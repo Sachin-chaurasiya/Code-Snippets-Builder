@@ -1,5 +1,5 @@
 import React, { ReactNode, createContext, useContext, useState } from 'react';
-import { INITIAL_CONTEXT_DATA } from './constants';
+import { INITIAL_CONTEXT_DATA } from './constant';
 
 interface AppContextData {
   language: string;

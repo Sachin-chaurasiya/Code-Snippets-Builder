@@ -13,8 +13,8 @@ import {
 import * as prismStyles from 'react-syntax-highlighter/dist/esm/styles/prism';
 import languages from 'react-syntax-highlighter/dist/esm/languages/prism/supported-languages';
 import { map, startCase, toNumber } from 'lodash';
-import { FONT_SIZES } from '../../constants';
-import { useAppProvider } from '../../AppProvider';
+import { FONT_SIZES } from 'constant';
+import { useAppProvider } from 'AppProvider';
 
 const RightSidebar: FC<BoxProps> = () => {
   const {

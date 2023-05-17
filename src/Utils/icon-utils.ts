@@ -1,4 +1,4 @@
-import { ICON_MAP, LANGUAGE_COLOR_MAP } from '../constants';
+import { ICON_MAP, LANGUAGE_COLOR_MAP } from 'constant';
 
 export const getIconByFileExtension = (extension: string) =>
   ICON_MAP[extension as keyof typeof ICON_MAP];

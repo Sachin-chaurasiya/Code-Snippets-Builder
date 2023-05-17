@@ -1,10 +1,9 @@
-import { ColorModeScript } from '@chakra-ui/react';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom/client';
-import { App } from './App';
-import './index.css';
+import { App } from 'App';
+import 'index.css';
 import { BrowserRouter } from 'react-router-dom';
-import AppProvider from './AppProvider';
+import AppProvider from 'AppProvider';
 
 const container = document.getElementById('root');
 if (!container) throw new Error('Failed to find the root element');
@@ -14,7 +13,6 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <AppProvider>
-        <ColorModeScript />
         <App />
       </AppProvider>
     </BrowserRouter>

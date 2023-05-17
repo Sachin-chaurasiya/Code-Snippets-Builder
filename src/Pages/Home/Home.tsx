@@ -1,10 +1,10 @@
 import React from 'react';
-import CodeEditor from '../../components/CodeEditor/CodeEditor';
+import { Text } from '@chakra-ui/react';
 
 const Home = () => {
   return (
     <>
-      <CodeEditor />;
+      <Text>Home Page : Work is pending</Text>
     </>
   );
 };

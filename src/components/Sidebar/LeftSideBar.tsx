@@ -4,7 +4,7 @@ import { FiHome, FiEdit } from 'react-icons/fi';
 import { BiCodeBlock } from 'react-icons/bi';
 import { IconType } from 'react-icons';
 import NavItem from './NavItem';
-import { ROUTES } from '../../constants';
+import { ROUTES } from 'constant';
 
 interface LinkItemProps {
   name: string;

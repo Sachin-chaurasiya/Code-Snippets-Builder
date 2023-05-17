@@ -15,7 +15,7 @@ import {
 } from '@chakra-ui/react';
 import { map } from 'lodash';
 import React, { useState } from 'react';
-import { DEV_IMAGES } from '../../constants';
+import { DEV_IMAGES } from 'constant';
 import { FiEdit } from 'react-icons/fi';
 
 const AddMediaModal = () => {
