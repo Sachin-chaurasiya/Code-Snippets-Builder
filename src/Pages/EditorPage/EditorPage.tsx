@@ -1,4 +1,4 @@
-import { Box } from '@chakra-ui/react';
+import { Box, Button, Flex } from '@chakra-ui/react';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import ReactFlow, {
   Connection,
@@ -11,6 +11,7 @@ import ReactFlow, {
   useNodesState,
 } from 'reactflow';
 import 'reactflow/dist/style.css';
+import { toPng } from 'html-to-image';
 
 import ToolBar from 'components/ToolBar/ToolBar';
 import { uniqueId } from 'lodash';
@@ -74,9 +75,38 @@ const EditorPage = () => {
     []
   );
 
+  function downloadImage(dataUrl: string) {
+    const a = document.createElement('a');
+
+    a.setAttribute('download', 'reactflow.png');
+    a.setAttribute('href', dataUrl);
+    a.click();
+  }
+
+  const onClick = () => {
+    toPng(document.querySelector('.react-flow') as HTMLElement, {
+      filter: (node) => {
+        // we don't want to add the minimap and the controls to the image
+        if (
+          node?.classList?.contains('react-flow__minimap') ||
+          node?.classList?.contains('react-flow__controls')
+        ) {
+          return false;
+        }
+
+        return true;
+      },
+    }).then(downloadImage);
+  };
+
   return (
     <>
-      <ToolBar />
+      <Flex justifyContent="space-between" alignItems="center">
+        <ToolBar />
+        <Button onClick={onClick} variant="solid">
+          Download
+        </Button>
+      </Flex>
       <ReactFlowProvider>
         <Box
           style={{

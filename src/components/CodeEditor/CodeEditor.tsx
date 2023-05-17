@@ -106,8 +106,10 @@ const CodeEditor = () => {
                     <IconButton
                       alignItems="end"
                       _hover={{ background: 'none' }}
+                      _groupHover={{ display: 'flex' }}
                       aria-label="remove-button"
                       variant="ghost"
+                      display="none"
                       icon={
                         <IoMdClose
                           fontWeight="bold"
