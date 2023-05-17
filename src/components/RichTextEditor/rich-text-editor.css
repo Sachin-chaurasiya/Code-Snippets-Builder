@@ -1,0 +1,9 @@
+#rich-text-editor.ProseMirror {
+  outline: transparent solid 2px;
+  outline-offset: 2px;
+  font-variant-ligatures: none;
+  white-space: break-spaces;
+  overflow-wrap: break-word;
+  -webkit-font-smoothing: subpixel-antialiased;
+  user-select: none;
+}

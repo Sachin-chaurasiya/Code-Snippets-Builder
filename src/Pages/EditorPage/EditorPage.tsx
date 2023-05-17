@@ -5,6 +5,7 @@ import ReactFlow, {
   Node,
   ReactFlowInstance,
   ReactFlowProvider,
+  XYPosition,
   addEdge,
   useEdgesState,
   useNodesState,
@@ -46,15 +47,15 @@ const EditorPage = () => {
       const position = reactFlowInstance?.project({
         x: event.clientX - (reactFlowBounds?.left ?? 0),
         y: event.clientY - (reactFlowBounds?.top ?? 0),
-      });
-      const newNode = {
+      }) as XYPosition;
+      const newNode: Node = {
         id: uniqueId('dragged'),
         type,
         position,
         data: { label: `${type} node` },
       };
 
-      setNodes((nds) => nds.concat(newNode as Node));
+      setNodes((nds) => nds.concat(newNode));
     },
     [reactFlowInstance, setNodes]
   );

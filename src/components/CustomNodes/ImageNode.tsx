@@ -20,7 +20,6 @@ const ImageNode: FC<NodeProps> = ({ selected }) => {
         onConnect={(params) => console.log('handle onConnect', params)}
         isConnectable={false}
       />
-      ;
     </>
   );
 };
