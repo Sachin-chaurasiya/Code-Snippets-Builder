@@ -1,10 +1,14 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import AddMediaModal from '../AddMediaModal/AddMediaModal';
-import { Handle, NodeProps, Position } from 'reactflow';
+import { Handle, NodeProps, NodeResizer, Position } from 'reactflow';
+import { Image } from '@chakra-ui/react';
 
 const ImageNode: FC<NodeProps> = ({ selected }) => {
+  const [source, setSource] = useState<string>('');
+
   return (
     <>
+      {source ? <NodeResizer keepAspectRatio isVisible={selected} /> : null}
       <Handle
         type="target"
         position={Position.Left}
@@ -12,7 +16,12 @@ const ImageNode: FC<NodeProps> = ({ selected }) => {
         onConnect={(params) => console.log('handle onConnect', params)}
         isConnectable={false}
       />
-      <AddMediaModal />
+
+      {source ? (
+        <Image width="100%" src={source} />
+      ) : (
+        <AddMediaModal onSourceSelect={setSource} />
+      )}
       <Handle
         type="source"
         position={Position.Right}
