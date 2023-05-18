@@ -1,6 +1,6 @@
 import { Editable, EditablePreview, EditableTextarea } from '@chakra-ui/react';
 import { useAppProvider } from 'AppProvider';
-import React, { FC } from 'react';
+import React, { FC, memo } from 'react';
 import { Handle, NodeProps, NodeResizer, Position } from 'reactflow';
 
 const TextNode: FC<NodeProps> = ({ selected }) => {
@@ -46,4 +46,4 @@ const TextNode: FC<NodeProps> = ({ selected }) => {
   );
 };
 
-export default TextNode;
+export default memo(TextNode);

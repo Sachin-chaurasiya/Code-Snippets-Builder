@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, memo, useState } from 'react';
 import AddMediaModal from '../AddMediaModal/AddMediaModal';
 import { Handle, NodeProps, NodeResizer, Position } from 'reactflow';
 import { Image } from '@chakra-ui/react';
@@ -33,4 +33,4 @@ const ImageNode: FC<NodeProps> = ({ selected }) => {
   );
 };
 
-export default ImageNode;
+export default memo(ImageNode);
