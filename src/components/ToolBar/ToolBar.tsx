@@ -44,6 +44,7 @@ const ToolBar = () => {
       <ButtonGroup variant="outline">
         {ToolBarItems.map(({ label, icon, nodeType }) => (
           <Button
+            key={label}
             aria-label={`drag and drop ${toLower(label)}`}
             _hover={{ background: 'gray.700' }}
             bg="gray.700"

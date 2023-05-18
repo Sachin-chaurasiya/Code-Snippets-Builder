@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Menu,
   MenuButton,
@@ -109,11 +110,11 @@ const ExportButton = () => {
     <Menu>
       <MenuButton>
         <Button
+          as={Box}
           _hover={{ background: 'purple.500' }}
           bg="purple.500"
           color="white"
           isLoading={isDownLoading}
-          // onClick={handleExport}
           variant="solid"
           leftIcon={<BiExport />}
         >

@@ -1,7 +1,7 @@
 import {
+  AspectRatio,
   Button,
   Grid,
-  IconButton,
   Image,
   Modal,
   ModalBody,
@@ -14,6 +14,7 @@ import {
 import { map } from 'lodash';
 import React from 'react';
 import { DEV_IMAGES } from 'constant';
+import { RiImageAddLine } from 'react-icons/ri';
 
 const AddMediaModal = ({
   onSourceSelect,
@@ -29,7 +30,9 @@ const AddMediaModal = ({
 
   return (
     <>
-      <Button onClick={onOpen}>Add Media</Button>
+      <Button width="100px" height="100px" onClick={onOpen}>
+        <RiImageAddLine fontSize="50px" />
+      </Button>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
@@ -43,16 +46,17 @@ const AddMediaModal = ({
               maxHeight="70vh"
             >
               {map(DEV_IMAGES, (source, key) => (
-                <IconButton
-                  key={key}
-                  variant="outline"
-                  aspectRatio="auto"
-                  aria-label={key}
-                  minWidth={10}
-                  onClick={() => handleSourceSelection(source)}
-                >
-                  <Image src={source} />
-                </IconButton>
+                <AspectRatio key={key} ratio={1}>
+                  <Button
+                    variant="outline"
+                    aspectRatio="auto"
+                    aria-label={key}
+                    minWidth={10}
+                    onClick={() => handleSourceSelection(source)}
+                  >
+                    <Image src={source} />
+                  </Button>
+                </AspectRatio>
               ))}
             </Grid>
           </ModalBody>
