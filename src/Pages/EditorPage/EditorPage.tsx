@@ -1,7 +1,8 @@
-import { Box, Button, Flex } from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import ReactFlow, {
   Connection,
+  Controls,
   Node,
   ReactFlowInstance,
   ReactFlowProvider,
@@ -11,7 +12,6 @@ import ReactFlow, {
   useNodesState,
 } from 'reactflow';
 import 'reactflow/dist/style.css';
-import { toPng } from 'html-to-image';
 
 import ToolBar from 'components/ToolBar/ToolBar';
 import { uniqueId } from 'lodash';
@@ -75,40 +75,13 @@ const EditorPage = () => {
     []
   );
 
-  function downloadImage(dataUrl: string) {
-    const a = document.createElement('a');
-
-    a.setAttribute('download', 'reactflow.png');
-    a.setAttribute('href', dataUrl);
-    a.click();
-  }
-
-  const onClick = () => {
-    toPng(document.querySelector('.react-flow') as HTMLElement, {
-      filter: (node) => {
-        // we don't want to add the minimap and the controls to the image
-        if (
-          node?.classList?.contains('react-flow__minimap') ||
-          node?.classList?.contains('react-flow__controls')
-        ) {
-          return false;
-        }
-
-        return true;
-      },
-    }).then(downloadImage);
-  };
-
   return (
     <>
-      <Flex justifyContent="space-between" alignItems="center">
-        <ToolBar />
-        <Button onClick={onClick} variant="solid">
-          Download
-        </Button>
-      </Flex>
+      <ToolBar />
+
       <ReactFlowProvider>
         <Box
+          borderRadius={4}
           style={{
             height: '80vh',
           }}
@@ -124,12 +97,15 @@ const EditorPage = () => {
             style={{
               background:
                 'linear-gradient(337deg, rgb(101, 78, 163), rgb(218, 152, 180))',
+              borderRadius: 6,
             }}
             onConnect={onConnect}
             onInit={setReactFlowInstance}
             onDrop={onDrop}
             onDragOver={onDragOver}
-          />
+          >
+            <Controls className="editor-controls" position="top-right" />
+          </ReactFlow>
         </Box>
       </ReactFlowProvider>
     </>

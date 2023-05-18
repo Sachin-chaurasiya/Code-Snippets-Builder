@@ -1,8 +1,11 @@
-import { Box, Flex, Icon, useColorModeValue } from '@chakra-ui/react';
+import { Box, Button, ButtonGroup, Flex, Icon } from '@chakra-ui/react';
 import React from 'react';
 import { IconType } from 'react-icons';
 import { BiCodeBlock, BiImage, BiText } from 'react-icons/bi';
+import { RxDragHandleDots2 } from 'react-icons/rx';
 import { CUSTOM_NODES } from 'constant';
+import ExportButton from 'components/ExportButton/ExportButton';
+import { toLower } from 'lodash';
 
 interface ToolBarItemsProps {
   label: string;
@@ -28,33 +31,35 @@ const ToolBar = () => {
 
   return (
     <Box
-      w="max-content"
-      bg={useColorModeValue('white', 'gray.900')}
-      border="1px"
-      borderColor={useColorModeValue('gray.200', 'gray.700')}
+      as={Flex}
+      justifyContent="space-between"
+      alignItems="center"
+      w="full"
       mb={4}
-      borderRadius={4}
+      p={4}
+      bg="white"
+      borderRadius="md"
       shadow="md"
-      padding="16px"
-      marginLeft="auto"
-      marginRight="auto"
     >
-      <Flex gap={8} alignItems="center">
+      <ButtonGroup variant="outline">
         {ToolBarItems.map(({ label, icon, nodeType }) => (
-          <Box
-            key={label}
-            as={Flex}
-            direction="column"
-            alignItems="center"
+          <Button
+            aria-label={`drag and drop ${toLower(label)}`}
+            _hover={{ background: 'gray.700' }}
+            bg="gray.700"
+            color="white"
+            p={4}
             draggable
             cursor="grab"
+            rightIcon={<RxDragHandleDots2 />}
+            leftIcon={<Icon as={icon} />}
             onDragStart={(event) => onDragStart(event, nodeType)}
           >
-            <Icon fontSize={32} as={icon} />
             {label}
-          </Box>
+          </Button>
         ))}
-      </Flex>
+      </ButtonGroup>
+      <ExportButton />
     </Box>
   );
 };
