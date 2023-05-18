@@ -1,8 +1,11 @@
 import { Editable, EditablePreview, EditableTextarea } from '@chakra-ui/react';
+import { useAppProvider } from 'AppProvider';
 import React, { FC } from 'react';
 import { Handle, NodeProps, NodeResizer, Position } from 'reactflow';
 
 const TextNode: FC<NodeProps> = ({ selected }) => {
+  const { text } = useAppProvider();
+
   return (
     <>
       <NodeResizer keepAspectRatio isVisible={selected} />
@@ -16,11 +19,13 @@ const TextNode: FC<NodeProps> = ({ selected }) => {
 
       <Editable
         autoFocus
-        bg="transparent"
+        bg={text.background}
         placeholder="Type something..."
         height="inherit"
         width="inherit"
         px="8px"
+        fontSize={text.fontSize}
+        borderRadius={text.borderRadius}
       >
         <EditablePreview />
         <EditableTextarea

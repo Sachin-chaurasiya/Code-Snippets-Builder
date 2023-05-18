@@ -25,7 +25,7 @@ import {
 const CodeEditor = () => {
   const [code, setCode] = useState<string>(CODE_SNIPPET);
   const {
-    data: { theme, fontSize, language },
+    editor: { theme, fontSize, language },
   } = useAppProvider();
 
   const [showFileName, setShowFileName] = useState<boolean>(false);

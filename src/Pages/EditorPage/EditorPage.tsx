@@ -19,8 +19,10 @@ import EditorNode from 'components/CustomNodes/EditorNode';
 import { CUSTOM_NODES, INITIAL_NODES } from 'constant';
 import TextNode from 'components/CustomNodes/TextNode';
 import ImageNode from 'components/CustomNodes/ImageNode';
+import { useAppProvider } from 'AppProvider';
 
 const EditorPage = () => {
+  const { background } = useAppProvider();
   const [nodes, setNodes, onNodesChange] = useNodesState(INITIAL_NODES);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
 
@@ -95,8 +97,7 @@ const EditorPage = () => {
             nodes={nodes}
             edges={edges}
             style={{
-              background:
-                'linear-gradient(337deg, rgb(101, 78, 163), rgb(218, 152, 180))',
+              background,
               borderRadius: 6,
             }}
             onConnect={onConnect}

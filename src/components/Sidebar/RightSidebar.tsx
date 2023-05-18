@@ -9,17 +9,30 @@ import {
   VStack,
   FormLabel,
   FormControl,
+  Divider,
+  SimpleGrid,
+  Button,
 } from '@chakra-ui/react';
 import * as prismStyles from 'react-syntax-highlighter/dist/esm/styles/prism';
 import languages from 'react-syntax-highlighter/dist/esm/languages/prism/supported-languages';
 import { map, startCase, toNumber } from 'lodash';
-import { FONT_SIZES } from 'constant';
+import {
+  BORDER_RADIUS,
+  FONT_SIZES,
+  GRADIENT_COLORS,
+  NAMED_COLORS,
+} from 'constant';
 import { useAppProvider } from 'AppProvider';
+import { BiCheckCircle } from 'react-icons/bi';
 
 const RightSidebar: FC<BoxProps> = () => {
   const {
-    data: { theme, fontSize, language },
-    onUpdate,
+    editor: { theme, fontSize, language },
+    text,
+    background,
+    onUpdateEditorData,
+    onUpdateTextData,
+    onUpdateBackground,
   } = useAppProvider();
 
   return (
@@ -35,59 +48,176 @@ const RightSidebar: FC<BoxProps> = () => {
       bottom={0}
       shadow="md"
       px="6"
+      overflow="auto"
     >
       <Flex h="20" alignItems="center" gap={2}>
-        <Text fontWeight="bold">Configure</Text>
+        <Text fontSize="xl" fontWeight="bold">
+          Configure
+        </Text>
       </Flex>
 
-      <VStack alignItems="flex-start">
+      <Box alignItems="flex-start" as={VStack} mb={4}>
         <FormControl>
-          <FormLabel>Language</FormLabel>
-          <Select
-            value={language}
-            onChange={(e) =>
-              onUpdate({ fontSize, theme, language: e.target.value })
-            }
-          >
-            {map(languages, (language: string) => (
-              <option key={language} value={language}>
-                {startCase(language)}
-              </option>
+          <FormLabel fontSize="lg" fontWeight="bold">
+            Background
+          </FormLabel>
+          <SimpleGrid columns={5} gap={4}>
+            {GRADIENT_COLORS.map((c) => (
+              <Button
+                key={c}
+                aria-label={c}
+                background={c}
+                height="40px"
+                width="40px"
+                padding={0}
+                minWidth="unset"
+                borderRadius={3}
+                _hover={{ background: c }}
+                onClick={() => onUpdateBackground(c)}
+              >
+                {background === c ? (
+                  <BiCheckCircle
+                    color="white"
+                    style={{ display: 'block', margin: 'auto' }}
+                  />
+                ) : (
+                  <></>
+                )}
+              </Button>
             ))}
-          </Select>
+          </SimpleGrid>
         </FormControl>
-        <FormControl>
-          <FormLabel>Theme</FormLabel>
-          <Select
-            value={theme}
-            onChange={(e) =>
-              onUpdate({ fontSize, theme: e.target.value, language })
-            }
-          >
-            {map(prismStyles, (_, name) => (
-              <option key={name} value={name}>
-                {startCase(name)}
-              </option>
-            ))}
-          </Select>
-        </FormControl>
+      </Box>
 
-        <FormControl>
-          <FormLabel>Font Size</FormLabel>
-          <Select
-            value={fontSize}
-            onChange={(e) =>
-              onUpdate({ fontSize: toNumber(e.target.value), theme, language })
-            }
-          >
-            {map(FONT_SIZES, (size) => (
-              <option key={size} value={size}>
-                {`${size}px`}
-              </option>
-            ))}
-          </Select>
-        </FormControl>
-      </VStack>
+      <Box alignItems="flex-start" as={VStack} mb={4}>
+        <Text fontSize="lg" fontWeight="bold">
+          Editor
+        </Text>
+        <Divider />
+        <VStack alignItems="flex-start">
+          <FormControl>
+            <FormLabel>Language</FormLabel>
+            <Select
+              value={language}
+              onChange={(e) =>
+                onUpdateEditorData({
+                  fontSize,
+                  theme,
+                  language: e.target.value,
+                })
+              }
+            >
+              {map(languages, (language: string) => (
+                <option key={language} value={language}>
+                  {startCase(language)}
+                </option>
+              ))}
+            </Select>
+          </FormControl>
+          <FormControl>
+            <FormLabel>Theme</FormLabel>
+            <Select
+              value={theme}
+              onChange={(e) =>
+                onUpdateEditorData({
+                  fontSize,
+                  theme: e.target.value,
+                  language,
+                })
+              }
+            >
+              {map(prismStyles, (_, name) => (
+                <option key={name} value={name}>
+                  {startCase(name)}
+                </option>
+              ))}
+            </Select>
+          </FormControl>
+
+          <FormControl>
+            <FormLabel>Font Size</FormLabel>
+            <Select
+              value={fontSize}
+              onChange={(e) =>
+                onUpdateEditorData({
+                  fontSize: toNumber(e.target.value),
+                  theme,
+                  language,
+                })
+              }
+            >
+              {map(FONT_SIZES, (size) => (
+                <option key={size} value={size}>
+                  {`${size}px`}
+                </option>
+              ))}
+            </Select>
+          </FormControl>
+        </VStack>
+      </Box>
+
+      <Box alignItems="flex-start" as={VStack} mb={4}>
+        <Text fontSize="lg" fontWeight="bold">
+          Text
+        </Text>
+        <Divider />
+        <VStack w="100%" alignItems="flex-start">
+          <FormControl>
+            <FormLabel>Background Color</FormLabel>
+            <Select
+              value={text.background}
+              onChange={(e) =>
+                onUpdateTextData({
+                  ...text,
+                  background: e.target.value,
+                })
+              }
+            >
+              {map(NAMED_COLORS, (color) => (
+                <option key={color} value={color}>
+                  {startCase(color)}
+                </option>
+              ))}
+            </Select>
+          </FormControl>
+          <FormControl>
+            <FormLabel>Font Size</FormLabel>
+            <Select
+              value={text.fontSize}
+              onChange={(e) =>
+                onUpdateTextData({
+                  ...text,
+                  fontSize: toNumber(e.target.value),
+                })
+              }
+            >
+              {map(FONT_SIZES, (size) => (
+                <option key={size} value={size}>
+                  {`${size}px`}
+                </option>
+              ))}
+            </Select>
+          </FormControl>
+          <FormControl>
+            <FormLabel>Border Radius</FormLabel>
+            <Select
+              value={text.borderRadius}
+              onChange={(e) =>
+                onUpdateTextData({
+                  ...text,
+                  borderRadius: e.target.value,
+                })
+              }
+            >
+              {map(BORDER_RADIUS, (size) => (
+                <option key={size} value={`${size}px`}>
+                  {`${size}px`}
+                </option>
+              ))}
+            </Select>
+          </FormControl>
+        </VStack>
+      </Box>
     </Box>
   );
 };
