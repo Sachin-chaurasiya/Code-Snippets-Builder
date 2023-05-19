@@ -105,7 +105,7 @@ const EditorPage = () => {
             onDrop={onDrop}
             onDragOver={onDragOver}
           >
-            <Controls className="editor-controls" position="top-right" />
+            <Controls className="editor-controls" position="bottom-right" />
           </ReactFlow>
         </Box>
       </ReactFlowProvider>

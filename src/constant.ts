@@ -145,12 +145,10 @@ export const GRADIENT_COLORS = [
   'linear-gradient(45deg, rgb(225, 79, 173), rgb(249, 212, 35))',
   'linear-gradient(45deg, rgb(236, 119, 171), rgb(120, 115, 245))',
   'linear-gradient(0deg, rgb(255, 154, 158), rgb(254, 207, 239), rgb(254, 207, 239))',
-  'linear-gradient(0deg, rgb(207, 217, 223), rgb(226, 235, 240))',
   'linear-gradient(0deg, rgb(199, 144, 129), rgb(223, 165, 121))',
   'linear-gradient(225deg, rgb(105, 234, 203), rgb(234, 204, 248), rgb(102, 84, 241))',
   'linear-gradient(0deg, rgb(2, 80, 197), rgb(212, 63, 141))',
   'linear-gradient(0deg, rgb(255, 8, 68), rgb(255, 177, 153))',
-  'linear-gradient(90deg, rgb(134, 143, 150), rgb(89, 97, 100))',
   'linear-gradient(225deg, rgb(252, 235, 194), rgb(253, 103, 166), rgb(178, 152, 250))',
 ];
 
