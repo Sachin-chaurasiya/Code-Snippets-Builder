@@ -17,7 +17,7 @@ const LinkItems: Array<LinkItemProps> = [
   { name: 'Editor', icon: FiEdit, path: ROUTES.EDITOR },
 ];
 
-const RightSidebar: FC<BoxProps> = () => {
+const LeftSidebar: FC<BoxProps> = () => {
   return (
     <Box
       bg={useColorModeValue('white', 'gray.900')}
@@ -43,4 +43,4 @@ const RightSidebar: FC<BoxProps> = () => {
   );
 };
 
-export default RightSidebar;
+export default LeftSidebar;

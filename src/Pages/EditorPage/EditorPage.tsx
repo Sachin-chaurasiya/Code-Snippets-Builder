@@ -1,5 +1,5 @@
 import { Box } from '@chakra-ui/react';
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, { Fragment, useCallback, useMemo, useRef, useState } from 'react';
 import ReactFlow, {
   Connection,
   Controls,
@@ -20,6 +20,7 @@ import { CUSTOM_NODES, INITIAL_NODES } from 'constant';
 import TextNode from 'components/CustomNodes/TextNode';
 import ImageNode from 'components/CustomNodes/ImageNode';
 import { useAppProvider } from 'AppProvider';
+import EditorSidebar from 'components/Sidebar/EditorSidebar';
 
 const EditorPage = () => {
   const { background } = useAppProvider();
@@ -78,38 +79,41 @@ const EditorPage = () => {
   );
 
   return (
-    <>
-      <ToolBar />
+    <Fragment>
+      <Box mr={80}>
+        <ToolBar />
 
-      <ReactFlowProvider>
-        <Box
-          borderRadius={4}
-          style={{
-            height: '80vh',
-          }}
-          ref={reactFlowWrapper}
-        >
-          <ReactFlow
-            nodeTypes={nodeTypes}
-            onNodesChange={onNodesChange}
-            onEdgesChange={onEdgesChange}
-            proOptions={{ hideAttribution: true }}
-            nodes={nodes}
-            edges={edges}
+        <ReactFlowProvider>
+          <Box
+            borderRadius={4}
             style={{
-              background,
-              borderRadius: 6,
+              height: '80vh',
             }}
-            onConnect={onConnect}
-            onInit={setReactFlowInstance}
-            onDrop={onDrop}
-            onDragOver={onDragOver}
+            ref={reactFlowWrapper}
           >
-            <Controls className="editor-controls" position="bottom-right" />
-          </ReactFlow>
-        </Box>
-      </ReactFlowProvider>
-    </>
+            <ReactFlow
+              nodeTypes={nodeTypes}
+              onNodesChange={onNodesChange}
+              onEdgesChange={onEdgesChange}
+              proOptions={{ hideAttribution: true }}
+              nodes={nodes}
+              edges={edges}
+              style={{
+                background,
+                borderRadius: 6,
+              }}
+              onConnect={onConnect}
+              onInit={setReactFlowInstance}
+              onDrop={onDrop}
+              onDragOver={onDragOver}
+            >
+              <Controls className="editor-controls" position="bottom-right" />
+            </ReactFlow>
+          </Box>
+        </ReactFlowProvider>
+      </Box>
+      <EditorSidebar />
+    </Fragment>
   );
 };
 

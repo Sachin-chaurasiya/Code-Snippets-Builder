@@ -25,7 +25,7 @@ import {
 import { useAppProvider } from 'AppProvider';
 import { BiCheckCircle } from 'react-icons/bi';
 
-const RightSidebar: FC<BoxProps> = () => {
+const EditorSidebar: FC<BoxProps> = () => {
   const {
     editor,
     text,
@@ -247,4 +247,4 @@ const RightSidebar: FC<BoxProps> = () => {
   );
 };
 
-export default RightSidebar;
+export default EditorSidebar;
