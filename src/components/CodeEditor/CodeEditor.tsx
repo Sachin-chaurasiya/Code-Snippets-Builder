@@ -143,7 +143,6 @@ const CodeEditor = () => {
               {code}
             </SyntaxHighlighter>
           )}
-          padding={10}
           style={{
             fontSize,
           }}

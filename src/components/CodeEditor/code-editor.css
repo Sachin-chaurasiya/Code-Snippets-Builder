@@ -72,14 +72,16 @@
   margin: 0px !important;
   border-top-left-radius: 0px !important;
   border-top-right-radius: 0px !important;
+  min-height: 80px;
 }
 
-#code-editor-textarea {
+#code-editor textarea {
   outline: transparent solid 2px;
   outline-offset: 2px;
   caret-color: white;
   font-family: inherit !important;
   color: transparent !important;
-  padding-left: 21px !important;
-  padding-right: 21px !important;
+  padding-top: 16px !important;
+  padding-left: 1em !important;
+  padding-right: 1em !important;
 }
