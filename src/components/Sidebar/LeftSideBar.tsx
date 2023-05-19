@@ -31,7 +31,7 @@ const LeftSidebar: FC<BoxProps> = () => {
       <Flex h="20" alignItems="center" mx="8" gap={2}>
         <BiCodeBlock fontSize={32} />
         <Text fontSize="xl" fontWeight="bold">
-          Builder
+          SnippetBuilder
         </Text>
       </Flex>
       {LinkItems.map((link) => (
