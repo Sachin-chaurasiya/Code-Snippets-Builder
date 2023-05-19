@@ -20,7 +20,7 @@ import { last } from 'lodash';
 import {
   getIconByFileExtension,
   getIconColorByFileExtension,
-} from 'Utils/icon-utils';
+} from 'utils/IconUtils';
 
 const CodeEditor = () => {
   const [code, setCode] = useState<string>(CODE_SNIPPET);
