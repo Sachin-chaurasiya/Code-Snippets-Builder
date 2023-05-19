@@ -2,8 +2,10 @@ import React, { FC, memo, useState } from 'react';
 import AddMediaModal from '../AddMediaModal/AddMediaModal';
 import { Handle, NodeProps, NodeResizer, Position } from 'reactflow';
 import { Image } from '@chakra-ui/react';
+import { useAppProvider } from 'AppProvider';
 
 const ImageNode: FC<NodeProps> = ({ selected }) => {
+  const { image } = useAppProvider();
   const [source, setSource] = useState<string>('');
 
   return (
@@ -18,7 +20,7 @@ const ImageNode: FC<NodeProps> = ({ selected }) => {
       />
 
       {source ? (
-        <Image width="100%" src={source} />
+        <Image width="100%" src={source} borderRadius={image.borderRadius} />
       ) : (
         <AddMediaModal onSourceSelect={setSource} />
       )}

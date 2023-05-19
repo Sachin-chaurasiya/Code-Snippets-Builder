@@ -27,11 +27,13 @@ import { BiCheckCircle } from 'react-icons/bi';
 
 const RightSidebar: FC<BoxProps> = () => {
   const {
-    editor: { theme, fontSize, language },
+    editor,
     text,
+    image,
     background,
     onUpdateEditorData,
     onUpdateTextData,
+    onUpdateImageData,
     onUpdateBackground,
   } = useAppProvider();
 
@@ -98,11 +100,10 @@ const RightSidebar: FC<BoxProps> = () => {
           <FormControl>
             <FormLabel>Language</FormLabel>
             <Select
-              value={language}
+              value={editor.language}
               onChange={(e) =>
                 onUpdateEditorData({
-                  fontSize,
-                  theme,
+                  ...editor,
                   language: e.target.value,
                 })
               }
@@ -117,12 +118,11 @@ const RightSidebar: FC<BoxProps> = () => {
           <FormControl>
             <FormLabel>Theme</FormLabel>
             <Select
-              value={theme}
+              value={editor.theme}
               onChange={(e) =>
                 onUpdateEditorData({
-                  fontSize,
+                  ...editor,
                   theme: e.target.value,
-                  language,
                 })
               }
             >
@@ -137,12 +137,11 @@ const RightSidebar: FC<BoxProps> = () => {
           <FormControl>
             <FormLabel>Font Size</FormLabel>
             <Select
-              value={fontSize}
+              value={editor.fontSize}
               onChange={(e) =>
                 onUpdateEditorData({
+                  ...editor,
                   fontSize: toNumber(e.target.value),
-                  theme,
-                  language,
                 })
               }
             >
@@ -205,6 +204,32 @@ const RightSidebar: FC<BoxProps> = () => {
               onChange={(e) =>
                 onUpdateTextData({
                   ...text,
+                  borderRadius: e.target.value,
+                })
+              }
+            >
+              {map(BORDER_RADIUS, (size) => (
+                <option key={size} value={`${size}px`}>
+                  {`${size}px`}
+                </option>
+              ))}
+            </Select>
+          </FormControl>
+        </VStack>
+      </Box>
+      <Box alignItems="flex-start" as={VStack} mb={4}>
+        <Text fontSize="lg" fontWeight="bold">
+          Image
+        </Text>
+        <Divider />
+        <VStack w="100%" alignItems="flex-start">
+          <FormControl>
+            <FormLabel>Border Radius</FormLabel>
+            <Select
+              value={image.borderRadius}
+              onChange={(e) =>
+                onUpdateImageData({
+                  ...image,
                   borderRadius: e.target.value,
                 })
               }

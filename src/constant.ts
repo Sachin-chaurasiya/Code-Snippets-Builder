@@ -18,27 +18,6 @@ import GitHubImage from './assets/dev-icons/github.svg';
 export const FONT_SIZES = [12, 14, 16, 18, 20];
 export const BORDER_RADIUS = [4, 6, 8, 10, 12];
 
-export const CODE_SNIPPET = `// Define a Tuple Type to represent a user's name and commits
-type UserContribution = [string, number];
-
-// Create a new User Contribution Tuple
-const userContribution: UserContribution = ["Sachin-chaurasiya", 3099];
-
-// Attempt to assign a value of the wrong type to the Tuple
-// This will result in a TypeScript error
-userContribution[0] = 87; // Type 'number' is not assignable to type 'string'
-
-// Define a function that returns a Tuple Type
-function getUserContribution(): UserContribution {
-  return ["Sachin-chaurasiya", 3099];
-}
-
-// Destructure the Tuple into individual variables
-const [name, commits] = getUserContribution();
-console.log(name); // "Sachin-chaurasiya"
-console.log(commits); // 3099
-`;
-
 export const ROUTES = {
   HOME: '/',
   EDITOR: '/editor',
@@ -51,9 +30,12 @@ export const INITIAL_CONTEXT_DATA = {
     fontSize: 14,
   },
   text: {
-    background: 'transparent',
+    background: 'moccasin',
     color: 'currentColor',
     fontSize: 16,
+    borderRadius: '4px',
+  },
+  image: {
     borderRadius: '4px',
   },
   onUpdate: noop,
