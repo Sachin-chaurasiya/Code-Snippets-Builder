@@ -1,0 +1,20 @@
+/* Custom */
+.window {
+  position: relative;
+  border-radius: 4px;
+  min-width: 150px;
+}
+
+#code-editor > pre > pre {
+  margin: 0 !important;
+  border-top-left-radius: 0px !important;
+  border-top-right-radius: 0px !important;
+  min-height: inherit;
+}
+
+#code-editor textarea {
+  outline: transparent solid 1px;
+  caret-color: white;
+  color: transparent !important;
+  padding: 14px !important;
+}
