@@ -1,10 +1,10 @@
 import React, { FC } from 'react';
 import { Box, Flex, useColorModeValue, Text, BoxProps } from '@chakra-ui/react';
 import { FiHome, FiEdit } from 'react-icons/fi';
-import { BiCodeBlock } from 'react-icons/bi';
 import { IconType } from 'react-icons';
 import NavItem from './NavItem';
 import { ROUTES } from 'constant';
+import { AiFillCode } from 'react-icons/ai';
 
 interface LinkItemProps {
   name: string;
@@ -29,9 +29,10 @@ const LeftSidebar: FC<BoxProps> = () => {
       shadow="md"
     >
       <Flex h="20" alignItems="center" mx="8" gap={2}>
-        <BiCodeBlock fontSize={32} />
-        <Text fontSize="xl" fontWeight="bold">
-          SnippetBuilder
+        <AiFillCode color="#2d3748" fontSize={32} />
+        <Text color="gray.700" fontSize="xl" fontWeight="bold">
+          <span>Snippet</span>
+          <span>Builder</span>
         </Text>
       </Flex>
       {LinkItems.map((link) => (
