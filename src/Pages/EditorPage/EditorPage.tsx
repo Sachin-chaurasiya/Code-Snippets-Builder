@@ -1,5 +1,12 @@
 import { Box } from '@chakra-ui/react';
-import React, { Fragment, useCallback, useMemo, useRef, useState } from 'react';
+import React, {
+  Fragment,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import ReactFlow, {
   Connection,
   Controls,
@@ -77,6 +84,19 @@ const EditorPage = () => {
     }),
     []
   );
+
+  useEffect(() => {
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+      event.preventDefault();
+      event.returnValue = '';
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, []);
 
   return (
     <Fragment>
