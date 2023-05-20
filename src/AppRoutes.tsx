@@ -1,15 +1,19 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { ROUTES } from 'constant';
-import Home from 'Pages/Home/Home';
-import EditorPage from 'Pages/EditorPage/EditorPage';
+import Loader from 'components/Loader';
+
+const HomePage = lazy(() => import('Pages/Home/Home'));
+const EditorPage = lazy(() => import('Pages/EditorPage/EditorPage'));
 
 const AppRoutes = () => {
   return (
-    <Routes>
-      <Route path={ROUTES.HOME} element={<Home />} />
-      <Route path={ROUTES.EDITOR} element={<EditorPage />} />
-    </Routes>
+    <Suspense fallback={<Loader />}>
+      <Routes>
+        <Route path={ROUTES.HOME} element={<HomePage />} />
+        <Route path={ROUTES.EDITOR} element={<EditorPage />} />
+      </Routes>
+    </Suspense>
   );
 };
 

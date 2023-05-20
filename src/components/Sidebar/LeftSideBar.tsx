@@ -1,17 +1,11 @@
 import React, { FC } from 'react';
-import {
-  Box,
-  Flex,
-  useColorModeValue,
-  Text,
-  BoxProps,
-  Image,
-} from '@chakra-ui/react';
+import { Box, useColorModeValue, BoxProps } from '@chakra-ui/react';
 import { FiHome, FiEdit } from 'react-icons/fi';
 import { IconType } from 'react-icons';
 import NavItem from './NavItem';
 import { ROUTES } from 'constant';
-import LogoImage from 'assets/images/logo.png';
+
+import BrandLogo from 'components/BrandLogo';
 
 interface LinkItemProps {
   name: string;
@@ -35,21 +29,7 @@ const LeftSidebar: FC<BoxProps> = () => {
       h="full"
       shadow="md"
     >
-      <Flex h="20" alignItems="center" gap={2}>
-        <Image boxSize="64px" src={LogoImage} objectFit="contain" />
-        <Text
-          ml="-16px"
-          mb="4px"
-          fontSize="xl"
-          fontWeight="bold"
-          backgroundImage="linear-gradient(270deg, rgb(20, 30, 48), rgb(36, 59, 85))"
-          color="transparent"
-          backgroundClip="text"
-        >
-          <span>Snippet</span>
-          <span>Builder</span>
-        </Text>
-      </Flex>
+      <BrandLogo ml={2} />
       {LinkItems.map((link) => (
         <NavItem path={link.path} key={link.name} icon={link.icon}>
           {link.name}
