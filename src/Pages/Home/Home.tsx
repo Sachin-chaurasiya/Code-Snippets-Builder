@@ -26,7 +26,13 @@ const LandingPage = () => {
       <Box py={16}>
         <Flex direction={['column', 'column', 'row']} justify="center">
           <Box flex="1" pr={[0, 0, 8]} pl={[0, 0, 16]}>
-            <Heading size="xl" mb={4}>
+            <Heading
+              size="xl"
+              mb={4}
+              backgroundImage="linear-gradient(270deg, rgb(20, 30, 48), rgb(36, 59, 85))"
+              color="transparent"
+              backgroundClip="text"
+            >
               Build Beautiful Code Snippets
             </Heading>
             <Text fontSize="lg" mb={6}>
@@ -35,8 +41,11 @@ const LandingPage = () => {
               templates, and enhance your code documentation.
             </Text>
             <Button
-              _hover={{ background: 'gray.700' }}
-              bg="gray.700"
+              _hover={{
+                background:
+                  'linear-gradient(135deg, rgb(102, 126, 234), rgb(118, 75, 162))',
+              }}
+              background="linear-gradient(135deg, rgb(102, 126, 234), rgb(118, 75, 162))"
               color="white"
               size="lg"
               onClick={handleGetStarted}
@@ -56,7 +65,14 @@ const LandingPage = () => {
 
       <Box bg="gray.100" py={16}>
         <Box maxWidth="container.md" mx="auto" px={4}>
-          <Heading size="xl" mb={8} textAlign="center">
+          <Heading
+            size="xl"
+            mb={8}
+            textAlign="center"
+            backgroundImage="linear-gradient(270deg, rgb(20, 30, 48), rgb(36, 59, 85))"
+            color="transparent"
+            backgroundClip="text"
+          >
             Features
           </Heading>
           <Stack spacing={6}>
@@ -81,7 +97,13 @@ const LandingPage = () => {
 
       <Box py={16}>
         <Box maxWidth="container.md" mx="auto" px={4} textAlign="center">
-          <Heading size="xl" mb={8}>
+          <Heading
+            size="xl"
+            mb={8}
+            backgroundImage="linear-gradient(270deg, rgb(20, 30, 48), rgb(36, 59, 85))"
+            color="transparent"
+            backgroundClip="text"
+          >
             Start Building Beautiful Code Snippets Today!
           </Heading>
           <Text fontSize="lg" mb={6}>
@@ -89,8 +111,11 @@ const LandingPage = () => {
             showcase your code in a visually appealing and professional manner.
           </Text>
           <Button
-            _hover={{ background: 'gray.700' }}
-            bg="gray.700"
+            _hover={{
+              background:
+                'linear-gradient(135deg, rgb(102, 126, 234), rgb(118, 75, 162))',
+            }}
+            background="linear-gradient(135deg, rgb(102, 126, 234), rgb(118, 75, 162))"
             color="white"
             size="lg"
             onClick={handleGetStarted}
@@ -124,7 +149,13 @@ const Feature = ({
   <Box>
     <Flex align="center" mb={2}>
       <Box boxSize={10}>{icon}</Box>
-      <Heading size="md" ml={3}>
+      <Heading
+        size="md"
+        ml={3}
+        backgroundImage="linear-gradient(270deg, rgb(20, 30, 48), rgb(36, 59, 85))"
+        color="transparent"
+        backgroundClip="text"
+      >
         {title}
       </Heading>
     </Flex>

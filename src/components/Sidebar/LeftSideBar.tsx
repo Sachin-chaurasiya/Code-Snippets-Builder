@@ -30,7 +30,13 @@ const LeftSidebar: FC<BoxProps> = () => {
     >
       <Flex h="20" alignItems="center" mx="8" gap={2}>
         <AiFillCode color="#2d3748" fontSize={32} />
-        <Text color="gray.700" fontSize="xl" fontWeight="bold">
+        <Text
+          fontSize="xl"
+          fontWeight="bold"
+          backgroundImage="linear-gradient(270deg, rgb(20, 30, 48), rgb(36, 59, 85))"
+          color="transparent"
+          backgroundClip="text"
+        >
           <span>Snippet</span>
           <span>Builder</span>
         </Text>
