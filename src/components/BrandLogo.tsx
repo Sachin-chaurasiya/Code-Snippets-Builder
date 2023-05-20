@@ -11,7 +11,7 @@ const BrandLogo: FC<FlexProps> = (props) => {
         mb="4px"
         fontSize="xl"
         fontWeight="bold"
-        backgroundImage="linear-gradient(270deg, rgb(20, 30, 48), rgb(36, 59, 85))"
+        background="linear-gradient(270deg, rgb(20, 30, 48), rgb(36, 59, 85))"
         color="transparent"
         backgroundClip="text"
       >

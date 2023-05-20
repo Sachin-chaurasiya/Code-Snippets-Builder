@@ -1,5 +1,7 @@
 import React, { ReactNode, createContext, useContext, useState } from 'react';
 import { INITIAL_CONTEXT_DATA } from './constant';
+import { useMediaQuery } from '@chakra-ui/react';
+import MobileViewMessage from 'components/MobileViewMessage';
 
 interface EditorContextData {
   language: string;
@@ -30,6 +32,8 @@ interface AppContextProps {
 export const AppContext = createContext<AppContextProps>({} as AppContextProps);
 
 const AppProvider = ({ children }: { children: ReactNode }) => {
+  const [isMobileScreen] = useMediaQuery('(max-width: 1024px)');
+
   const [editorContextData, setEditorContextData] = useState<EditorContextData>(
     INITIAL_CONTEXT_DATA.editor
   );
@@ -66,7 +70,7 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
         onUpdateBackground: handleUpdateBackground,
       }}
     >
-      {children}
+      {isMobileScreen ? <MobileViewMessage /> : children}
     </AppContext.Provider>
   );
 };
