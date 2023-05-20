@@ -63,31 +63,27 @@ const LandingPage = () => {
         </Flex>
       </Box>
 
-      <Box bg="gray.100" py={16}>
+      <Box
+        bg="linear-gradient(270deg, rgb(20, 30, 48), rgb(36, 59, 85))"
+        py={16}
+      >
         <Box maxWidth="container.md" mx="auto" px={4}>
-          <Heading
-            size="xl"
-            mb={8}
-            textAlign="center"
-            backgroundImage="linear-gradient(270deg, rgb(20, 30, 48), rgb(36, 59, 85))"
-            color="transparent"
-            backgroundClip="text"
-          >
+          <Heading color="white" size="xl" mb={8} textAlign="center">
             Features
           </Heading>
           <Stack spacing={6}>
             <Feature
-              icon={<RiDragDropLine size={50} />}
+              icon={<RiDragDropLine size={50} color="white" />}
               title="Drag and Drop Interface"
               description="Easily drag and drop code elements to create your desired snippet structure."
             />
             <Feature
-              icon={<BiCustomize size={50} />}
+              icon={<BiCustomize size={50} color="white" />}
               title="Customize Appearance"
               description="Choose from a wide range of themes, fonts, and color schemes to make your snippets visually appealing."
             />
             <Feature
-              icon={<DiTerminal size={50} />}
+              icon={<DiTerminal size={50} color="white" />}
               title="Multi-Language Support"
               description="Create snippets for various programming languages, including JavaScript, Python, Java, and more."
             />
@@ -149,17 +145,11 @@ const Feature = ({
   <Box>
     <Flex align="center" mb={2}>
       <Box boxSize={10}>{icon}</Box>
-      <Heading
-        size="md"
-        ml={3}
-        backgroundImage="linear-gradient(270deg, rgb(20, 30, 48), rgb(36, 59, 85))"
-        color="transparent"
-        backgroundClip="text"
-      >
+      <Heading size="md" ml={3} color="white">
         {title}
       </Heading>
     </Flex>
-    <Text>{description}</Text>
+    <Text color="white">{description}</Text>
   </Box>
 );
 

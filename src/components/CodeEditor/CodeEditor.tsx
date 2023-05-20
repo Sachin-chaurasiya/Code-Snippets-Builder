@@ -27,7 +27,7 @@ const CodeEditor = () => {
     <>
       <Box className="window" style={{ background: `${backgroundColor}` }}>
         <TitleBar backgroundColor={backgroundColor} />
-        <Flex paddingY="21px">
+        <Flex paddingY="21px" shadow="2xl">
           <Box />
           <Editor
             id="code-editor"
