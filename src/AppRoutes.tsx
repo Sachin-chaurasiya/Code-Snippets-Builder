@@ -5,6 +5,7 @@ import Loader from 'components/Loader';
 
 const HomePage = lazy(() => import('Pages/Home/Home'));
 const EditorPage = lazy(() => import('Pages/EditorPage/EditorPage'));
+const NotFound = lazy(() => import('Pages/NotFound/NotFound'));
 
 const AppRoutes = () => {
   return (
@@ -12,6 +13,7 @@ const AppRoutes = () => {
       <Routes>
         <Route path={ROUTES.HOME} element={<HomePage />} />
         <Route path={ROUTES.EDITOR} element={<EditorPage />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Suspense>
   );
