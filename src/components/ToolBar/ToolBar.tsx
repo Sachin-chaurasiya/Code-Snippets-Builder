@@ -46,8 +46,11 @@ const ToolBar = () => {
           <Button
             key={label}
             aria-label={`drag and drop ${toLower(label)}`}
-            _hover={{ background: 'gray.700' }}
-            bg="gray.700"
+            _hover={{
+              background:
+                'linear-gradient(270deg, rgb(20, 30, 48), rgb(36, 59, 85))',
+            }}
+            background="linear-gradient(270deg, rgb(20, 30, 48), rgb(36, 59, 85))"
             color="white"
             p={4}
             draggable

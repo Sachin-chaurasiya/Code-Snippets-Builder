@@ -31,10 +31,15 @@ const NavItem = ({ icon, children, path, ...rest }: NavItemProps) => {
         role="group"
         cursor="pointer"
         _hover={{
-          bg: 'purple.500',
+          background:
+            'linear-gradient(270deg, rgb(20, 30, 48), rgb(36, 59, 85))',
           color: 'white',
         }}
-        bg={isActiveItem ? 'purple.500' : ''}
+        background={
+          isActiveItem
+            ? 'linear-gradient(270deg, rgb(20, 30, 48), rgb(36, 59, 85))'
+            : ''
+        }
         color={isActiveItem ? 'white' : ''}
         {...rest}
       >

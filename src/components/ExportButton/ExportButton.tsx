@@ -111,8 +111,11 @@ const ExportButton = () => {
       <MenuButton>
         <Button
           as={Box}
-          _hover={{ background: 'purple.500' }}
-          bg="purple.500"
+          _hover={{
+            background:
+              'linear-gradient(135deg, rgb(102, 126, 234), rgb(118, 75, 162))',
+          }}
+          background="linear-gradient(135deg, rgb(102, 126, 234), rgb(118, 75, 162))"
           color="white"
           isLoading={isDownLoading}
           variant="solid"
