@@ -23,8 +23,4 @@ Create snippets for various programming languages, including JavaScript, Python,
 
 ## Start Building Beautiful Code Snippets Today!
 
-With our drag and drop code snippet builder, you can effortlessly showcase your code in a visually appealing and professional manner.
-
-<a href="https://snippetbuilder.sachinchaurasiya.dev/editor" target="_blank">
-<img width="140" alt="image" src="https://github.com/Sachin-chaurasiya/Code-Snippets-Builder/assets/59080942/ae43e8ba-66ae-46ee-b21c-ef3b3519b763">
-</a>  
+With our drag and drop code snippet builder, you can effortlessly showcase your code in a visually appealing and professional manner.  
