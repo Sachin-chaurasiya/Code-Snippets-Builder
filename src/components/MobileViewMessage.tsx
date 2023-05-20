@@ -14,7 +14,7 @@ const MobileViewMessage = () => {
       gap={8}
     >
       <BrandLogo gap={8} />
-      <Text fontSize="md">
+      <Text fontSize="md" textAlign="center">
         For the best experience, please use the desktop version of our website.
       </Text>
     </Box>
