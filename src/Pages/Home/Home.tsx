@@ -7,6 +7,7 @@ import {
   Button,
   Image,
   Stack,
+  Link,
 } from '@chakra-ui/react';
 import CodeSnippetImage from 'assets/images/code-snippet.png';
 import { RiDragDropLine } from 'react-icons/ri';
@@ -101,7 +102,10 @@ const LandingPage = () => {
 
       <Box bg="gray.100" py={4}>
         <Box maxWidth="container.md" mx="auto" textAlign="center">
-          <Text>Made with ❤️ by Sachin Chaurasiya</Text>
+          <Text>
+            Made with ❤️ by{' '}
+            <Link href="https://sachinchaurasiya.dev">Sachin Chaurasiya</Link>
+          </Text>
         </Box>
       </Box>
     </Box>
