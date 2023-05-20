@@ -6,6 +6,7 @@ import NavItem from './NavItem';
 import { ROUTES } from 'constant';
 
 import BrandLogo from 'components/BrandLogo';
+import { useNavigate } from 'react-router-dom';
 
 interface LinkItemProps {
   name: string;
@@ -19,6 +20,9 @@ const LinkItems: Array<LinkItemProps> = [
 ];
 
 const LeftSidebar: FC<BoxProps> = () => {
+  const navigate = useNavigate();
+
+  const handleNavigateHome = () => navigate(ROUTES.HOME);
   return (
     <Box
       bg={useColorModeValue('white', 'gray.900')}
@@ -29,7 +33,7 @@ const LeftSidebar: FC<BoxProps> = () => {
       h="full"
       shadow="md"
     >
-      <BrandLogo ml={2} />
+      <BrandLogo ml={2} onClick={handleNavigateHome} cursor="pointer" />
       {LinkItems.map((link) => (
         <NavItem path={link.path} key={link.name} icon={link.icon}>
           {link.name}
