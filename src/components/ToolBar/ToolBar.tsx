@@ -1,4 +1,11 @@
-import { Box, Button, ButtonGroup, Flex, Icon } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  ButtonGroup,
+  Flex,
+  Icon,
+  Tooltip,
+} from '@chakra-ui/react';
 import React from 'react';
 import { IconType } from 'react-icons';
 import { BiCodeBlock, BiImage, BiText } from 'react-icons/bi';
@@ -43,24 +50,23 @@ const ToolBar = () => {
     >
       <ButtonGroup variant="outline">
         {ToolBarItems.map(({ label, icon, nodeType }) => (
-          <Button
-            key={label}
-            aria-label={`drag and drop ${toLower(label)}`}
-            _hover={{
-              background:
-                'linear-gradient(270deg, rgb(20, 30, 48), rgb(36, 59, 85))',
-            }}
-            background="linear-gradient(270deg, rgb(20, 30, 48), rgb(36, 59, 85))"
-            color="white"
-            p={4}
-            draggable
-            cursor="grab"
-            rightIcon={<RxDragHandleDots2 />}
-            leftIcon={<Icon as={icon} />}
-            onDragStart={(event) => onDragStart(event, nodeType)}
-          >
-            {label}
-          </Button>
+          <Tooltip key={label} label={`Add ${label}`} borderRadius="4px">
+            <Button
+              aria-label={`drag and drop ${toLower(label)}`}
+              _hover={{
+                background:
+                  'linear-gradient(270deg, rgb(20, 30, 48), rgb(36, 59, 85))',
+              }}
+              background="linear-gradient(270deg, rgb(20, 30, 48), rgb(36, 59, 85))"
+              color="white"
+              p={4}
+              draggable
+              cursor="grab"
+              rightIcon={<RxDragHandleDots2 />}
+              leftIcon={<Icon as={icon} fontSize="20px" />}
+              onDragStart={(event) => onDragStart(event, nodeType)}
+            />
+          </Tooltip>
         ))}
       </ButtonGroup>
       <ExportButton />
