@@ -12,10 +12,9 @@ const ErrorFallback: React.FC<FallbackProps> = ({ resetErrorBoundary }) => {
       justifyContent="center"
       alignItems="center"
       minHeight="100vh"
-      gap={8}
     >
       <BrandLogo />
-      <Text>Something went wrong!</Text>
+      <Text mb={2}>Something went wrong!</Text>
       <Button
         _hover={{
           background:
@@ -23,7 +22,7 @@ const ErrorFallback: React.FC<FallbackProps> = ({ resetErrorBoundary }) => {
         }}
         background="linear-gradient(135deg, rgb(102, 126, 234), rgb(118, 75, 162))"
         color="white"
-        size="lg"
+        size="md"
         onClick={resetErrorBoundary}
       >
         Home
