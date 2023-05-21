@@ -3,7 +3,7 @@ import { Box, useColorModeValue, BoxProps } from '@chakra-ui/react';
 import { FiHome, FiEdit } from 'react-icons/fi';
 import { IconType } from 'react-icons';
 import NavItem from './NavItem';
-import { ROUTES } from 'constant';
+import { ROUTES } from 'constants/common';
 
 import BrandLogo from 'components/BrandLogo';
 import { useNavigate } from 'react-router-dom';

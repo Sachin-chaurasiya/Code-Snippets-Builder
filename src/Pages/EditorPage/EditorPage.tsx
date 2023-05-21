@@ -21,7 +21,7 @@ import 'reactflow/dist/style.css';
 import ToolBar from 'components/ToolBar/ToolBar';
 import { uniqueId } from 'lodash';
 import EditorNode from 'components/CustomNodes/EditorNode';
-import { CUSTOM_NODES, INITIAL_NODES } from 'constant';
+import { CUSTOM_NODES, INITIAL_NODES } from 'constants/editor';
 import TextNode from 'components/CustomNodes/TextNode';
 import ImageNode from 'components/CustomNodes/ImageNode';
 import { useAppProvider } from 'AppProvider';

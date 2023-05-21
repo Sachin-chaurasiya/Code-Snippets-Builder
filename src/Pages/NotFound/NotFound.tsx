@@ -1,5 +1,5 @@
 import { Box, Heading, Text, Button, Flex } from '@chakra-ui/react';
-import { ROUTES } from 'constant';
+import { ROUTES } from 'constants/common';
 import { useNavigate } from 'react-router-dom';
 
 export const NotFound = () => {

@@ -21,7 +21,7 @@ import {
   FONT_SIZES,
   GRADIENT_COLORS,
   NAMED_COLORS,
-} from 'constant';
+} from 'constants/editor';
 import { useAppProvider } from 'AppProvider';
 import { BiCheckCircle } from 'react-icons/bi';
 

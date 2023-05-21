@@ -14,7 +14,7 @@ import { RiDragDropLine } from 'react-icons/ri';
 import { BiCustomize } from 'react-icons/bi';
 import { DiTerminal } from 'react-icons/di';
 import { useNavigate } from 'react-router-dom';
-import { ROUTES } from 'constant';
+import { ROUTES } from 'constants/common';
 
 const LandingPage = () => {
   const navigate = useNavigate();
