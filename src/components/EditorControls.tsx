@@ -73,13 +73,19 @@ const EditorControls = () => {
     <Box as={Flex} mb={4} justifyContent="space-between">
       <Flex gap={2} flex={1}>
         <Tooltip label="Fit view">
-          <Button bg="white" onClick={onFitViewHandler} aria-label="fit view">
+          <Button
+            _hover={{ background: 'white' }}
+            bg="white"
+            onClick={onFitViewHandler}
+            aria-label="fit view"
+          >
             <FitViewIcon />
           </Button>
         </Tooltip>
 
         <Tooltip label="Toggle interactivity">
           <Button
+            _hover={{ background: 'white' }}
             bg="white"
             onClick={onToggleInteractivity}
             aria-label="toggle interactivity"
@@ -91,8 +97,7 @@ const EditorControls = () => {
       <Flex
         bg="white"
         justifyContent="space-between"
-        gap={4}
-        flex={1}
+        flex={0.3}
         borderRadius="6px"
       >
         <Tooltip label="Zoom out">
@@ -114,7 +119,7 @@ const EditorControls = () => {
           onChange={handleZoomTo}
         >
           <SliderTrack>
-            <SliderFilledTrack />
+            <SliderFilledTrack bgGradient="linear-gradient(135deg, rgb(102, 126, 234), rgb(118, 75, 162))" />
           </SliderTrack>
           <SliderThumb />
         </Slider>
