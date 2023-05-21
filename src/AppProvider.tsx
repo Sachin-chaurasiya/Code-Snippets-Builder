@@ -3,32 +3,12 @@ import { INITIAL_CONTEXT_DATA } from './constants/common';
 import { useMediaQuery } from '@chakra-ui/react';
 import MobileViewMessage from 'components/MobileViewMessage';
 import { DEFAULT_EDITOR_BG_COLOR } from 'constants/editor';
-
-interface EditorContextData {
-  language: string;
-  theme: string;
-  fontSize: number;
-}
-interface TextContextData {
-  background: string;
-  color: string;
-  fontSize: number;
-  borderRadius: string;
-}
-interface ImageContextData {
-  borderRadius: string;
-}
-
-interface AppContextProps {
-  background: string;
-  editor: EditorContextData;
-  text: TextContextData;
-  image: ImageContextData;
-  onUpdateEditorData: (value: EditorContextData) => void;
-  onUpdateTextData: (value: TextContextData) => void;
-  onUpdateImageData: (value: ImageContextData) => void;
-  onUpdateBackground: (value: string) => void;
-}
+import {
+  AppContextProps,
+  EditorContextData,
+  ImageContextData,
+  TextContextData,
+} from 'interface/AppProvider.interface';
 
 export const AppContext = createContext<AppContextProps>({} as AppContextProps);
 
