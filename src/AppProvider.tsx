@@ -1,7 +1,8 @@
 import React, { ReactNode, createContext, useContext, useState } from 'react';
-import { INITIAL_CONTEXT_DATA } from './constant';
+import { INITIAL_CONTEXT_DATA } from './constants/common';
 import { useMediaQuery } from '@chakra-ui/react';
 import MobileViewMessage from 'components/MobileViewMessage';
+import { DEFAULT_EDITOR_BG_COLOR } from 'constants/editor';
 
 interface EditorContextData {
   language: string;
@@ -43,9 +44,7 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
   const [imageContextData, setImageContextData] = useState<ImageContextData>(
     INITIAL_CONTEXT_DATA.text
   );
-  const [background, setBackground] = useState<string>(
-    'linear-gradient(337deg, rgb(101, 78, 163), rgb(218, 152, 180))'
-  );
+  const [background, setBackground] = useState<string>(DEFAULT_EDITOR_BG_COLOR);
 
   const handleUpdateEditorData = (updatedData: EditorContextData) =>
     setEditorContextData(updatedData);

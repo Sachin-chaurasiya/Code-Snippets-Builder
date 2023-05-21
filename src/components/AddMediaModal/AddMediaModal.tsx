@@ -13,7 +13,7 @@ import {
 } from '@chakra-ui/react';
 import { map } from 'lodash';
 import React from 'react';
-import { DEV_IMAGES } from 'constant';
+import { DEV_IMAGES } from 'constants/image';
 import { RiImageAddLine } from 'react-icons/ri';
 
 const AddMediaModal = ({

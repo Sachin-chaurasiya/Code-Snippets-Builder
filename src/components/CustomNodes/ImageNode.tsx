@@ -3,7 +3,7 @@ import AddMediaModal from '../AddMediaModal/AddMediaModal';
 import { Handle, NodeProps, NodeResizer, Position } from 'reactflow';
 import { Image } from '@chakra-ui/react';
 import { useAppProvider } from 'AppProvider';
-import { HANDLE_COLOR } from 'constant';
+import { HANDLE_COLOR } from 'constants/editor';
 
 const ImageNode: FC<NodeProps> = ({ selected }) => {
   const { image } = useAppProvider();

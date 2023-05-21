@@ -1,102 +1,5 @@
-import { noop, uniqueId } from 'lodash';
-import {
-  SiJavascript,
-  SiTypescript,
-  SiHtml5,
-  SiCss3,
-  SiReact,
-} from 'react-icons/si';
-
-import TypeScriptImage from './assets/dev-icons/typescript.svg';
-import JavaScriptImage from './assets/dev-icons/javascript.svg';
-import ReactImage from './assets/dev-icons/react.svg';
-import HtmlImage from './assets/dev-icons/html5.svg';
-import CssImage from './assets/dev-icons/css3.svg';
-import GitImage from './assets/dev-icons/git.svg';
-import GitHubImage from './assets/dev-icons/github.svg';
+import { uniqueId } from 'lodash';
 import { Node } from 'reactflow';
-
-export const FONT_SIZES = [12, 14, 16, 18, 20];
-export const BORDER_RADIUS = [4, 6, 8, 10, 12];
-
-export const ROUTES = {
-  HOME: '/',
-  EDITOR: '/editor',
-};
-
-export const INITIAL_CONTEXT_DATA = {
-  editor: {
-    language: 'javascript',
-    theme: 'dracula',
-    fontSize: 14,
-  },
-  text: {
-    background: 'moccasin',
-    color: 'currentColor',
-    fontSize: 16,
-    borderRadius: '4px',
-  },
-  image: {
-    borderRadius: '4px',
-  },
-  onUpdate: noop,
-};
-
-export const CUSTOM_NODES = {
-  EDITOR_NODE: 'editorNode',
-  TEXT_NODE: 'textNode',
-  IMAGE_NODE: 'imageNode',
-};
-
-export const INITIAL_NODES: Node[] = [
-  {
-    id: uniqueId('dragged'),
-    position: { x: 80, y: 50 },
-    data: { label: 'Initial Code Editor Node' },
-    type: 'editorNode',
-    dragHandle: '.node-drag-handle',
-  },
-];
-
-export const ICON_MAP = {
-  js: SiJavascript,
-  ts: SiTypescript,
-  html: SiHtml5,
-  css: SiCss3,
-  tsx: SiReact,
-  jsx: SiReact,
-};
-export const LANGUAGE_COLOR_MAP = {
-  js: '#edc624',
-  ts: '#2f76c4',
-  jsx: '#61dafb',
-  tsx: '#61dafb',
-  html: '#f16528',
-  css: '#3365f1',
-};
-
-export const DEV_IMAGES = {
-  TYPESCRIPT: TypeScriptImage,
-  JAVASCRIPT: JavaScriptImage,
-  GIT: GitImage,
-  GITHUB: GitHubImage,
-  HTML: HtmlImage,
-  CSS: CssImage,
-  REACT: ReactImage,
-};
-
-export const TEXT_COLORS = [
-  'gray.500',
-  'red.500',
-  'gray.700',
-  'green.500',
-  'blue.500',
-  'blue.800',
-  'yellow.500',
-  'orange.500',
-  'purple.500',
-  'pink.500',
-];
 
 export const GRADIENT_COLORS = [
   'linear-gradient(337deg, rgb(101, 78, 163), rgb(218, 152, 180))',
@@ -135,8 +38,6 @@ export const GRADIENT_COLORS = [
   'linear-gradient(0deg, rgb(255, 8, 68), rgb(255, 177, 153))',
   'linear-gradient(225deg, rgb(252, 235, 194), rgb(253, 103, 166), rgb(178, 152, 250))',
 ];
-
-export const FONTS = ['cursive', 'fantasy', 'monospace', 'sans-serif', 'serif'];
 
 export const NAMED_COLORS = [
   'aliceblue',
@@ -274,4 +175,37 @@ export const NAMED_COLORS = [
   'transparent',
 ];
 
+export const FONTS = ['cursive', 'fantasy', 'monospace', 'sans-serif', 'serif'];
+
 export const HANDLE_COLOR = '#4299e1';
+
+export const DEFAULT_EDITOR_BG_COLOR =
+  'linear-gradient(145deg, rgb(48, 207, 208), rgb(51, 8, 103))';
+
+export const CUSTOM_NODES = {
+  EDITOR_NODE: 'editorNode',
+  TEXT_NODE: 'textNode',
+  IMAGE_NODE: 'imageNode',
+};
+
+export const FONT_SIZES = [12, 14, 16, 18, 20];
+export const BORDER_RADIUS = [4, 6, 8, 10, 12];
+
+export const INITIAL_NODES: Node[] = [
+  {
+    id: uniqueId('dragged'),
+    position: { x: 80, y: 50 },
+    data: { label: 'Initial Code Editor Node' },
+    type: 'editorNode',
+    dragHandle: '.node-drag-handle',
+  },
+];
+
+export const LANGUAGE_COLOR_MAP = {
+  js: '#edc624',
+  ts: '#2f76c4',
+  jsx: '#61dafb',
+  tsx: '#61dafb',
+  html: '#f16528',
+  css: '#3365f1',
+};

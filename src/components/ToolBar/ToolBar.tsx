@@ -10,7 +10,7 @@ import React from 'react';
 import { IconType } from 'react-icons';
 import { BiCodeBlock, BiImage, BiText } from 'react-icons/bi';
 import { RxDragHandleDots2 } from 'react-icons/rx';
-import { CUSTOM_NODES } from 'constant';
+import { CUSTOM_NODES } from 'constants/editor';
 import ExportButton from 'components/ExportButton/ExportButton';
 import { toLower } from 'lodash';
 
