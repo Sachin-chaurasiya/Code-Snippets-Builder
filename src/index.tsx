@@ -5,6 +5,7 @@ import 'index.css';
 import { BrowserRouter } from 'react-router-dom';
 import AppProvider from 'AppProvider';
 import ErrorBoundaryComponent from 'ErrorBoundary/ErrorBoundary';
+import { ReactFlowProvider } from 'reactflow';
 
 const container = document.getElementById('root');
 if (!container) throw new Error('Failed to find the root element');
@@ -14,9 +15,11 @@ root.render(
   <React.StrictMode>
     <ErrorBoundaryComponent>
       <BrowserRouter>
-        <AppProvider>
-          <App />
-        </AppProvider>
+        <ReactFlowProvider>
+          <AppProvider>
+            <App />
+          </AppProvider>
+        </ReactFlowProvider>
       </BrowserRouter>
     </ErrorBoundaryComponent>
   </React.StrictMode>
