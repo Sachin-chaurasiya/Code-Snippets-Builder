@@ -36,6 +36,7 @@ const TitleBar = ({
 
   return (
     <Flex
+      className="node-drag-handle"
       direction="row"
       gap="16px"
       paddingInline="16px"

@@ -14,6 +14,7 @@ import HtmlImage from './assets/dev-icons/html5.svg';
 import CssImage from './assets/dev-icons/css3.svg';
 import GitImage from './assets/dev-icons/git.svg';
 import GitHubImage from './assets/dev-icons/github.svg';
+import { Node } from 'reactflow';
 
 export const FONT_SIZES = [12, 14, 16, 18, 20];
 export const BORDER_RADIUS = [4, 6, 8, 10, 12];
@@ -47,12 +48,13 @@ export const CUSTOM_NODES = {
   IMAGE_NODE: 'imageNode',
 };
 
-export const INITIAL_NODES = [
+export const INITIAL_NODES: Node[] = [
   {
     id: uniqueId('dragged'),
     position: { x: 80, y: 50 },
     data: { label: 'Initial Code Editor Node' },
     type: 'editorNode',
+    dragHandle: '.node-drag-handle',
   },
 ];
 

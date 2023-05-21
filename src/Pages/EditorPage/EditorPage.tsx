@@ -64,6 +64,8 @@ const EditorPage = () => {
         type,
         position,
         data: { label: `${type} node` },
+        dragHandle:
+          type === CUSTOM_NODES.EDITOR_NODE ? '.node-drag-handle' : undefined,
       };
 
       setNodes((nds) => nds.concat(newNode));
