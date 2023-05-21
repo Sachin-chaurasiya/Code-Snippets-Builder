@@ -9,10 +9,8 @@ import React, {
 } from 'react';
 import ReactFlow, {
   Connection,
-  Controls,
   Node,
   ReactFlowInstance,
-  ReactFlowProvider,
   XYPosition,
   addEdge,
   useEdgesState,
@@ -28,6 +26,7 @@ import TextNode from 'components/CustomNodes/TextNode';
 import ImageNode from 'components/CustomNodes/ImageNode';
 import { useAppProvider } from 'AppProvider';
 import EditorSidebar from 'components/Sidebar/EditorSidebar';
+import EditorControls from 'components/EditorControls';
 
 const EditorPage = () => {
   const { background } = useAppProvider();
@@ -104,35 +103,31 @@ const EditorPage = () => {
     <Fragment>
       <Box mr={80}>
         <ToolBar />
-
-        <ReactFlowProvider>
-          <Box
-            borderRadius={4}
+        <EditorControls />
+        <Box
+          borderRadius={4}
+          style={{
+            height: '80vh',
+          }}
+          ref={reactFlowWrapper}
+        >
+          <ReactFlow
+            nodeTypes={nodeTypes}
+            onNodesChange={onNodesChange}
+            onEdgesChange={onEdgesChange}
+            proOptions={{ hideAttribution: true }}
+            nodes={nodes}
+            edges={edges}
             style={{
-              height: '80vh',
+              background,
+              borderRadius: 6,
             }}
-            ref={reactFlowWrapper}
-          >
-            <ReactFlow
-              nodeTypes={nodeTypes}
-              onNodesChange={onNodesChange}
-              onEdgesChange={onEdgesChange}
-              proOptions={{ hideAttribution: true }}
-              nodes={nodes}
-              edges={edges}
-              style={{
-                background,
-                borderRadius: 6,
-              }}
-              onConnect={onConnect}
-              onInit={setReactFlowInstance}
-              onDrop={onDrop}
-              onDragOver={onDragOver}
-            >
-              <Controls className="editor-controls" position="bottom-right" />
-            </ReactFlow>
-          </Box>
-        </ReactFlowProvider>
+            onConnect={onConnect}
+            onInit={setReactFlowInstance}
+            onDrop={onDrop}
+            onDragOver={onDragOver}
+          />
+        </Box>
       </Box>
       <EditorSidebar />
     </Fragment>
