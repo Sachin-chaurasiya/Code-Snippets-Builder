@@ -2,12 +2,13 @@ import React, { FC, memo } from 'react';
 import CodeEditor from '../CodeEditor/CodeEditor';
 import { Handle, NodeProps, Position } from 'reactflow';
 import { Box } from '@chakra-ui/react';
+import { HANDLE_COLOR } from 'constant';
 
 const EditorNode: FC<NodeProps> = ({ selected }) => {
   return (
     <Box
       border={selected ? '1px' : ''}
-      borderColor={selected ? 'blue.400' : ''}
+      borderColor={selected ? HANDLE_COLOR : ''}
     >
       <Handle
         type="target"

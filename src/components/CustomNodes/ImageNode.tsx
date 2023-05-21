@@ -3,6 +3,7 @@ import AddMediaModal from '../AddMediaModal/AddMediaModal';
 import { Handle, NodeProps, NodeResizer, Position } from 'reactflow';
 import { Image } from '@chakra-ui/react';
 import { useAppProvider } from 'AppProvider';
+import { HANDLE_COLOR } from 'constant';
 
 const ImageNode: FC<NodeProps> = ({ selected }) => {
   const { image } = useAppProvider();
@@ -10,7 +11,19 @@ const ImageNode: FC<NodeProps> = ({ selected }) => {
 
   return (
     <>
-      {source ? <NodeResizer keepAspectRatio isVisible={selected} /> : null}
+      {source ? (
+        <NodeResizer
+          handleStyle={{
+            borderRadius: '50%',
+            width: '8px',
+            height: '8px',
+            color: HANDLE_COLOR,
+          }}
+          color={HANDLE_COLOR}
+          keepAspectRatio
+          isVisible={selected}
+        />
+      ) : null}
       <Handle
         type="target"
         position={Position.Left}

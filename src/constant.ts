@@ -273,3 +273,5 @@ export const NAMED_COLORS = [
   'white',
   'transparent',
 ];
+
+export const HANDLE_COLOR = '#4299e1';

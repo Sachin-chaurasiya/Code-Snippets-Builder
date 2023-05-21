@@ -1,5 +1,6 @@
 import { Editable, EditablePreview, EditableTextarea } from '@chakra-ui/react';
 import { useAppProvider } from 'AppProvider';
+import { HANDLE_COLOR } from 'constant';
 import React, { FC, memo } from 'react';
 import { Handle, NodeProps, NodeResizer, Position } from 'reactflow';
 
@@ -8,7 +9,17 @@ const TextNode: FC<NodeProps> = ({ selected }) => {
 
   return (
     <>
-      <NodeResizer keepAspectRatio isVisible={selected} />
+      <NodeResizer
+        handleStyle={{
+          borderRadius: '50%',
+          width: '8px',
+          height: '8px',
+          color: HANDLE_COLOR,
+        }}
+        color={HANDLE_COLOR}
+        keepAspectRatio
+        isVisible={selected}
+      />
       <Handle
         type="target"
         position={Position.Left}
