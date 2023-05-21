@@ -30,6 +30,7 @@ const CodeEditor = () => {
         <Flex paddingY="21px" shadow="2xl">
           <Box />
           <Editor
+            autoFocus={true}
             id="code-editor"
             textareaId="code-editor-textarea"
             value={code}
