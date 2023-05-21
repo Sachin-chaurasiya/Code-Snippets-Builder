@@ -74,6 +74,7 @@ const EditorControls = () => {
       <Flex gap={2} flex={1}>
         <Tooltip label="Fit view">
           <Button
+            shadow="md"
             _hover={{ background: 'white' }}
             bg="white"
             onClick={onFitViewHandler}
@@ -85,6 +86,7 @@ const EditorControls = () => {
 
         <Tooltip label="Toggle interactivity">
           <Button
+            shadow="md"
             _hover={{ background: 'white' }}
             bg="white"
             onClick={onToggleInteractivity}
@@ -99,6 +101,7 @@ const EditorControls = () => {
         justifyContent="space-between"
         flex={0.3}
         borderRadius="6px"
+        shadow="md"
       >
         <Tooltip label="Zoom out">
           <Button

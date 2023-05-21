@@ -48,17 +48,16 @@ const ToolBar = () => {
       borderRadius="md"
       shadow="md"
     >
-      <ButtonGroup variant="outline">
+      <ButtonGroup>
         {ToolBarItems.map(({ label, icon, nodeType }) => (
           <Tooltip key={label} label={`Add ${label}`} borderRadius="4px">
             <Button
+              shadow="md"
               aria-label={`drag and drop ${toLower(label)}`}
               _hover={{
-                background:
-                  'linear-gradient(270deg, rgb(20, 30, 48), rgb(36, 59, 85))',
+                background: 'white',
               }}
-              background="linear-gradient(270deg, rgb(20, 30, 48), rgb(36, 59, 85))"
-              color="white"
+              background="white"
               p={4}
               draggable
               cursor="grab"
