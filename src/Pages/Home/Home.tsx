@@ -64,7 +64,7 @@ const LandingPage = () => {
       </Box>
 
       <Box
-        bg="linear-gradient(270deg, rgb(20, 30, 48), rgb(36, 59, 85))"
+        bg="linear-gradient(135deg, rgb(102, 126, 234), rgb(118, 75, 162))"
         py={16}
       >
         <Box maxWidth="container.md" mx="auto" px={4}>
@@ -142,15 +142,17 @@ const Feature = ({
   title: string;
   description: string;
 }) => (
-  <Box>
-    <Flex align="center" mb={2}>
-      <Box boxSize={10}>{icon}</Box>
+  <Flex>
+    <Box boxSize={10}>{icon}</Box>
+    <Flex direction="column">
       <Heading size="md" ml={3} color="white">
         {title}
       </Heading>
+      <Text color="white" ml={3}>
+        {description}
+      </Text>
     </Flex>
-    <Text color="white">{description}</Text>
-  </Box>
+  </Flex>
 );
 
 export default LandingPage;
