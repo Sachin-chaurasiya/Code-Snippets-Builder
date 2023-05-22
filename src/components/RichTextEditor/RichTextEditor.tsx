@@ -30,6 +30,7 @@ const RichTextEditor: FC<Props> = ({ width, height }) => {
         borderRadius: text.borderRadius,
         width: `${width}px`,
         height: `${height}px`,
+        fontSize: `${text.fontSize}px`,
       }}
       formats={FORMAT_OPTIONS}
       modules={MODULES}

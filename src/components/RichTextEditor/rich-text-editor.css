@@ -38,3 +38,6 @@
 .ql-bubble .ql-tooltip-editor input[type='text'] {
   color: var(--tooltip-primary);
 }
+.ql-container {
+  font-size: inherit !important;
+}
