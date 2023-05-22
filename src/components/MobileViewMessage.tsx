@@ -13,7 +13,7 @@ const MobileViewMessage = () => {
       minHeight="100vh"
       gap={8}
     >
-      <BrandLogo gap={8} />
+      <BrandLogo gap={4} />
       <Text fontSize="md" textAlign="center">
         For the best experience, please use the desktop version of our website.
       </Text>

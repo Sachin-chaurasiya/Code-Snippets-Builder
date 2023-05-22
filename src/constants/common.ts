@@ -1,4 +1,5 @@
 import { noop } from 'lodash';
+import { CSSProperties } from 'react';
 
 export const ROUTES = {
   HOME: '/',
@@ -12,7 +13,7 @@ export const INITIAL_CONTEXT_DATA = {
     fontSize: 14,
   },
   text: {
-    background: 'moccasin',
+    background: 'white',
     color: 'currentColor',
     fontSize: 16,
     borderRadius: '4px',
@@ -21,4 +22,34 @@ export const INITIAL_CONTEXT_DATA = {
     borderRadius: '4px',
   },
   onUpdate: noop,
+};
+
+export const HANDLE_STYLE_X: CSSProperties = {
+  background: 'transparent',
+  opacity: 0,
+  minHeight: '100%',
+  pointerEvents: 'all',
+};
+export const HANDLE_STYLE_Y: CSSProperties = {
+  background: 'transparent',
+  opacity: 0,
+  minWidth: '100%',
+  pointerEvents: 'all',
+};
+
+export const HANDLE_LEFT_STYLE: CSSProperties = {
+  left: '-8px',
+  width: '8px',
+};
+export const HANDLE_RIGHT_STYLE: CSSProperties = {
+  right: '-8px',
+  width: '8px',
+};
+export const HANDLE_TOP_STYLE: CSSProperties = {
+  top: '-8px',
+  height: '12px',
+};
+export const HANDLE_BOTTOM_STYLE: CSSProperties = {
+  bottom: '-8px',
+  height: '12px',
 };

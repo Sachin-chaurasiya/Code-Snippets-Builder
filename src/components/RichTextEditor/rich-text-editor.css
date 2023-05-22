@@ -1,0 +1,40 @@
+:root {
+  --tooltip-primary: #19263a;
+  --tooltip-primary-1: #6876df;
+}
+
+.ql-bubble .ql-tooltip {
+  width: max-content;
+  background: #ffffff;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  top: -56px !important;
+}
+.ql-bubble .ql-tooltip-arrow {
+  display: none;
+}
+
+.ql-bubble .ql-fill,
+.ql-bubble .ql-toolbar button:hover .ql-fill {
+  fill: var(--tooltip-primary);
+}
+
+.ql-bubble .ql-stroke,
+.ql-bubble .ql-toolbar button:hover .ql-stroke {
+  stroke: var(--tooltip-primary);
+}
+
+.ql-bubble .ql-toolbar button.ql-active {
+  border-radius: 4px;
+}
+
+.ql-bubble .ql-toolbar button.ql-active .ql-stroke {
+  stroke: var(--tooltip-primary-1);
+}
+.ql-bubble .ql-toolbar button.ql-active .ql-fill {
+  fill: var(--tooltip-primary-1);
+}
+
+.ql-bubble .ql-tooltip-editor input[type='text'] {
+  color: var(--tooltip-primary);
+}

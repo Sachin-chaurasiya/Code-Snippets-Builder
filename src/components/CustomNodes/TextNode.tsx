@@ -1,11 +1,34 @@
-import { Editable, EditablePreview, EditableTextarea } from '@chakra-ui/react';
-import { useAppProvider } from 'AppProvider';
+import RichTextEditor from 'components/RichTextEditor/RichTextEditor';
+import {
+  HANDLE_BOTTOM_STYLE,
+  HANDLE_LEFT_STYLE,
+  HANDLE_RIGHT_STYLE,
+  HANDLE_STYLE_X,
+  HANDLE_STYLE_Y,
+  HANDLE_TOP_STYLE,
+} from 'constants/common';
 import { HANDLE_COLOR } from 'constants/editor';
-import React, { FC, memo } from 'react';
-import { Handle, NodeProps, NodeResizer, Position } from 'reactflow';
+import React, { FC, memo, useEffect, useState } from 'react';
+import {
+  Handle,
+  NodeProps,
+  NodeResizer,
+  Position,
+  ResizeParams,
+} from 'reactflow';
 
 const TextNode: FC<NodeProps> = ({ selected }) => {
-  const { text } = useAppProvider();
+  const [params, setParams] = useState<ResizeParams>();
+
+  useEffect(() => {
+    const collection = document.getElementsByClassName('react-flow__handle');
+    const list = Array.from(collection);
+    list.forEach((item) =>
+      item.classList.remove(
+        ...['nodrag', 'nopan', 'target', 'connectablestart', 'connectableend']
+      )
+    );
+  }, []);
 
   return (
     <>
@@ -16,41 +39,41 @@ const TextNode: FC<NodeProps> = ({ selected }) => {
           height: '8px',
           color: HANDLE_COLOR,
         }}
+        minWidth={200}
+        minHeight={60}
         color={HANDLE_COLOR}
         keepAspectRatio
         isVisible={selected}
+        onResizeEnd={(_, param) => setParams(param)}
       />
       <Handle
         type="target"
         position={Position.Left}
-        style={{ background: '#555', opacity: 0 }}
-        onConnect={(params) => console.log('handle onConnect', params)}
+        style={{ ...HANDLE_STYLE_X, ...HANDLE_LEFT_STYLE }}
+        isConnectable={false}
+      />
+      <Handle
+        type="target"
+        position={Position.Top}
+        style={{ ...HANDLE_STYLE_Y, ...HANDLE_TOP_STYLE }}
         isConnectable={false}
       />
 
-      <Editable
-        autoFocus
-        bg={text.background}
-        placeholder="Type something..."
-        height="inherit"
-        width="inherit"
-        px="8px"
-        fontSize={text.fontSize}
-        borderRadius={text.borderRadius}
-      >
-        <EditablePreview />
-        <EditableTextarea
-          autoFocus
-          _focusVisible={{ outline: 'none' }}
-          resize="none"
-        />
-      </Editable>
+      <RichTextEditor
+        width={params?.width ?? 300}
+        height={params?.height ?? 60}
+      />
 
       <Handle
         type="source"
         position={Position.Right}
-        style={{ background: '#555', opacity: 0 }}
-        onConnect={(params) => console.log('handle onConnect', params)}
+        style={{ ...HANDLE_STYLE_X, ...HANDLE_RIGHT_STYLE }}
+        isConnectable={false}
+      />
+      <Handle
+        type="source"
+        position={Position.Bottom}
+        style={{ ...HANDLE_STYLE_Y, ...HANDLE_BOTTOM_STYLE }}
         isConnectable={false}
       />
     </>

@@ -27,6 +27,7 @@ import ImageNode from 'components/CustomNodes/ImageNode';
 import { useAppProvider } from 'AppProvider';
 import EditorSidebar from 'components/Sidebar/EditorSidebar';
 import EditorControls from 'components/EditorControls';
+import { getDragHandleByNodeType } from 'utils/EditorUtils';
 
 const EditorPage = () => {
   const { background } = useAppProvider();
@@ -63,8 +64,7 @@ const EditorPage = () => {
         type,
         position,
         data: { label: `${type} node` },
-        dragHandle:
-          type === CUSTOM_NODES.EDITOR_NODE ? '.node-drag-handle' : undefined,
+        dragHandle: getDragHandleByNodeType(type),
       };
 
       setNodes((nds) => nds.concat(newNode));
