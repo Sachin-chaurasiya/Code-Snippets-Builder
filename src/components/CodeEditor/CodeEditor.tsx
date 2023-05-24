@@ -33,7 +33,6 @@ const CodeEditor = () => {
         <CodeMirror
           spellCheck={false}
           id="code-editor"
-          autoFocus
           style={{ fontSize: `${editor.fontSize}px` }}
           basicSetup={{
             lineNumbers: false,

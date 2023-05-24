@@ -28,7 +28,7 @@ const TextNode: FC<NodeProps> = ({ selected }) => {
         ...['nodrag', 'nopan', 'target', 'connectablestart', 'connectableend']
       )
     );
-  }, []);
+  }, [selected]);
 
   return (
     <>

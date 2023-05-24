@@ -112,6 +112,7 @@ const EditorPage = () => {
           ref={reactFlowWrapper}
         >
           <ReactFlow
+            nodesConnectable={false}
             nodeTypes={nodeTypes}
             onNodesChange={onNodesChange}
             onEdgesChange={onEdgesChange}
