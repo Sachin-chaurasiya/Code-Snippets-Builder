@@ -1,5 +1,7 @@
-import { uniqueId } from 'lodash';
+import { sortBy, uniqueId } from 'lodash';
 import { Node } from 'reactflow';
+import * as themes from '@uiw/codemirror-themes-all';
+import { langNames as languages } from '@uiw/codemirror-extensions-langs';
 
 export const GRADIENT_COLORS = [
   'linear-gradient(337deg, rgb(101, 78, 163), rgb(218, 152, 180))',
@@ -211,3 +213,10 @@ export const LANGUAGE_COLOR_MAP = {
 };
 
 export const CODE_EDITOR_BACKGROUND_COLOR = '#282a36';
+
+export const THEME_OPTIONS = ['dark', 'light']
+  .concat(Object.keys(themes))
+  .filter((item) => typeof themes[item as keyof typeof themes] !== 'function')
+  .filter((item) => !/^(defaultSettings)/.test(item as keyof typeof themes));
+
+export const LANGUAGE_OPTIONS = sortBy(languages);

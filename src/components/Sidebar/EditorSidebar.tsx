@@ -13,22 +13,18 @@ import {
   SimpleGrid,
   Button,
 } from '@chakra-ui/react';
-import { langNames as languages } from '@uiw/codemirror-extensions-langs';
-import * as themes from '@uiw/codemirror-themes-all';
+
 import { map, startCase, toNumber } from 'lodash';
 import {
   BORDER_RADIUS,
   FONT_SIZES,
   GRADIENT_COLORS,
+  LANGUAGE_OPTIONS,
   NAMED_COLORS,
+  THEME_OPTIONS,
 } from 'constants/editor';
 import { useAppProvider } from 'AppProvider';
 import { BiCheckCircle } from 'react-icons/bi';
-
-const themeOptions = ['dark', 'light']
-  .concat(Object.keys(themes))
-  .filter((item) => typeof themes[item as keyof typeof themes] !== 'function')
-  .filter((item) => !/^(defaultSettings)/.test(item as keyof typeof themes));
 
 const EditorSidebar: FC<BoxProps> = () => {
   const {
@@ -113,7 +109,7 @@ const EditorSidebar: FC<BoxProps> = () => {
                 })
               }
             >
-              {map(languages.sort(), (language: string) => (
+              {map(LANGUAGE_OPTIONS, (language: string) => (
                 <option key={language} value={language}>
                   {startCase(language)}
                 </option>
@@ -131,7 +127,7 @@ const EditorSidebar: FC<BoxProps> = () => {
                 })
               }
             >
-              {map(themeOptions, (name) => (
+              {map(THEME_OPTIONS, (name) => (
                 <option key={name} value={name}>
                   {startCase(name)}
                 </option>
