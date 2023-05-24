@@ -209,3 +209,5 @@ export const LANGUAGE_COLOR_MAP = {
   html: '#f16528',
   css: '#3365f1',
 };
+
+export const CODE_EDITOR_BACKGROUND_COLOR = '#282a36';

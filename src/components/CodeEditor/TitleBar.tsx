@@ -7,6 +7,7 @@ import {
   Icon,
   IconButton,
 } from '@chakra-ui/react';
+import { CODE_EDITOR_BACKGROUND_COLOR } from 'constants/editor';
 import { last } from 'lodash';
 import React, { useMemo, useState } from 'react';
 import { HiPlus } from 'react-icons/hi';
@@ -16,11 +17,7 @@ import {
   getIconColorByFileExtension,
 } from 'utils/IconUtils';
 
-const TitleBar = ({
-  backgroundColor,
-}: {
-  backgroundColor: string | number | undefined;
-}) => {
+const TitleBar = () => {
   const [showFileName, setShowFileName] = useState<boolean>(false);
   const [fileName, setFileName] = useState<string>('');
 
@@ -75,7 +72,7 @@ const TitleBar = ({
           height="40px"
           cursor="default"
           zIndex={1}
-          style={{ background: backgroundColor }}
+          style={{ background: CODE_EDITOR_BACKGROUND_COLOR }}
         >
           {FileNameIcon ? (
             <IconButton
