@@ -1,7 +1,8 @@
 <h1 align="center">Code Snippets Builder</h1>
 
 <p align="center">
-<img width="230" alt="image" src="https://github.com/Sachin-chaurasiya/Code-Snippets-Builder/assets/59080942/e7aa3133-79ac-48b3-8fd1-2e951c721512">
+<img width="228" alt="image" src="https://github.com/Sachin-chaurasiya/Code-Snippets-Builder/assets/59080942/d67adff6-dc50-4f31-9e27-14faf063f8b0">
+
 </p> 
 
 ## Build Beautiful Code Snippets
