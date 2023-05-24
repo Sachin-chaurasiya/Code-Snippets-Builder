@@ -12,7 +12,7 @@ const Loader = () => {
       justifyContent="center"
       alignItems="center"
     >
-      <BrandLogo />
+      <BrandLogo logoSize="large" />
       <Spinner size="lg" />
     </Box>
   );
