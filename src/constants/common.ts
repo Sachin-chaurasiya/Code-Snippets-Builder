@@ -39,17 +39,17 @@ export const HANDLE_STYLE_Y: CSSProperties = {
 
 export const HANDLE_LEFT_STYLE: CSSProperties = {
   left: '-8px',
-  width: '8px',
+  width: '16px',
 };
 export const HANDLE_RIGHT_STYLE: CSSProperties = {
   right: '-8px',
-  width: '8px',
+  width: '16px',
 };
 export const HANDLE_TOP_STYLE: CSSProperties = {
   top: '-8px',
-  height: '12px',
+  height: '16px',
 };
 export const HANDLE_BOTTOM_STYLE: CSSProperties = {
   bottom: '-8px',
-  height: '12px',
+  height: '16px',
 };
