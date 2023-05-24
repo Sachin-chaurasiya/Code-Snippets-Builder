@@ -4,9 +4,9 @@ import {
   EditableInput,
   EditablePreview,
   Flex,
-  Icon,
   IconButton,
 } from '@chakra-ui/react';
+import EditorTitleIcon from 'components/Icons/EditorTitleIcon';
 import { CODE_EDITOR_BACKGROUND_COLOR } from 'constants/editor';
 import { last } from 'lodash';
 import React, { useMemo, useState } from 'react';
@@ -42,21 +42,7 @@ const TitleBar = () => {
       alignItems="center"
       style={{ background: 'rgba(255, 255, 255, 0.06)' }}
     >
-      <Icon
-        display="inline-block"
-        width="55px"
-        height="auto"
-        focusable="false"
-        viewBox="0 0 420 100"
-        lineHeight="1em"
-        verticalAlign="middle"
-        color="currentcolor"
-        flexShrink={0}
-      >
-        <circle fill="#ff5f57" cx="50" cy="50" r="50"></circle>
-        <circle fill="#febc2e" cx="210" cy="50" r="50"></circle>
-        <circle fill="#28c840" cx="370" cy="50" r="50"></circle>
-      </Icon>
+      <EditorTitleIcon />
       {showFileName ? (
         <Box
           alignItems="center"

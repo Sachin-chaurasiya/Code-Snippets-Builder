@@ -1,11 +1,31 @@
 import { Flex, FlexProps, Image, Text } from '@chakra-ui/react';
-import React, { FC } from 'react';
+import React, { FC, useMemo } from 'react';
 import LogoImage from 'assets/images/logo.png';
 
-const BrandLogo: FC<FlexProps> = (props) => {
+type LogoSize = 'small' | 'medium' | 'large';
+
+interface BrandLogoProps extends FlexProps {
+  logoSize?: LogoSize;
+}
+
+const BrandLogo: FC<BrandLogoProps> = ({ logoSize = 'medium', ...rest }) => {
+  const boxSize = useMemo(() => {
+    switch (logoSize) {
+      case 'small':
+        return '64px';
+
+      case 'large':
+        return '128px';
+
+      case 'medium':
+      default:
+        return '72px';
+    }
+  }, [logoSize]);
+
   return (
-    <Flex h="20" alignItems="center" gap={2} {...props}>
-      <Image boxSize="64px" src={LogoImage} objectFit="contain" />
+    <Flex h="20" alignItems="center" gap={2} {...rest}>
+      <Image boxSize={boxSize} src={LogoImage} objectFit="contain" />
       <Text
         ml="-16px"
         mb="4px"
