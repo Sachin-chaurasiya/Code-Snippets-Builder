@@ -1,50 +1,53 @@
 import React, { useMemo, useState } from 'react';
 import './code-editor.css';
-import Editor from 'react-simple-code-editor';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import * as prismStyles from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { useAppProvider } from 'AppProvider';
-import { Box, Flex } from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
 import TitleBar from './TitleBar';
+import CodeMirror, { ReactCodeMirrorProps } from '@uiw/react-codemirror';
+import { langs } from '@uiw/codemirror-extensions-langs';
+import * as themes from '@uiw/codemirror-themes-all';
+import { CODE_EDITOR_BACKGROUND_COLOR } from 'constants/editor';
 
 const CodeEditor = () => {
-  const [code, setCode] = useState<string>('// put your code here');
-  const {
-    editor: { theme, fontSize, language },
-  } = useAppProvider();
+  const [code, setCode] = useState<string>('// Put your code snippet here');
+  const { editor } = useAppProvider();
 
-  const selectedStyle = useMemo(
-    () => prismStyles[theme as keyof typeof prismStyles],
-    [theme]
+  const theme = useMemo(
+    () => themes[editor.theme as keyof typeof themes],
+    [editor.theme]
   );
 
-  const backgroundColor = useMemo(
-    () => selectedStyle['pre[class*="language-"]'].background,
-    [selectedStyle]
+  const extensions = useMemo(
+    () => [langs[editor.language as keyof typeof langs]()],
+    [editor.language]
   );
 
   return (
     <>
-      <Box className="window" style={{ background: `${backgroundColor}` }}>
-        <TitleBar backgroundColor={backgroundColor} />
-        <Flex paddingY="21px" shadow="2xl">
-          <Box />
-          <Editor
-            autoFocus={true}
-            id="code-editor"
-            textareaId="code-editor-textarea"
-            value={code}
-            onValueChange={(code) => setCode(code)}
-            highlight={(code) => (
-              <SyntaxHighlighter language={language} style={selectedStyle}>
-                {code}
-              </SyntaxHighlighter>
-            )}
-            style={{
-              fontSize,
-            }}
-          />
-        </Flex>
+      <Box
+        className="window"
+        style={{ background: `${CODE_EDITOR_BACKGROUND_COLOR}` }}
+      >
+        <TitleBar />
+
+        <CodeMirror
+          spellCheck={false}
+          id="code-editor"
+          autoFocus
+          style={{ fontSize: `${editor.fontSize}px` }}
+          basicSetup={{
+            lineNumbers: false,
+            foldGutter: false,
+            autocompletion: false,
+            highlightActiveLine: false,
+            tabSize: 4,
+          }}
+          value={code}
+          height="100%"
+          theme={theme as ReactCodeMirrorProps['theme']}
+          extensions={extensions}
+          onChange={(code) => setCode(code)}
+        />
       </Box>
     </>
   );

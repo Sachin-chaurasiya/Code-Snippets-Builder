@@ -13,14 +13,15 @@ import {
   SimpleGrid,
   Button,
 } from '@chakra-ui/react';
-import * as prismStyles from 'react-syntax-highlighter/dist/esm/styles/prism';
-import languages from 'react-syntax-highlighter/dist/esm/languages/prism/supported-languages';
+
 import { map, startCase, toNumber } from 'lodash';
 import {
   BORDER_RADIUS,
   FONT_SIZES,
   GRADIENT_COLORS,
+  LANGUAGE_OPTIONS,
   NAMED_COLORS,
+  THEME_OPTIONS,
 } from 'constants/editor';
 import { useAppProvider } from 'AppProvider';
 import { BiCheckCircle } from 'react-icons/bi';
@@ -96,7 +97,7 @@ const EditorSidebar: FC<BoxProps> = () => {
           Editor
         </Text>
         <Divider />
-        <VStack alignItems="flex-start">
+        <VStack w="100%" alignItems="flex-start">
           <FormControl>
             <FormLabel>Language</FormLabel>
             <Select
@@ -108,7 +109,7 @@ const EditorSidebar: FC<BoxProps> = () => {
                 })
               }
             >
-              {map(languages, (language: string) => (
+              {map(LANGUAGE_OPTIONS, (language: string) => (
                 <option key={language} value={language}>
                   {startCase(language)}
                 </option>
@@ -126,7 +127,7 @@ const EditorSidebar: FC<BoxProps> = () => {
                 })
               }
             >
-              {map(prismStyles, (_, name) => (
+              {map(THEME_OPTIONS, (name) => (
                 <option key={name} value={name}>
                   {startCase(name)}
                 </option>
