@@ -53,3 +53,6 @@ export const HANDLE_BOTTOM_STYLE: CSSProperties = {
   bottom: '-8px',
   height: '16px',
 };
+
+export const BORDER_RADIUS_MEDIUM = '4px';
+export const BORDER_RADIUS_LARGE = '6px';

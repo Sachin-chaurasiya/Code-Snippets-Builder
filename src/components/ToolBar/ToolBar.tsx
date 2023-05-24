@@ -13,6 +13,7 @@ import { RxDragHandleDots2 } from 'react-icons/rx';
 import { CUSTOM_NODES } from 'constants/editor';
 import ExportButton from 'components/ExportButton/ExportButton';
 import { toLower } from 'lodash';
+import { BORDER_RADIUS_MEDIUM } from 'constants/common';
 
 interface ToolBarItemsProps {
   label: string;
@@ -50,7 +51,11 @@ const ToolBar = () => {
     >
       <ButtonGroup>
         {ToolBarItems.map(({ label, icon, nodeType }) => (
-          <Tooltip key={label} label={`Add ${label}`} borderRadius="4px">
+          <Tooltip
+            key={label}
+            label={`Add ${label}`}
+            borderRadius={BORDER_RADIUS_MEDIUM}
+          >
             <Button
               shadow="md"
               aria-label={`drag and drop ${toLower(label)}`}

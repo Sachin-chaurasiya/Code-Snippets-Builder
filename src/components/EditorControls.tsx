@@ -16,6 +16,7 @@ import {
 } from '@chakra-ui/react';
 import PlusIcon from './Icons/PlusIcon';
 import MinusIcon from './Icons/MinusIcon';
+import { BORDER_RADIUS_LARGE, BORDER_RADIUS_MEDIUM } from 'constants/common';
 
 const selector = (s: ReactFlowState) => ({
   isInteractive: s.nodesDraggable || s.nodesConnectable || s.elementsSelectable,
@@ -72,7 +73,7 @@ const EditorControls = () => {
   return (
     <Box as={Flex} mb={4} justifyContent="space-between">
       <Flex gap={2} flex={1}>
-        <Tooltip label="Fit view">
+        <Tooltip label="Fit view" borderRadius={BORDER_RADIUS_MEDIUM}>
           <Button
             shadow="md"
             _hover={{ background: 'white' }}
@@ -84,7 +85,10 @@ const EditorControls = () => {
           </Button>
         </Tooltip>
 
-        <Tooltip label="Toggle interactivity">
+        <Tooltip
+          label="Toggle interactivity"
+          borderRadius={BORDER_RADIUS_MEDIUM}
+        >
           <Button
             shadow="md"
             _hover={{ background: 'white' }}
@@ -100,10 +104,10 @@ const EditorControls = () => {
         bg="white"
         justifyContent="space-between"
         flex={0.3}
-        borderRadius="6px"
+        borderRadius={BORDER_RADIUS_LARGE}
         shadow="md"
       >
-        <Tooltip label="Zoom out">
+        <Tooltip label="Zoom out" borderRadius={BORDER_RADIUS_MEDIUM}>
           <Button
             _hover={{ background: 'transparent' }}
             onClick={onZoomOutHandler}
@@ -126,7 +130,7 @@ const EditorControls = () => {
           </SliderTrack>
           <SliderThumb />
         </Slider>
-        <Tooltip label="Zoom in">
+        <Tooltip label="Zoom in" borderRadius={BORDER_RADIUS_MEDIUM}>
           <Button
             _hover={{ background: 'transparent' }}
             onClick={onZoomInHandler}
