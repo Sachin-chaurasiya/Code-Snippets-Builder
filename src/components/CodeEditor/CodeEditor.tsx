@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import './code-editor.css';
 import { useAppProvider } from 'AppProvider';
 import { Box } from '@chakra-ui/react';
@@ -21,6 +21,13 @@ const CodeEditor = () => {
     () => [langs[editor.language as keyof typeof langs]()],
     [editor.language]
   );
+
+  useEffect(() => {
+    const element = document.querySelector('[contenteditable="true"]');
+    element?.setAttribute('data-gramm', 'false');
+    element?.setAttribute('data-gramm_editor', 'false');
+    element?.setAttribute('data-enable-grammarly', 'false');
+  }, []);
 
   return (
     <>
