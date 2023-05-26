@@ -124,7 +124,7 @@ const ExportButton = () => {
           Export
         </Button>
       </MenuButton>
-      <MenuList>
+      <MenuList zIndex={5}>
         <MenuItem icon={<BsImage />} onClick={handlePngExport}>
           Save PNG
         </MenuItem>
