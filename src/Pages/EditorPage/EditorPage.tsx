@@ -10,6 +10,7 @@ import React, {
 import ReactFlow, {
   Connection,
   Node,
+  Panel,
   ReactFlowInstance,
   XYPosition,
   addEdge,
@@ -28,6 +29,7 @@ import { useAppProvider } from 'AppProvider';
 import EditorSidebar from 'components/Sidebar/EditorSidebar';
 import EditorControls from 'components/EditorControls';
 import { getDragHandleByNodeType } from 'utils/EditorUtils';
+import BrandLogo from 'components/BrandLogo';
 
 const EditorPage = () => {
   const { background } = useAppProvider();
@@ -127,7 +129,16 @@ const EditorPage = () => {
             onInit={setReactFlowInstance}
             onDrop={onDrop}
             onDragOver={onDragOver}
-          />
+          >
+            <Panel position="bottom-right">
+              <BrandLogo
+                textColor="white"
+                logoType="light"
+                textBackgroundColor="transparent"
+                backgroundClip="inherit"
+              />
+            </Panel>
+          </ReactFlow>
         </Box>
       </Box>
       <EditorSidebar />
