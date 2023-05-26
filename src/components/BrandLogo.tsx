@@ -1,14 +1,27 @@
-import { Flex, FlexProps, Image, Text } from '@chakra-ui/react';
+import { Flex, FlexProps, Image, Text, TextProps } from '@chakra-ui/react';
 import React, { FC, useMemo } from 'react';
 import LogoImage from 'assets/images/logo.png';
+import LightLogoImage from 'assets/images/light-logo.png';
 
 type LogoSize = 'small' | 'medium' | 'large';
+type LogoType = 'light' | 'dark';
 
 interface BrandLogoProps extends FlexProps {
   logoSize?: LogoSize;
+  logoType?: LogoType;
+  textColor?: TextProps['color'];
+  textBackgroundColor?: TextProps['backgroundColor'];
+  backgroundClip?: TextProps['backgroundClip'];
 }
 
-const BrandLogo: FC<BrandLogoProps> = ({ logoSize = 'medium', ...rest }) => {
+const BrandLogo: FC<BrandLogoProps> = ({
+  logoSize = 'medium',
+  logoType = 'dark',
+  textColor,
+  textBackgroundColor,
+  backgroundClip,
+  ...rest
+}) => {
   const boxSize = useMemo(() => {
     switch (logoSize) {
       case 'small':
@@ -25,15 +38,22 @@ const BrandLogo: FC<BrandLogoProps> = ({ logoSize = 'medium', ...rest }) => {
 
   return (
     <Flex h="20" alignItems="center" gap={2} {...rest}>
-      <Image boxSize={boxSize} src={LogoImage} objectFit="contain" />
+      <Image
+        boxSize={boxSize}
+        src={logoType === 'dark' ? LogoImage : LightLogoImage}
+        objectFit="contain"
+      />
       <Text
         ml="-16px"
         mb="4px"
         fontSize="xl"
         fontWeight="bold"
-        background="linear-gradient(270deg, rgb(20, 30, 48), rgb(36, 59, 85))"
-        color="transparent"
-        backgroundClip="text"
+        background={
+          textBackgroundColor ??
+          'linear-gradient(270deg, rgb(20, 30, 48), rgb(36, 59, 85))'
+        }
+        color={textColor ?? 'transparent'}
+        backgroundClip={backgroundClip ?? 'text'}
       >
         <span>Snippet</span>
         <span>Builder</span>
