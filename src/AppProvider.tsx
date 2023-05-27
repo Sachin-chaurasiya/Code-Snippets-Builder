@@ -25,6 +25,9 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
   const [imageContextData, setImageContextData] = useState<ImageContextData>(
     INITIAL_CONTEXT_DATA.text
   );
+  const [hideWaterMark, setIsWaterMarkVisible] = useState<boolean>(
+    INITIAL_CONTEXT_DATA.hideWaterMark
+  );
   const [profileContextData, setProfileContextData] =
     useState<ProfileContextData>(INITIAL_CONTEXT_DATA.profile);
   const [background, setBackground] = useState<string>(DEFAULT_EDITOR_BG_COLOR);
@@ -40,6 +43,8 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
 
   const handleUpdateBackground = (updatedData: string) =>
     setBackground(updatedData);
+  const handleUpdateWaterMark = (updatedData: boolean) =>
+    setIsWaterMarkVisible(updatedData);
 
   return (
     <AppContext.Provider
@@ -48,12 +53,14 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
         text: textContextData,
         image: imageContextData,
         profile: profileContextData,
+        hideWaterMark,
         background,
         onUpdateEditorData: handleUpdateEditorData,
         onUpdateTextData: handleUpdateTextData,
         onUpdateImageData: handleUpdateImageData,
         onUpdateBackground: handleUpdateBackground,
         onUpdateProfileData: handleUpdateProfileData,
+        onUpdateWaterMark: handleUpdateWaterMark,
       }}
     >
       {isMobileScreen ? <MobileViewMessage /> : children}

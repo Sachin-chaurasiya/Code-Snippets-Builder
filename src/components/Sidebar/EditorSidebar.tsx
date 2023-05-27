@@ -10,6 +10,8 @@ import {
   FormControl,
   SimpleGrid,
   Button,
+  Switch,
+  Divider,
 } from '@chakra-ui/react';
 
 import { GRADIENT_COLORS } from 'constants/editor';
@@ -21,7 +23,8 @@ import ImageConfig from 'components/Configs/ImageConfig';
 import ProfileConfig from 'components/Configs/ProfileConfig';
 
 const EditorSidebar: FC<BoxProps> = () => {
-  const { background, onUpdateBackground } = useAppProvider();
+  const { background, onUpdateBackground, hideWaterMark, onUpdateWaterMark } =
+    useAppProvider();
 
   return (
     <Box
@@ -45,10 +48,22 @@ const EditorSidebar: FC<BoxProps> = () => {
       </Flex>
 
       <Box alignItems="flex-start" as={VStack} mb={4}>
-        <FormControl>
-          <FormLabel fontSize="lg" fontWeight="bold">
-            Background
+        <Text fontSize="lg" fontWeight="bold">
+          Background
+        </Text>
+        <Divider />
+        <FormControl display="flex" alignItems="center">
+          <FormLabel htmlFor="water-mark" mb="0">
+            Hide watermark
           </FormLabel>
+          <Switch
+            id="water-mark"
+            isChecked={hideWaterMark}
+            onChange={(e) => onUpdateWaterMark(e.target.checked)}
+          />
+        </FormControl>
+        <FormControl>
+          <FormLabel>Color</FormLabel>
           <SimpleGrid columns={5} gap={4}>
             {GRADIENT_COLORS.map((c) => (
               <Button

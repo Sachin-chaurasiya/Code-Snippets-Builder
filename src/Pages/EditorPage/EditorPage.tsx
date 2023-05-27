@@ -33,7 +33,7 @@ import BrandLogo from 'components/BrandLogo/BrandLogo';
 import ProfileInfo from 'components/ProfileInfo';
 
 const EditorPage = () => {
-  const { background } = useAppProvider();
+  const { background, hideWaterMark, profile } = useAppProvider();
   const [nodes, setNodes, onNodesChange] = useNodesState(INITIAL_NODES);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
 
@@ -131,22 +131,26 @@ const EditorPage = () => {
             onDrop={onDrop}
             onDragOver={onDragOver}
           >
-            <Panel position="bottom-right">
-              <BrandLogo
-                gap={4}
-                h="auto"
-                textColor="white"
-                logoType="light"
-                textBackgroundColor="transparent"
-                backgroundClip="inherit"
-                logoSize="x-small"
-                textFontSize="md"
-                textFontWeight="normal"
-              />
-            </Panel>
-            <Panel position="bottom-left">
-              <ProfileInfo />
-            </Panel>
+            {!hideWaterMark ? (
+              <Panel position="bottom-right">
+                <BrandLogo
+                  gap={4}
+                  h="auto"
+                  textColor="white"
+                  logoType="light"
+                  textBackgroundColor="transparent"
+                  backgroundClip="inherit"
+                  logoSize="x-small"
+                  textFontSize="md"
+                  textFontWeight="normal"
+                />
+              </Panel>
+            ) : null}
+            {profile.isVisible ? (
+              <Panel position="bottom-left">
+                <ProfileInfo />
+              </Panel>
+            ) : null}
           </ReactFlow>
         </Box>
       </Box>
