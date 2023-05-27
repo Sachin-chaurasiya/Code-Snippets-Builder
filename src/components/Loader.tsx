@@ -1,6 +1,6 @@
 import { Box, Flex, Spinner } from '@chakra-ui/react';
 import React from 'react';
-import BrandLogo from './BrandLogo';
+import BrandLogo from './BrandLogo/BrandLogo';
 
 const Loader = () => {
   return (

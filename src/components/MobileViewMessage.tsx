@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Flex, Text } from '@chakra-ui/react';
-import BrandLogo from './BrandLogo';
+import BrandLogo from './BrandLogo/BrandLogo';
 
 const MobileViewMessage = () => {
   return (

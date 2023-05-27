@@ -7,29 +7,12 @@ import {
   Tooltip,
 } from '@chakra-ui/react';
 import React from 'react';
-import { IconType } from 'react-icons';
-import { BiCodeBlock, BiImage, BiText } from 'react-icons/bi';
+
 import { RxDragHandleDots2 } from 'react-icons/rx';
-import { CUSTOM_NODES } from 'constants/editor';
 import ExportButton from 'components/ExportButton/ExportButton';
 import { toLower } from 'lodash';
 import { BORDER_RADIUS_MEDIUM } from 'constants/common';
-
-interface ToolBarItemsProps {
-  label: string;
-  icon: IconType;
-  nodeType: string;
-}
-
-export const ToolBarItems: ToolBarItemsProps[] = [
-  {
-    label: 'Editor',
-    icon: BiCodeBlock,
-    nodeType: CUSTOM_NODES.EDITOR_NODE,
-  },
-  { label: 'Text', icon: BiText, nodeType: CUSTOM_NODES.TEXT_NODE },
-  { label: 'Image', icon: BiImage, nodeType: CUSTOM_NODES.IMAGE_NODE },
-];
+import { TOOL_BAR_ITEMS } from 'constants/editor';
 
 const ToolBar = () => {
   const onDragStart = (event: React.DragEvent, nodeType: string) => {
@@ -50,7 +33,7 @@ const ToolBar = () => {
       shadow="md"
     >
       <ButtonGroup>
-        {ToolBarItems.map(({ label, icon, nodeType }) => (
+        {TOOL_BAR_ITEMS.map(({ label, icon, nodeType }) => (
           <Tooltip
             key={label}
             label={`Add ${label}`}

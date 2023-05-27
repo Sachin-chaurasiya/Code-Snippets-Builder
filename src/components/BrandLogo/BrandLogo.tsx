@@ -1,18 +1,8 @@
-import { Flex, FlexProps, Image, Text, TextProps } from '@chakra-ui/react';
+import { Flex, Image, Text } from '@chakra-ui/react';
 import React, { FC, useMemo } from 'react';
 import LogoImage from 'assets/images/logo.png';
 import LightLogoImage from 'assets/images/light-logo.png';
-
-type LogoSize = 'small' | 'medium' | 'large';
-type LogoType = 'light' | 'dark';
-
-interface BrandLogoProps extends FlexProps {
-  logoSize?: LogoSize;
-  logoType?: LogoType;
-  textColor?: TextProps['color'];
-  textBackgroundColor?: TextProps['backgroundColor'];
-  backgroundClip?: TextProps['backgroundClip'];
-}
+import { BrandLogoProps } from './BrandLogo.interface';
 
 const BrandLogo: FC<BrandLogoProps> = ({
   logoSize = 'medium',

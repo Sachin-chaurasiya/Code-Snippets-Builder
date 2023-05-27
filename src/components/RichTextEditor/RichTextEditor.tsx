@@ -4,13 +4,9 @@ import React, { FC, useEffect, useRef, useState } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.bubble.css';
 import './rich-text-editor.css';
+import { RichtextEditorProps } from './RichTextEditor.interface';
 
-interface Props {
-  width: number;
-  height: number;
-}
-
-const RichTextEditor: FC<Props> = ({ width, height }) => {
+const RichTextEditor: FC<RichtextEditorProps> = ({ width, height }) => {
   const { text } = useAppProvider();
 
   const editorRef = useRef<ReactQuill>(null);

@@ -14,6 +14,7 @@ import FirebaseImage from 'assets/dev-icons/firebase.svg';
 import VScodeImage from 'assets/dev-icons/vscode.svg';
 import WebpackImage from 'assets/dev-icons/webpack.svg';
 import TailwindImage from 'assets/dev-icons/tailwindcss.svg';
+import { ExportImageConfig } from 'components/ExportButton/ExportButton.interface';
 
 export const DEV_IMAGES = {
   TYPESCRIPT: TypeScriptImage,
@@ -32,4 +33,21 @@ export const DEV_IMAGES = {
   VSCODE: VScodeImage,
   WEBPACK: WebpackImage,
   TAILWIND_CSS: TailwindImage,
+};
+
+export const EXPORT_IMAGE_CONFIG: ExportImageConfig = {
+  node: document.querySelector('.react-flow') as HTMLElement,
+  options: {
+    filter: (node) => {
+      // we don't want to add the minimap and the controls to the image
+      if (
+        node?.classList?.contains('react-flow__minimap') ||
+        node?.classList?.contains('react-flow__controls')
+      ) {
+        return false;
+      }
+
+      return true;
+    },
+  },
 };

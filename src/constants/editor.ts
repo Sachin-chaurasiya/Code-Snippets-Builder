@@ -2,6 +2,8 @@ import { sortBy, uniqueId } from 'lodash';
 import { Node } from 'reactflow';
 import * as themes from '@uiw/codemirror-themes-all';
 import { langNames as languages } from '@uiw/codemirror-extensions-langs';
+import { ToolBarItemsProps } from 'components/ToolBar/ToolBar.interface';
+import { BiCodeBlock, BiImage, BiText } from 'react-icons/bi';
 
 export const GRADIENT_COLORS = [
   'linear-gradient(337deg, rgb(101, 78, 163), rgb(218, 152, 180))',
@@ -220,3 +222,13 @@ export const THEME_OPTIONS = ['dark', 'light']
   .filter((item) => !/^(defaultSettings)/.test(item as keyof typeof themes));
 
 export const LANGUAGE_OPTIONS = sortBy(languages);
+
+export const TOOL_BAR_ITEMS: ToolBarItemsProps[] = [
+  {
+    label: 'Editor',
+    icon: BiCodeBlock,
+    nodeType: CUSTOM_NODES.EDITOR_NODE,
+  },
+  { label: 'Text', icon: BiText, nodeType: CUSTOM_NODES.TEXT_NODE },
+  { label: 'Image', icon: BiImage, nodeType: CUSTOM_NODES.IMAGE_NODE },
+];

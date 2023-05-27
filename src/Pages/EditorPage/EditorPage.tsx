@@ -29,7 +29,7 @@ import { useAppProvider } from 'AppProvider';
 import EditorSidebar from 'components/Sidebar/EditorSidebar';
 import EditorControls from 'components/EditorControls';
 import { getDragHandleByNodeType } from 'utils/EditorUtils';
-import BrandLogo from 'components/BrandLogo';
+import BrandLogo from 'components/BrandLogo/BrandLogo';
 
 const EditorPage = () => {
   const { background } = useAppProvider();

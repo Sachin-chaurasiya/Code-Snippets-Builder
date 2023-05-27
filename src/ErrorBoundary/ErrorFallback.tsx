@@ -1,5 +1,5 @@
 import { Box, Button, Flex, Text } from '@chakra-ui/react';
-import BrandLogo from 'components/BrandLogo';
+import BrandLogo from 'components/BrandLogo/BrandLogo';
 import React from 'react';
 import { FallbackProps } from 'react-error-boundary';
 

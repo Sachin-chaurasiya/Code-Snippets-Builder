@@ -1,13 +1,7 @@
-import { Flex, FlexProps, Icon, Link } from '@chakra-ui/react';
-import { ReactNode, useMemo } from 'react';
-import { IconType } from 'react-icons';
+import { Flex, Icon, Link } from '@chakra-ui/react';
+import { useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
-
-interface NavItemProps extends FlexProps {
-  icon: IconType;
-  children: ReactNode;
-  path: string;
-}
+import { NavItemProps } from './Sidebar.interface';
 
 const NavItem = ({ icon, children, path, ...rest }: NavItemProps) => {
   const location = useLocation();

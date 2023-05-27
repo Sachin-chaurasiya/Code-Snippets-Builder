@@ -1,23 +1,11 @@
 import React, { FC } from 'react';
 import { Box, useColorModeValue, BoxProps } from '@chakra-ui/react';
-import { FiHome, FiEdit } from 'react-icons/fi';
-import { IconType } from 'react-icons';
 import NavItem from './NavItem';
 import { ROUTES } from 'constants/common';
 
-import BrandLogo from 'components/BrandLogo';
+import BrandLogo from 'components/BrandLogo/BrandLogo';
 import { useNavigate } from 'react-router-dom';
-
-interface LinkItemProps {
-  name: string;
-  icon: IconType;
-  path: string;
-}
-
-const LinkItems: Array<LinkItemProps> = [
-  { name: 'Home', icon: FiHome, path: ROUTES.HOME },
-  { name: 'Editor', icon: FiEdit, path: ROUTES.EDITOR },
-];
+import { LINK_ITEMS } from 'constants/sidebar';
 
 const LeftSidebar: FC<BoxProps> = () => {
   const navigate = useNavigate();
@@ -34,7 +22,7 @@ const LeftSidebar: FC<BoxProps> = () => {
       shadow="md"
     >
       <BrandLogo ml={2} onClick={handleNavigateHome} cursor="pointer" />
-      {LinkItems.map((link) => (
+      {LINK_ITEMS.map((link) => (
         <NavItem path={link.path} key={link.name} icon={link.icon}>
           {link.name}
         </NavItem>

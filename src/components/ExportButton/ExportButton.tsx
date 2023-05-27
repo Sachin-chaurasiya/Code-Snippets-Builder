@@ -8,15 +8,10 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import { toBlob, toJpeg, toPng, toSvg } from 'html-to-image';
-import { Options } from 'html-to-image/lib/types';
 import React, { useState } from 'react';
 import { BiClipboard, BiExport } from 'react-icons/bi';
 import { BsImage } from 'react-icons/bs';
-
-interface Config {
-  node: HTMLElement;
-  options?: Options;
-}
+import { EXPORT_IMAGE_CONFIG } from 'constants/image';
 
 const ExportButton = () => {
   const toast = useToast();
@@ -30,27 +25,13 @@ const ExportButton = () => {
     a.click();
   };
 
-  const configuration: Config = {
-    node: document.querySelector('.react-flow') as HTMLElement,
-    options: {
-      filter: (node) => {
-        // we don't want to add the minimap and the controls to the image
-        if (
-          node?.classList?.contains('react-flow__minimap') ||
-          node?.classList?.contains('react-flow__controls')
-        ) {
-          return false;
-        }
-
-        return true;
-      },
-    },
-  };
-
   const handlePngExport = async () => {
     try {
       setIsDownLoading(true);
-      const url = await toPng(configuration.node, configuration.options);
+      const url = await toPng(
+        EXPORT_IMAGE_CONFIG.node,
+        EXPORT_IMAGE_CONFIG.options
+      );
       downloadImage(url, 'png');
     } catch (error) {
       // handle error
@@ -61,7 +42,10 @@ const ExportButton = () => {
   const handleJpegExport = async () => {
     try {
       setIsDownLoading(true);
-      const url = await toJpeg(configuration.node, configuration.options);
+      const url = await toJpeg(
+        EXPORT_IMAGE_CONFIG.node,
+        EXPORT_IMAGE_CONFIG.options
+      );
       downloadImage(url, 'jpeg');
     } catch (error) {
       // handle error
@@ -72,7 +56,10 @@ const ExportButton = () => {
   const handleSvgExport = async () => {
     try {
       setIsDownLoading(true);
-      const url = await toSvg(configuration.node, configuration.options);
+      const url = await toSvg(
+        EXPORT_IMAGE_CONFIG.node,
+        EXPORT_IMAGE_CONFIG.options
+      );
       downloadImage(url, 'svg');
     } catch (error) {
       // handle error
@@ -83,7 +70,10 @@ const ExportButton = () => {
   const handleClipboardExport = async () => {
     try {
       setIsDownLoading(true);
-      const blob = await toBlob(configuration.node, configuration.options);
+      const blob = await toBlob(
+        EXPORT_IMAGE_CONFIG.node,
+        EXPORT_IMAGE_CONFIG.options
+      );
       if (blob) {
         await navigator.clipboard.write([
           new ClipboardItem({
