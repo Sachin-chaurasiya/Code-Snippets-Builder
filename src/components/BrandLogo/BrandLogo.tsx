@@ -10,12 +10,17 @@ const BrandLogo: FC<BrandLogoProps> = ({
   textColor,
   textBackgroundColor,
   backgroundClip,
+  textFontSize,
+  textFontWeight,
   ...rest
 }) => {
   const boxSize = useMemo(() => {
     switch (logoSize) {
       case 'small':
         return '64px';
+
+      case 'x-small':
+        return '40px';
 
       case 'large':
         return '128px';
@@ -36,8 +41,8 @@ const BrandLogo: FC<BrandLogoProps> = ({
       <Text
         ml="-16px"
         mb="4px"
-        fontSize="xl"
-        fontWeight="bold"
+        fontSize={textFontSize ?? 'xl'}
+        fontWeight={textFontWeight ?? 'bold'}
         background={
           textBackgroundColor ??
           'linear-gradient(270deg, rgb(20, 30, 48), rgb(36, 59, 85))'

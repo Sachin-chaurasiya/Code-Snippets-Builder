@@ -1,6 +1,6 @@
 import { FlexProps, TextProps } from '@chakra-ui/react';
 
-export type LogoSize = 'small' | 'medium' | 'large';
+export type LogoSize = 'small' | 'medium' | 'large' | 'x-small';
 export type LogoType = 'light' | 'dark';
 
 export interface BrandLogoProps extends FlexProps {
@@ -9,4 +9,6 @@ export interface BrandLogoProps extends FlexProps {
   textColor?: TextProps['color'];
   textBackgroundColor?: TextProps['backgroundColor'];
   backgroundClip?: TextProps['backgroundClip'];
+  textFontSize?: TextProps['fontSize'];
+  textFontWeight?: TextProps['fontWeight'];
 }

@@ -5,38 +5,23 @@ import {
   useColorModeValue,
   Text,
   BoxProps,
-  Select,
   VStack,
   FormLabel,
   FormControl,
-  Divider,
   SimpleGrid,
   Button,
 } from '@chakra-ui/react';
 
-import { map, startCase, toNumber } from 'lodash';
-import {
-  BORDER_RADIUS,
-  FONT_SIZES,
-  GRADIENT_COLORS,
-  LANGUAGE_OPTIONS,
-  NAMED_COLORS,
-  THEME_OPTIONS,
-} from 'constants/editor';
+import { GRADIENT_COLORS } from 'constants/editor';
 import { useAppProvider } from 'AppProvider';
 import { BiCheckCircle } from 'react-icons/bi';
+import EditorConfig from 'components/Configs/EditorConfig';
+import TextConfig from 'components/Configs/TextConfig';
+import ImageConfig from 'components/Configs/ImageConfig';
+import ProfileConfig from 'components/Configs/ProfileConfig';
 
 const EditorSidebar: FC<BoxProps> = () => {
-  const {
-    editor,
-    text,
-    image,
-    background,
-    onUpdateEditorData,
-    onUpdateTextData,
-    onUpdateImageData,
-    onUpdateBackground,
-  } = useAppProvider();
+  const { background, onUpdateBackground } = useAppProvider();
 
   return (
     <Box
@@ -92,158 +77,10 @@ const EditorSidebar: FC<BoxProps> = () => {
         </FormControl>
       </Box>
 
-      <Box alignItems="flex-start" as={VStack} mb={4}>
-        <Text fontSize="lg" fontWeight="bold">
-          Editor
-        </Text>
-        <Divider />
-        <VStack w="100%" alignItems="flex-start">
-          <FormControl>
-            <FormLabel>Language</FormLabel>
-            <Select
-              value={editor.language}
-              onChange={(e) =>
-                onUpdateEditorData({
-                  ...editor,
-                  language: e.target.value,
-                })
-              }
-            >
-              {map(LANGUAGE_OPTIONS, (language: string) => (
-                <option key={language} value={language}>
-                  {startCase(language)}
-                </option>
-              ))}
-            </Select>
-          </FormControl>
-          <FormControl>
-            <FormLabel>Theme</FormLabel>
-            <Select
-              value={editor.theme}
-              onChange={(e) =>
-                onUpdateEditorData({
-                  ...editor,
-                  theme: e.target.value,
-                })
-              }
-            >
-              {map(THEME_OPTIONS, (name) => (
-                <option key={name} value={name}>
-                  {startCase(name)}
-                </option>
-              ))}
-            </Select>
-          </FormControl>
-
-          <FormControl>
-            <FormLabel>Font Size</FormLabel>
-            <Select
-              value={editor.fontSize}
-              onChange={(e) =>
-                onUpdateEditorData({
-                  ...editor,
-                  fontSize: toNumber(e.target.value),
-                })
-              }
-            >
-              {map(FONT_SIZES, (size) => (
-                <option key={size} value={size}>
-                  {`${size}px`}
-                </option>
-              ))}
-            </Select>
-          </FormControl>
-        </VStack>
-      </Box>
-
-      <Box alignItems="flex-start" as={VStack} mb={4}>
-        <Text fontSize="lg" fontWeight="bold">
-          Text
-        </Text>
-        <Divider />
-        <VStack w="100%" alignItems="flex-start">
-          <FormControl>
-            <FormLabel>Background Color</FormLabel>
-            <Select
-              value={text.background}
-              onChange={(e) =>
-                onUpdateTextData({
-                  ...text,
-                  background: e.target.value,
-                })
-              }
-            >
-              {map(NAMED_COLORS, (color) => (
-                <option key={color} value={color}>
-                  {startCase(color)}
-                </option>
-              ))}
-            </Select>
-          </FormControl>
-          <FormControl>
-            <FormLabel>Font Size</FormLabel>
-            <Select
-              value={text.fontSize}
-              onChange={(e) =>
-                onUpdateTextData({
-                  ...text,
-                  fontSize: toNumber(e.target.value),
-                })
-              }
-            >
-              {map(FONT_SIZES, (size) => (
-                <option key={size} value={size}>
-                  {`${size}px`}
-                </option>
-              ))}
-            </Select>
-          </FormControl>
-          <FormControl>
-            <FormLabel>Border Radius</FormLabel>
-            <Select
-              value={text.borderRadius}
-              onChange={(e) =>
-                onUpdateTextData({
-                  ...text,
-                  borderRadius: e.target.value,
-                })
-              }
-            >
-              {map(BORDER_RADIUS, (size) => (
-                <option key={size} value={`${size}px`}>
-                  {`${size}px`}
-                </option>
-              ))}
-            </Select>
-          </FormControl>
-        </VStack>
-      </Box>
-      <Box alignItems="flex-start" as={VStack} mb={4}>
-        <Text fontSize="lg" fontWeight="bold">
-          Image
-        </Text>
-        <Divider />
-        <VStack w="100%" alignItems="flex-start">
-          <FormControl>
-            <FormLabel>Border Radius</FormLabel>
-            <Select
-              value={image.borderRadius}
-              onChange={(e) =>
-                onUpdateImageData({
-                  ...image,
-                  borderRadius: e.target.value,
-                })
-              }
-            >
-              {map(BORDER_RADIUS, (size) => (
-                <option key={size} value={`${size}px`}>
-                  {`${size}px`}
-                </option>
-              ))}
-            </Select>
-          </FormControl>
-        </VStack>
-      </Box>
+      <EditorConfig />
+      <TextConfig />
+      <ImageConfig />
+      <ProfileConfig />
     </Box>
   );
 };
