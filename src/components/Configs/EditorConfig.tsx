@@ -9,6 +9,7 @@ import {
 } from '@chakra-ui/react';
 import { useAppProvider } from 'AppProvider';
 import { FONT_SIZES, LANGUAGE_OPTIONS, THEME_OPTIONS } from 'constants/editor';
+import { COMMON_TEXT_PROPS } from 'constants/text';
 import { map, startCase, toNumber } from 'lodash';
 import React from 'react';
 
@@ -17,7 +18,7 @@ const EditorConfig = () => {
 
   return (
     <Box alignItems="flex-start" as={VStack} mb={4}>
-      <Text fontSize="lg" fontWeight="bold">
+      <Text fontSize="lg" fontWeight="bold" {...COMMON_TEXT_PROPS}>
         Editor
       </Text>
       <Divider />

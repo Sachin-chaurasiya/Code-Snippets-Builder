@@ -15,6 +15,7 @@ import { BiCustomize } from 'react-icons/bi';
 import { DiTerminal } from 'react-icons/di';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from 'constants/common';
+import { COMMON_TEXT_PROPS } from 'constants/text';
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -26,13 +27,7 @@ const LandingPage = () => {
       <Box py={16}>
         <Flex direction={['column', 'column', 'row']} justify="center">
           <Box flex="1" pr={[0, 0, 8]} pl={[0, 0, 16]}>
-            <Heading
-              size="xl"
-              mb={4}
-              background="linear-gradient(270deg, rgb(20, 30, 48), rgb(36, 59, 85))"
-              color="transparent"
-              backgroundClip="text"
-            >
+            <Heading size="xl" mb={4} {...COMMON_TEXT_PROPS}>
               Build Beautiful Code Snippets
             </Heading>
             <Text fontSize="lg" mb={6}>
@@ -93,13 +88,7 @@ const LandingPage = () => {
 
       <Box py={16}>
         <Box maxWidth="container.md" mx="auto" px={4} textAlign="center">
-          <Heading
-            size="xl"
-            mb={8}
-            background="linear-gradient(270deg, rgb(20, 30, 48), rgb(36, 59, 85))"
-            color="transparent"
-            backgroundClip="text"
-          >
+          <Heading size="xl" mb={8} {...COMMON_TEXT_PROPS}>
             Start Building Beautiful Code Snippets Today!
           </Heading>
           <Text fontSize="lg" mb={6}>
