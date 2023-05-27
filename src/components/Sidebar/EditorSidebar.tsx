@@ -63,7 +63,7 @@ const EditorSidebar: FC<BoxProps> = () => {
           />
         </FormControl>
         <FormControl>
-          <FormLabel>Color</FormLabel>
+          <FormLabel>Fill</FormLabel>
           <SimpleGrid columns={5} gap={4}>
             {GRADIENT_COLORS.map((c) => (
               <Button
