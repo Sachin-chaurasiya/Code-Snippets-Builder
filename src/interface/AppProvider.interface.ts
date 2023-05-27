@@ -15,6 +15,7 @@ export interface ImageContextData {
 export interface ProfileContextData {
   platform: string;
   username: string;
+  isVisible: boolean;
 }
 
 export interface AppContextProps {
@@ -23,9 +24,11 @@ export interface AppContextProps {
   text: TextContextData;
   image: ImageContextData;
   profile: ProfileContextData;
+  hideWaterMark: boolean;
   onUpdateEditorData: (value: EditorContextData) => void;
   onUpdateTextData: (value: TextContextData) => void;
   onUpdateImageData: (value: ImageContextData) => void;
   onUpdateProfileData: (value: ProfileContextData) => void;
   onUpdateBackground: (value: string) => void;
+  onUpdateWaterMark: (value: boolean) => void;
 }

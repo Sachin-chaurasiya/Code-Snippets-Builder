@@ -5,6 +5,7 @@ import {
   FormLabel,
   Input,
   Select,
+  Switch,
   Text,
   VStack,
 } from '@chakra-ui/react';
@@ -23,6 +24,18 @@ const ProfileConfig = () => {
       </Text>
       <Divider />
       <VStack w="100%" alignItems="flex-start">
+        <FormControl display="flex" alignItems="center">
+          <FormLabel htmlFor="profile-info" mb="0">
+            Show profile info
+          </FormLabel>
+          <Switch
+            id="profile-info"
+            isChecked={Boolean(profile.isVisible)}
+            onChange={(e) =>
+              onUpdateProfileData({ ...profile, isVisible: e.target.checked })
+            }
+          />
+        </FormControl>
         <FormControl>
           <FormLabel>Platform</FormLabel>
           <Select
