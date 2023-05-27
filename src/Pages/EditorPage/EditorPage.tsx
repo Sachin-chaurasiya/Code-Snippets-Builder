@@ -30,6 +30,7 @@ import EditorSidebar from 'components/Sidebar/EditorSidebar';
 import EditorControls from 'components/EditorControls';
 import { getDragHandleByNodeType } from 'utils/EditorUtils';
 import BrandLogo from 'components/BrandLogo/BrandLogo';
+import ProfileInfo from 'components/ProfileInfo';
 
 const EditorPage = () => {
   const { background } = useAppProvider();
@@ -132,11 +133,19 @@ const EditorPage = () => {
           >
             <Panel position="bottom-right">
               <BrandLogo
+                gap={4}
+                h="auto"
                 textColor="white"
                 logoType="light"
                 textBackgroundColor="transparent"
                 backgroundClip="inherit"
+                logoSize="x-small"
+                textFontSize="md"
+                textFontWeight="normal"
               />
+            </Panel>
+            <Panel position="bottom-left">
+              <ProfileInfo />
             </Panel>
           </ReactFlow>
         </Box>

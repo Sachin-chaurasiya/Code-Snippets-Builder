@@ -21,6 +21,10 @@ export const INITIAL_CONTEXT_DATA = {
   image: {
     borderRadius: '4px',
   },
+  profile: {
+    platform: 'twitter',
+    username: 'sachindotcom',
+  },
   onUpdate: noop,
 };
 

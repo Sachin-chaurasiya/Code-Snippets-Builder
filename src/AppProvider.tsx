@@ -7,6 +7,7 @@ import {
   AppContextProps,
   EditorContextData,
   ImageContextData,
+  ProfileContextData,
   TextContextData,
 } from 'interface/AppProvider.interface';
 
@@ -24,6 +25,8 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
   const [imageContextData, setImageContextData] = useState<ImageContextData>(
     INITIAL_CONTEXT_DATA.text
   );
+  const [profileContextData, setProfileContextData] =
+    useState<ProfileContextData>(INITIAL_CONTEXT_DATA.profile);
   const [background, setBackground] = useState<string>(DEFAULT_EDITOR_BG_COLOR);
 
   const handleUpdateEditorData = (updatedData: EditorContextData) =>
@@ -32,6 +35,8 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
     setTextContextData(updatedData);
   const handleUpdateImageData = (updatedData: ImageContextData) =>
     setImageContextData(updatedData);
+  const handleUpdateProfileData = (updatedData: ProfileContextData) =>
+    setProfileContextData(updatedData);
 
   const handleUpdateBackground = (updatedData: string) =>
     setBackground(updatedData);
@@ -42,11 +47,13 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
         editor: editorContextData,
         text: textContextData,
         image: imageContextData,
+        profile: profileContextData,
         background,
         onUpdateEditorData: handleUpdateEditorData,
         onUpdateTextData: handleUpdateTextData,
         onUpdateImageData: handleUpdateImageData,
         onUpdateBackground: handleUpdateBackground,
+        onUpdateProfileData: handleUpdateProfileData,
       }}
     >
       {isMobileScreen ? <MobileViewMessage /> : children}
