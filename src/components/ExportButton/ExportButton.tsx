@@ -11,7 +11,7 @@ import { toBlob, toJpeg, toPng, toSvg } from 'html-to-image';
 import React, { useState } from 'react';
 import { BiClipboard, BiExport } from 'react-icons/bi';
 import { BsImage } from 'react-icons/bs';
-import { EXPORT_IMAGE_CONFIG } from 'constants/image';
+import { ExportImageConfig } from './ExportButton.interface';
 
 const ExportButton = () => {
   const toast = useToast();
@@ -23,6 +23,22 @@ const ExportButton = () => {
     a.setAttribute('download', `snippet.${extension}`);
     a.setAttribute('href', dataUrl);
     a.click();
+  };
+  const EXPORT_IMAGE_CONFIG: ExportImageConfig = {
+    node: document.querySelector('.react-flow') as HTMLElement,
+    options: {
+      filter: (node) => {
+        // we don't want to add the minimap and the controls to the image
+        if (
+          node?.classList?.contains('react-flow__minimap') ||
+          node?.classList?.contains('react-flow__controls')
+        ) {
+          return false;
+        }
+
+        return true;
+      },
+    },
   };
 
   const handlePngExport = async () => {
