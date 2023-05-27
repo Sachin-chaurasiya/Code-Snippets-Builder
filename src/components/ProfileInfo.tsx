@@ -18,7 +18,10 @@ const ProfileInfo = () => {
         as={profileInfo?.icon}
         color={profileInfo?.brandColor}
       />
-      <Text color="white">{profile.username}</Text>
+      <Text color="white">
+        {profile.platform === 'twitter' ? '@' : ''}
+        {profile.username}
+      </Text>
     </Flex>
   );
 };
