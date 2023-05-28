@@ -1,3 +1,4 @@
+import CustomHandle from 'components/CustomHandle/CustomHandle';
 import RichTextEditor from 'components/RichTextEditor/RichTextEditor';
 import {
   HANDLE_BOTTOM_STYLE,
@@ -8,27 +9,11 @@ import {
   HANDLE_TOP_STYLE,
 } from 'constants/common';
 import { HANDLE_COLOR } from 'constants/editor';
-import React, { FC, memo, useEffect, useState } from 'react';
-import {
-  Handle,
-  NodeProps,
-  NodeResizer,
-  Position,
-  ResizeParams,
-} from 'reactflow';
+import React, { FC, memo, useState } from 'react';
+import { NodeProps, NodeResizer, ResizeParams } from 'reactflow';
 
-const TextNode: FC<NodeProps> = ({ selected }) => {
+const TextNode: FC<NodeProps> = ({ selected, dragging }) => {
   const [params, setParams] = useState<ResizeParams>();
-
-  useEffect(() => {
-    const collection = document.getElementsByClassName('react-flow__handle');
-    const list = Array.from(collection);
-    list.forEach((item) =>
-      item.classList.remove(
-        ...['nodrag', 'nopan', 'target', 'connectablestart', 'connectableend']
-      )
-    );
-  }, [selected]);
 
   return (
     <>
@@ -46,35 +31,32 @@ const TextNode: FC<NodeProps> = ({ selected }) => {
         isVisible={selected}
         onResizeEnd={(_, param) => setParams(param)}
       />
-      <Handle
-        type="target"
-        position={Position.Left}
+      <CustomHandle
+        top="50%"
+        transform="translate(0, -50%)"
         style={{ ...HANDLE_STYLE_X, ...HANDLE_LEFT_STYLE }}
-        isConnectable={false}
       />
-      <Handle
-        type="target"
-        position={Position.Top}
+      <CustomHandle
+        left="50%"
+        transform="translate(-50%, 0)"
         style={{ ...HANDLE_STYLE_Y, ...HANDLE_TOP_STYLE }}
-        isConnectable={false}
       />
 
       <RichTextEditor
         width={params?.width ?? 300}
         height={params?.height ?? 60}
       />
-
-      <Handle
-        type="source"
-        position={Position.Right}
+      <CustomHandle
+        top="50%"
+        transform="translate(0, -50%)"
         style={{ ...HANDLE_STYLE_X, ...HANDLE_RIGHT_STYLE }}
-        isConnectable={false}
       />
-      <Handle
-        type="source"
-        position={Position.Bottom}
+
+      <CustomHandle
+        top="auto"
+        left="50%"
+        transform="translate(-50%, 0)"
         style={{ ...HANDLE_STYLE_Y, ...HANDLE_BOTTOM_STYLE }}
-        isConnectable={false}
       />
     </>
   );

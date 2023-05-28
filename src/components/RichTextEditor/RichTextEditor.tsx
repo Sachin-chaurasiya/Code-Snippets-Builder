@@ -28,7 +28,7 @@ const RichTextEditor: FC<RichtextEditorProps> = ({ width, height }) => {
         background: text.background,
         borderRadius: text.borderRadius,
         width: `${width}px`,
-        height: `${height}px`,
+        minHeight: `${height}px`,
         fontSize: `${text.fontSize}px`,
       }}
       formats={FORMAT_OPTIONS}

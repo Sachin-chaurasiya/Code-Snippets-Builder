@@ -5,7 +5,7 @@ export const getDragHandleByNodeType = (type: string) => {
     case CUSTOM_NODES.EDITOR_NODE:
       return '.node-drag-handle';
     case CUSTOM_NODES.TEXT_NODE:
-      return '.react-flow__handle';
+      return '.custom_handle';
 
     default:
       return;
