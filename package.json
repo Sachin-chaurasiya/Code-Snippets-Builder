@@ -1,6 +1,6 @@
 {
   "name": "code-snippets-builder",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "private": true,
   "dependencies": {
     "@chakra-ui/react": "^2.6.1",
