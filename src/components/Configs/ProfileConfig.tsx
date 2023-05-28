@@ -5,12 +5,13 @@ import {
   FormLabel,
   Input,
   Select,
-  Switch,
   Text,
   VStack,
 } from '@chakra-ui/react';
 import { useAppProvider } from 'AppProvider';
+import CustomSwitch from 'components/CustomSwitch/CustomSwitch';
 import { SUPPORTED_PROFILES } from 'constants/profile';
+import { COMMON_TEXT_PROPS } from 'constants/text';
 import { map } from 'lodash';
 import React from 'react';
 
@@ -19,7 +20,7 @@ const ProfileConfig = () => {
 
   return (
     <Box alignItems="flex-start" as={VStack} mb={4}>
-      <Text fontSize="lg" fontWeight="bold">
+      <Text fontSize="lg" fontWeight="bold" {...COMMON_TEXT_PROPS}>
         Profile Info
       </Text>
       <Divider />
@@ -28,7 +29,7 @@ const ProfileConfig = () => {
           <FormLabel htmlFor="profile-info" mb="0">
             Show profile info
           </FormLabel>
-          <Switch
+          <CustomSwitch
             id="profile-info"
             isChecked={Boolean(profile.isVisible)}
             onChange={(e) =>

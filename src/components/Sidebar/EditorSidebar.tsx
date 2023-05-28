@@ -10,7 +10,6 @@ import {
   FormControl,
   SimpleGrid,
   Button,
-  Switch,
   Divider,
 } from '@chakra-ui/react';
 
@@ -21,6 +20,8 @@ import EditorConfig from 'components/Configs/EditorConfig';
 import TextConfig from 'components/Configs/TextConfig';
 import ImageConfig from 'components/Configs/ImageConfig';
 import ProfileConfig from 'components/Configs/ProfileConfig';
+import CustomSwitch from 'components/CustomSwitch/CustomSwitch';
+import { COMMON_TEXT_PROPS } from 'constants/text';
 
 const EditorSidebar: FC<BoxProps> = () => {
   const { background, onUpdateBackground, hideWaterMark, onUpdateWaterMark } =
@@ -42,13 +43,13 @@ const EditorSidebar: FC<BoxProps> = () => {
       overflow="auto"
     >
       <Flex h="20" alignItems="center" gap={2}>
-        <Text fontSize="xl" fontWeight="bold">
+        <Text fontSize="xl" fontWeight="bold" {...COMMON_TEXT_PROPS}>
           Configure
         </Text>
       </Flex>
 
       <Box alignItems="flex-start" as={VStack} mb={4}>
-        <Text fontSize="lg" fontWeight="bold">
+        <Text fontSize="lg" fontWeight="bold" {...COMMON_TEXT_PROPS}>
           Background
         </Text>
         <Divider />
@@ -56,7 +57,7 @@ const EditorSidebar: FC<BoxProps> = () => {
           <FormLabel htmlFor="water-mark" mb="0">
             Hide watermark
           </FormLabel>
-          <Switch
+          <CustomSwitch
             id="water-mark"
             isChecked={hideWaterMark}
             onChange={(e) => onUpdateWaterMark(e.target.checked)}
