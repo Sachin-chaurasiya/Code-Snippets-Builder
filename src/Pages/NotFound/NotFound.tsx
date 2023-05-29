@@ -1,5 +1,5 @@
 import { Box, Heading, Text, Button, Flex } from '@chakra-ui/react';
-import { ROUTES } from 'constants/common';
+import { PRIMARY_GRADIENT_COLOR, ROUTES } from 'constants/common';
 import { useNavigate } from 'react-router-dom';
 
 export const NotFound = () => {
@@ -20,7 +20,7 @@ export const NotFound = () => {
         display="inline-block"
         as="h2"
         size="2xl"
-        bgGradient="linear-gradient(135deg, rgb(102, 126, 234), rgb(118, 75, 162))"
+        bgGradient={PRIMARY_GRADIENT_COLOR}
         backgroundClip="text"
       >
         404
@@ -34,7 +34,7 @@ export const NotFound = () => {
 
       <Button
         colorScheme="rgb(102, 126, 234)"
-        bgGradient="linear-gradient(135deg, rgb(102, 126, 234), rgb(118, 75, 162))"
+        bgGradient={PRIMARY_GRADIENT_COLOR}
         color="white"
         variant="solid"
         onClick={() => navigate(ROUTES.HOME)}

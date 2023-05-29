@@ -4,7 +4,7 @@ import { App } from 'App';
 import 'index.css';
 import { BrowserRouter } from 'react-router-dom';
 import AppProvider from 'AppProvider';
-import ErrorBoundaryComponent from 'ErrorBoundary/ErrorBoundary';
+import ErrorBoundaryComponent from 'components/ErrorBoundary/ErrorBoundary';
 import { ReactFlowProvider } from 'reactflow';
 import { ChakraProvider, theme } from '@chakra-ui/react';
 

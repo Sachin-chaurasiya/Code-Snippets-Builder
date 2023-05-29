@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { ReactFlowState, useReactFlow, useStore, useStoreApi } from 'reactflow';
 import { shallow } from 'zustand/shallow';
-import FitViewIcon from 'components/Icons/FitViewIcon';
-import UnlockIcon from 'components/Icons/UnlockIcon';
-import LockIcon from 'components/Icons/LockIcon';
+import FitViewIcon from 'components/Common/Icons/FitViewIcon';
+import UnlockIcon from 'components/Common/Icons/UnlockIcon';
+import LockIcon from 'components/Common/Icons/LockIcon';
 import {
   Box,
   Button,
@@ -14,9 +14,13 @@ import {
   SliderTrack,
   Tooltip,
 } from '@chakra-ui/react';
-import PlusIcon from './Icons/PlusIcon';
-import MinusIcon from './Icons/MinusIcon';
-import { BORDER_RADIUS_LARGE, BORDER_RADIUS_MEDIUM } from 'constants/common';
+import PlusIcon from '../../Common/Icons/PlusIcon';
+import MinusIcon from '../../Common/Icons/MinusIcon';
+import {
+  BORDER_RADIUS_LARGE,
+  BORDER_RADIUS_MEDIUM,
+  PRIMARY_GRADIENT_COLOR,
+} from 'constants/common';
 
 const selector = (s: ReactFlowState) => ({
   isInteractive: s.nodesDraggable || s.nodesConnectable || s.elementsSelectable,
@@ -126,7 +130,7 @@ const EditorControls = () => {
           onChange={handleZoomTo}
         >
           <SliderTrack>
-            <SliderFilledTrack bgGradient="linear-gradient(135deg, rgb(102, 126, 234), rgb(118, 75, 162))" />
+            <SliderFilledTrack bgGradient={PRIMARY_GRADIENT_COLOR} />
           </SliderTrack>
           <SliderThumb />
         </Slider>

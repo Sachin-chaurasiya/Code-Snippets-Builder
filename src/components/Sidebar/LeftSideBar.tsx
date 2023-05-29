@@ -3,7 +3,7 @@ import { Box, useColorModeValue, BoxProps } from '@chakra-ui/react';
 import NavItem from './NavItem';
 import { ROUTES } from 'constants/common';
 
-import BrandLogo from 'components/BrandLogo/BrandLogo';
+import BrandLogo from 'components/Common/BrandLogo/BrandLogo';
 import { useNavigate } from 'react-router-dom';
 import { LINK_ITEMS } from 'constants/sidebar';
 

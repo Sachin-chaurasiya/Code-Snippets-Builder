@@ -19,18 +19,18 @@ import ReactFlow, {
 } from 'reactflow';
 import 'reactflow/dist/style.css';
 
-import ToolBar from 'components/ToolBar/ToolBar';
+import ToolBar from 'components/Editor/ToolBar/ToolBar';
 import { uniqueId } from 'lodash';
-import EditorNode from 'components/CustomNodes/EditorNode';
+import EditorNode from 'components/Editor/CustomNodes/EditorNode';
 import { CUSTOM_NODES, INITIAL_NODES } from 'constants/editor';
-import TextNode from 'components/CustomNodes/TextNode';
-import ImageNode from 'components/CustomNodes/ImageNode';
+import TextNode from 'components/Editor/CustomNodes/TextNode';
+import ImageNode from 'components/Editor/CustomNodes/ImageNode';
 import { useAppProvider } from 'AppProvider';
-import EditorSidebar from 'components/Sidebar/EditorSidebar';
-import EditorControls from 'components/EditorControls';
+import EditorSidebar from 'components/Editor/EditorSidebar/EditorSidebar';
+import EditorControls from 'components/Editor/EditorControls/EditorControls';
 import { getDragHandleByNodeType } from 'utils/EditorUtils';
-import BrandLogo from 'components/BrandLogo/BrandLogo';
-import ProfileInfo from 'components/ProfileInfo';
+import BrandLogo from 'components/Common/BrandLogo/BrandLogo';
+import ProfileInfo from 'components/Editor/ProfileInfo/ProfileInfo';
 
 const EditorPage = () => {
   const { background, hideWaterMark, profile } = useAppProvider();
@@ -38,6 +38,7 @@ const EditorPage = () => {
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
 
   const reactFlowWrapper = useRef<HTMLDivElement>(null);
+
   const [reactFlowInstance, setReactFlowInstance] =
     useState<ReactFlowInstance>();
 
@@ -51,7 +52,7 @@ const EditorPage = () => {
       event.preventDefault();
 
       const reactFlowBounds = reactFlowWrapper.current?.getBoundingClientRect();
-      const type = event.dataTransfer.getData('application/reactflow');
+      const type = event.dataTransfer.getData('application/SnippetBuilder');
 
       // check if the dropped element is valid
       if (typeof type === 'undefined' || !type) {

@@ -2,7 +2,7 @@ import { sortBy, uniqueId } from 'lodash';
 import { Node } from 'reactflow';
 import * as themes from '@uiw/codemirror-themes-all';
 import { langNames as languages } from '@uiw/codemirror-extensions-langs';
-import { ToolBarItemsProps } from 'components/ToolBar/ToolBar.interface';
+import { ToolBarItemsProps } from 'components/Editor/ToolBar/ToolBar.interface';
 import { BiCodeBlock, BiImage, BiText } from 'react-icons/bi';
 
 export const GRADIENT_COLORS = [

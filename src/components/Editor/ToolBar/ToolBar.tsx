@@ -9,14 +9,14 @@ import {
 import React from 'react';
 
 import { RxDragHandleDots2 } from 'react-icons/rx';
-import ExportButton from 'components/ExportButton/ExportButton';
+import ExportButton from 'components/Editor/ExportButton/ExportButton';
 import { toLower } from 'lodash';
 import { BORDER_RADIUS_MEDIUM } from 'constants/common';
 import { TOOL_BAR_ITEMS } from 'constants/editor';
 
 const ToolBar = () => {
   const onDragStart = (event: React.DragEvent, nodeType: string) => {
-    event.dataTransfer.setData('application/reactflow', nodeType);
+    event.dataTransfer.setData('application/SnippetBuilder', nodeType);
     event.dataTransfer.effectAllowed = 'move';
   };
 

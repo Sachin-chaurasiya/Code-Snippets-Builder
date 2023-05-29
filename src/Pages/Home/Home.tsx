@@ -14,8 +14,9 @@ import { RiDragDropLine } from 'react-icons/ri';
 import { BiCustomize } from 'react-icons/bi';
 import { DiTerminal } from 'react-icons/di';
 import { useNavigate } from 'react-router-dom';
-import { ROUTES } from 'constants/common';
+import { PRIMARY_GRADIENT_COLOR, ROUTES } from 'constants/common';
 import { COMMON_TEXT_PROPS } from 'constants/text';
+import { PERSONAL_WEBSITE } from 'constants/links';
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -37,10 +38,9 @@ const LandingPage = () => {
             </Text>
             <Button
               _hover={{
-                background:
-                  'linear-gradient(135deg, rgb(102, 126, 234), rgb(118, 75, 162))',
+                bgGradient: PRIMARY_GRADIENT_COLOR,
               }}
-              background="linear-gradient(135deg, rgb(102, 126, 234), rgb(118, 75, 162))"
+              bgGradient={PRIMARY_GRADIENT_COLOR}
               color="white"
               size="lg"
               onClick={handleGetStarted}
@@ -58,10 +58,7 @@ const LandingPage = () => {
         </Flex>
       </Box>
 
-      <Box
-        bg="linear-gradient(135deg, rgb(102, 126, 234), rgb(118, 75, 162))"
-        py={16}
-      >
+      <Box bg={PRIMARY_GRADIENT_COLOR} py={16}>
         <Box maxWidth="container.md" mx="auto" px={4}>
           <Heading color="white" size="xl" mb={8} textAlign="center">
             Features
@@ -97,10 +94,9 @@ const LandingPage = () => {
           </Text>
           <Button
             _hover={{
-              background:
-                'linear-gradient(135deg, rgb(102, 126, 234), rgb(118, 75, 162))',
+              bgGradient: PRIMARY_GRADIENT_COLOR,
             }}
-            background="linear-gradient(135deg, rgb(102, 126, 234), rgb(118, 75, 162))"
+            bgGradient={PRIMARY_GRADIENT_COLOR}
             color="white"
             size="lg"
             onClick={handleGetStarted}
@@ -114,7 +110,7 @@ const LandingPage = () => {
         <Box maxWidth="container.md" mx="auto" textAlign="center">
           <Text>
             Made with ❤️ by{' '}
-            <Link href="https://sachinchaurasiya.dev">Sachin Chaurasiya</Link>
+            <Link href={PERSONAL_WEBSITE}>Sachin Chaurasiya</Link>
           </Text>
         </Box>
       </Box>

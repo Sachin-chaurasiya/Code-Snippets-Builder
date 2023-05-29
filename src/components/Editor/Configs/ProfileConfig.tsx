@@ -9,7 +9,7 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { useAppProvider } from 'AppProvider';
-import CustomSwitch from 'components/CustomSwitch/CustomSwitch';
+import CustomSwitch from 'components/Common/CustomSwitch/CustomSwitch';
 import { SUPPORTED_PROFILES } from 'constants/profile';
 import { COMMON_TEXT_PROPS } from 'constants/text';
 import { map } from 'lodash';
