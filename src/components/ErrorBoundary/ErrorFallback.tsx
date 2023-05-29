@@ -1,5 +1,6 @@
 import { Box, Button, Flex, Text } from '@chakra-ui/react';
-import BrandLogo from 'components/BrandLogo/BrandLogo';
+import BrandLogo from 'components/Common/BrandLogo/BrandLogo';
+import { PRIMARY_GRADIENT_COLOR } from 'constants/common';
 import React from 'react';
 import { FallbackProps } from 'react-error-boundary';
 
@@ -17,10 +18,9 @@ const ErrorFallback: React.FC<FallbackProps> = ({ resetErrorBoundary }) => {
       <Text mb={2}>Something went wrong!</Text>
       <Button
         _hover={{
-          background:
-            'linear-gradient(135deg, rgb(102, 126, 234), rgb(118, 75, 162))',
+          bgGradient: PRIMARY_GRADIENT_COLOR,
         }}
-        background="linear-gradient(135deg, rgb(102, 126, 234), rgb(118, 75, 162))"
+        bgGradient={PRIMARY_GRADIENT_COLOR}
         color="white"
         size="md"
         onClick={resetErrorBoundary}

@@ -2,6 +2,7 @@ import { Flex, Icon, Link } from '@chakra-ui/react';
 import { useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 import { NavItemProps } from './Sidebar.interface';
+import { PRIMARY_GRADIENT_COLOR } from 'constants/common';
 
 const NavItem = ({ icon, children, path, ...rest }: NavItemProps) => {
   const location = useLocation();
@@ -25,15 +26,10 @@ const NavItem = ({ icon, children, path, ...rest }: NavItemProps) => {
         role="group"
         cursor="pointer"
         _hover={{
-          background:
-            'linear-gradient(135deg, rgb(102, 126, 234), rgb(118, 75, 162))',
+          bgGradient: PRIMARY_GRADIENT_COLOR,
           color: 'white',
         }}
-        background={
-          isActiveItem
-            ? 'linear-gradient(135deg, rgb(102, 126, 234), rgb(118, 75, 162))'
-            : ''
-        }
+        bgGradient={isActiveItem ? PRIMARY_GRADIENT_COLOR : ''}
         color={isActiveItem ? 'white' : ''}
         {...rest}
       >

@@ -12,6 +12,7 @@ import React, { useState } from 'react';
 import { BiClipboard, BiExport } from 'react-icons/bi';
 import { BsImage } from 'react-icons/bs';
 import { ExportImageConfig } from './ExportButton.interface';
+import { PRIMARY_GRADIENT_COLOR } from 'constants/common';
 
 const ExportButton = () => {
   const toast = useToast();
@@ -118,10 +119,9 @@ const ExportButton = () => {
         <Button
           as={Box}
           _hover={{
-            background:
-              'linear-gradient(135deg, rgb(102, 126, 234), rgb(118, 75, 162))',
+            bgGradient: PRIMARY_GRADIENT_COLOR,
           }}
-          background="linear-gradient(135deg, rgb(102, 126, 234), rgb(118, 75, 162))"
+          bgGradient={PRIMARY_GRADIENT_COLOR}
           color="white"
           isLoading={isDownLoading}
           variant="solid"

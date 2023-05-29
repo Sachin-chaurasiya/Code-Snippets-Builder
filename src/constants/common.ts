@@ -60,3 +60,6 @@ export const HANDLE_BOTTOM_STYLE: CSSProperties = {
 
 export const BORDER_RADIUS_MEDIUM = '4px';
 export const BORDER_RADIUS_LARGE = '6px';
+export const APP_TEXT_COLOR = '#2d3748';
+export const PRIMARY_GRADIENT_COLOR =
+  'linear-gradient(135deg, rgb(102, 126, 234), rgb(118, 75, 162))';

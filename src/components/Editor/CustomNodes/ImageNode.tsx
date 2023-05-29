@@ -1,5 +1,5 @@
 import React, { FC, memo, useState } from 'react';
-import AddMediaModal from '../AddMediaModal/AddMediaModal';
+import AddMediaModal from '../../Modals/AddMediaModal/AddMediaModal';
 import { NodeProps, NodeResizer } from 'reactflow';
 import { Image } from '@chakra-ui/react';
 import { useAppProvider } from 'AppProvider';

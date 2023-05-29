@@ -2,10 +2,11 @@ import * as React from 'react';
 import { Box, useColorModeValue } from '@chakra-ui/react';
 import LeftSidebar from './components/Sidebar/LeftSideBar';
 import AppRoutes from './AppRoutes';
+import { APP_TEXT_COLOR } from 'constants/common';
 
 export const App = () => (
   <Box
-    color="#2d3748"
+    color={APP_TEXT_COLOR}
     minH="100vh"
     bg={useColorModeValue('gray.100', 'gray.900')}
   >

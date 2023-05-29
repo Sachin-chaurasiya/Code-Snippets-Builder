@@ -1,7 +1,13 @@
-import React, { ReactNode, createContext, useContext, useState } from 'react';
+import React, {
+  ReactNode,
+  createContext,
+  useContext,
+  useMemo,
+  useState,
+} from 'react';
 import { INITIAL_CONTEXT_DATA } from './constants/common';
 import { useMediaQuery } from '@chakra-ui/react';
-import MobileViewMessage from 'components/MobileViewMessage';
+import MobileViewMessage from 'components/MobileViewMessage/MobileViewMessage';
 import { DEFAULT_EDITOR_BG_COLOR } from 'constants/editor';
 import {
   AppContextProps,
@@ -46,23 +52,33 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
   const handleUpdateWaterMark = (updatedData: boolean) =>
     setIsWaterMarkVisible(updatedData);
 
+  const contextValues = useMemo(
+    () => ({
+      editor: editorContextData,
+      text: textContextData,
+      image: imageContextData,
+      profile: profileContextData,
+      hideWaterMark,
+      background,
+      onUpdateEditorData: handleUpdateEditorData,
+      onUpdateTextData: handleUpdateTextData,
+      onUpdateImageData: handleUpdateImageData,
+      onUpdateBackground: handleUpdateBackground,
+      onUpdateProfileData: handleUpdateProfileData,
+      onUpdateWaterMark: handleUpdateWaterMark,
+    }),
+    [
+      background,
+      editorContextData,
+      textContextData,
+      imageContextData,
+      profileContextData,
+      hideWaterMark,
+    ]
+  );
+
   return (
-    <AppContext.Provider
-      value={{
-        editor: editorContextData,
-        text: textContextData,
-        image: imageContextData,
-        profile: profileContextData,
-        hideWaterMark,
-        background,
-        onUpdateEditorData: handleUpdateEditorData,
-        onUpdateTextData: handleUpdateTextData,
-        onUpdateImageData: handleUpdateImageData,
-        onUpdateBackground: handleUpdateBackground,
-        onUpdateProfileData: handleUpdateProfileData,
-        onUpdateWaterMark: handleUpdateWaterMark,
-      }}
-    >
+    <AppContext.Provider value={contextValues}>
       {isMobileScreen ? <MobileViewMessage /> : children}
     </AppContext.Provider>
   );

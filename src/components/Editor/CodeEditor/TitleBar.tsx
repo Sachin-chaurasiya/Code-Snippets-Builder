@@ -6,7 +6,7 @@ import {
   Flex,
   IconButton,
 } from '@chakra-ui/react';
-import EditorTitleIcon from 'components/Icons/EditorTitleIcon';
+import EditorTitleIcon from 'components/Common/Icons/EditorTitleIcon';
 import { CODE_EDITOR_BACKGROUND_COLOR } from 'constants/editor';
 import { last } from 'lodash';
 import React, { useMemo, useState } from 'react';

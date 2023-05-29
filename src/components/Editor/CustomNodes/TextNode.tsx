@@ -1,5 +1,5 @@
-import CustomHandle from 'components/CustomHandle/CustomHandle';
-import RichTextEditor from 'components/RichTextEditor/RichTextEditor';
+import CustomHandle from 'components/Common/CustomHandle/CustomHandle';
+import RichTextEditor from 'components/Editor/RichTextEditor/RichTextEditor';
 import {
   HANDLE_BOTTOM_STYLE,
   HANDLE_LEFT_STYLE,

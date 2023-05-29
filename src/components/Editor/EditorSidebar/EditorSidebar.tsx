@@ -16,11 +16,11 @@ import {
 import { GRADIENT_COLORS } from 'constants/editor';
 import { useAppProvider } from 'AppProvider';
 import { BiCheckCircle } from 'react-icons/bi';
-import EditorConfig from 'components/Configs/EditorConfig';
-import TextConfig from 'components/Configs/TextConfig';
-import ImageConfig from 'components/Configs/ImageConfig';
-import ProfileConfig from 'components/Configs/ProfileConfig';
-import CustomSwitch from 'components/CustomSwitch/CustomSwitch';
+import EditorConfig from 'components/Editor/Configs/EditorConfig';
+import TextConfig from 'components/Editor/Configs/TextConfig';
+import ImageConfig from 'components/Editor/Configs/ImageConfig';
+import ProfileConfig from 'components/Editor/Configs/ProfileConfig';
+import CustomSwitch from 'components/Common/CustomSwitch/CustomSwitch';
 import { COMMON_TEXT_PROPS } from 'constants/text';
 
 const EditorSidebar: FC<BoxProps> = () => {
