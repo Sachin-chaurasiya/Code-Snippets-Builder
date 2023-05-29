@@ -39,6 +39,7 @@ const ExportButton = () => {
 
         return true;
       },
+      quality: 1,
     },
   };
 
