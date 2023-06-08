@@ -9,12 +9,20 @@ const EditorPage = lazy(
 );
 const NotFound = lazy(async () => await import('Pages/NotFound/NotFound'));
 
+const LoginPage = lazy(async () => await import('Pages/LoginPage/LoginPage'));
+
+const SignUpPage = lazy(
+  async () => await import('Pages/SignUpPage/SignUpPage')
+);
+
 const AppRoutes = () => {
   return (
     <Suspense fallback={<Loader />}>
       <Routes>
         <Route path={ROUTES.HOME} element={<HomePage />} />
         <Route path={ROUTES.EDITOR} element={<EditorPage />} />
+        <Route path={ROUTES.LOGIN} element={<LoginPage />} />
+        <Route path={ROUTES.SIGN_UP} element={<SignUpPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Suspense>

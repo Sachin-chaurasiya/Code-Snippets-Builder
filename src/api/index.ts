@@ -39,16 +39,32 @@ export const API_CLIENT = {
       `${window.location.origin}/login`
     );
   },
-  emailLogin: async (email: string, password: string, name?: string) => {
+  emailSignUp: async (email: string, password: string, name?: string) => {
     try {
-      const user = await API_CLIENT.account.create(
+      await API_CLIENT.account.create(
         generateUniqueId(),
         email,
         password,
         name
       );
 
-      return user;
+      const session = await API_CLIENT.getLoggedInUserSession();
+
+      return session;
+    } catch (error) {
+      // handle error
+
+      return undefined;
+    }
+  },
+  emailLogin: async (email: string, password: string, _?: string) => {
+    try {
+      const session = await API_CLIENT.account.createEmailSession(
+        email,
+        password
+      );
+
+      return session;
     } catch (error) {
       // handle error
 
