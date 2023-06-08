@@ -1,0 +1,6 @@
+'*.{ts,tsx}':
+  # Run ESLint
+  - eslint 'src/**/*.{ts,tsx}' --fix
+
+# Run Prettier
+'src/**': prettier --write

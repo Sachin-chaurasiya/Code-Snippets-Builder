@@ -27,13 +27,12 @@ const TextConfig = () => {
           <FormLabel>Background Color</FormLabel>
           <Select
             value={text.background}
-            onChange={(e) =>
+            onChange={(e) => {
               onUpdateTextData({
                 ...text,
                 background: e.target.value,
-              })
-            }
-          >
+              });
+            }}>
             {map(NAMED_COLORS, (color) => (
               <option key={color} value={color}>
                 {startCase(color)}
@@ -45,13 +44,12 @@ const TextConfig = () => {
           <FormLabel>Font Size</FormLabel>
           <Select
             value={text.fontSize}
-            onChange={(e) =>
+            onChange={(e) => {
               onUpdateTextData({
                 ...text,
                 fontSize: toNumber(e.target.value),
-              })
-            }
-          >
+              });
+            }}>
             {map(FONT_SIZES, (size) => (
               <option key={size} value={size}>
                 {`${size}px`}
@@ -63,13 +61,12 @@ const TextConfig = () => {
           <FormLabel>Border Radius</FormLabel>
           <Select
             value={text.borderRadius}
-            onChange={(e) =>
+            onChange={(e) => {
               onUpdateTextData({
                 ...text,
                 borderRadius: e.target.value,
-              })
-            }
-          >
+              });
+            }}>
             {map(BORDER_RADIUS, (size) => (
               <option key={size} value={`${size}px`}>
                 {`${size}px`}

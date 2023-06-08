@@ -8,8 +8,7 @@ export const App = () => (
   <Box
     color={APP_TEXT_COLOR}
     minH="100vh"
-    bg={useColorModeValue('gray.100', 'gray.900')}
-  >
+    bg={useColorModeValue('gray.100', 'gray.900')}>
     <LeftSidebar />
     <Box ml={60} p="4">
       <AppRoutes />

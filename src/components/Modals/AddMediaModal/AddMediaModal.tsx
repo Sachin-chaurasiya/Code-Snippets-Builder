@@ -43,8 +43,7 @@ const AddMediaModal = ({
               templateColumns="repeat(4, 1fr)"
               gap={4}
               minHeight="30vh"
-              maxHeight="70vh"
-            >
+              maxHeight="70vh">
               {map(DEV_IMAGES, (source, key) => (
                 <AspectRatio key={key} ratio={1}>
                   <Button
@@ -52,8 +51,9 @@ const AddMediaModal = ({
                     aspectRatio="auto"
                     aria-label={key}
                     minWidth={10}
-                    onClick={() => handleSourceSelection(source)}
-                  >
+                    onClick={() => {
+                      handleSourceSelection(source);
+                    }}>
                     <Image src={source} />
                   </Button>
                 </AspectRatio>

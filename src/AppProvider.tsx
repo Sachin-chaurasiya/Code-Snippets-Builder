@@ -38,19 +38,25 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
     useState<ProfileContextData>(INITIAL_CONTEXT_DATA.profile);
   const [background, setBackground] = useState<string>(DEFAULT_EDITOR_BG_COLOR);
 
-  const handleUpdateEditorData = (updatedData: EditorContextData) =>
+  const handleUpdateEditorData = (updatedData: EditorContextData) => {
     setEditorContextData(updatedData);
-  const handleUpdateTextData = (updatedData: TextContextData) =>
+  };
+  const handleUpdateTextData = (updatedData: TextContextData) => {
     setTextContextData(updatedData);
-  const handleUpdateImageData = (updatedData: ImageContextData) =>
+  };
+  const handleUpdateImageData = (updatedData: ImageContextData) => {
     setImageContextData(updatedData);
-  const handleUpdateProfileData = (updatedData: ProfileContextData) =>
+  };
+  const handleUpdateProfileData = (updatedData: ProfileContextData) => {
     setProfileContextData(updatedData);
+  };
 
-  const handleUpdateBackground = (updatedData: string) =>
+  const handleUpdateBackground = (updatedData: string) => {
     setBackground(updatedData);
-  const handleUpdateWaterMark = (updatedData: boolean) =>
+  };
+  const handleUpdateWaterMark = (updatedData: boolean) => {
     setIsWaterMarkVisible(updatedData);
+  };
 
   const contextValues = useMemo(
     () => ({

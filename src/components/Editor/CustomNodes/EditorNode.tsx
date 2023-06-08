@@ -8,8 +8,7 @@ const EditorNode: FC<NodeProps> = ({ selected }) => {
   return (
     <Box
       border={selected ? '1px' : ''}
-      borderColor={selected ? HANDLE_COLOR : ''}
-    >
+      borderColor={selected ? HANDLE_COLOR : ''}>
       <CodeEditor />
     </Box>
   );

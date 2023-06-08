@@ -126,8 +126,7 @@ const ExportButton = () => {
           color="white"
           isLoading={isDownLoading}
           variant="solid"
-          leftIcon={<BiExport />}
-        >
+          leftIcon={<BiExport />}>
           Export
         </Button>
       </MenuButton>

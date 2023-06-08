@@ -10,7 +10,9 @@ import { LINK_ITEMS } from 'constants/sidebar';
 const LeftSidebar: FC<BoxProps> = () => {
   const navigate = useNavigate();
 
-  const handleNavigateHome = () => navigate(ROUTES.HOME);
+  const handleNavigateHome = () => {
+    navigate(ROUTES.HOME);
+  };
   return (
     <Box
       bg={useColorModeValue('white', 'gray.900')}
@@ -19,8 +21,7 @@ const LeftSidebar: FC<BoxProps> = () => {
       w="60"
       pos="fixed"
       h="full"
-      shadow="md"
-    >
+      shadow="md">
       <BrandLogo ml={2} onClick={handleNavigateHome} cursor="pointer" />
       {LINK_ITEMS.map((link) => (
         <NavItem path={link.path} key={link.name} icon={link.icon}>

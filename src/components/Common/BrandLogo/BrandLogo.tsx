@@ -48,8 +48,7 @@ const BrandLogo: FC<BrandLogoProps> = ({
           'linear-gradient(270deg, rgb(20, 30, 48), rgb(36, 59, 85))'
         }
         color={textColor ?? 'transparent'}
-        backgroundClip={backgroundClip ?? 'text'}
-      >
+        backgroundClip={backgroundClip ?? 'text'}>
         <span>Snippet</span>
         <span>Builder</span>
       </Text>

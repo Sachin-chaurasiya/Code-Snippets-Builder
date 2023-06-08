@@ -40,8 +40,7 @@ const EditorSidebar: FC<BoxProps> = () => {
       bottom={0}
       shadow="md"
       px="6"
-      overflow="auto"
-    >
+      overflow="auto">
       <Flex h="20" alignItems="center" gap={2}>
         <Text fontSize="xl" fontWeight="bold" {...COMMON_TEXT_PROPS}>
           Configure
@@ -60,7 +59,9 @@ const EditorSidebar: FC<BoxProps> = () => {
           <CustomSwitch
             id="water-mark"
             isChecked={hideWaterMark}
-            onChange={(e) => onUpdateWaterMark(e.target.checked)}
+            onChange={(e) => {
+              onUpdateWaterMark(e.target.checked);
+            }}
           />
         </FormControl>
         <FormControl>
@@ -77,8 +78,9 @@ const EditorSidebar: FC<BoxProps> = () => {
                 minWidth="unset"
                 borderRadius={3}
                 _hover={{ background: c }}
-                onClick={() => onUpdateBackground(c)}
-              >
+                onClick={() => {
+                  onUpdateBackground(c);
+                }}>
                 {background === c ? (
                   <BiCheckCircle
                     color="white"

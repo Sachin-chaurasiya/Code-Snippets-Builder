@@ -27,13 +27,12 @@ const ImageConfig = () => {
           <FormLabel>Border Radius</FormLabel>
           <Select
             value={image.borderRadius}
-            onChange={(e) =>
+            onChange={(e) => {
               onUpdateImageData({
                 ...image,
                 borderRadius: e.target.value,
-              })
-            }
-          >
+              });
+            }}>
             {map(BORDER_RADIUS, (size) => (
               <option key={size} value={`${size}px`}>
                 {`${size}px`}

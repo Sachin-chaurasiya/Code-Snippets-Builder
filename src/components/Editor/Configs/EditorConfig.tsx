@@ -27,13 +27,12 @@ const EditorConfig = () => {
           <FormLabel>Language</FormLabel>
           <Select
             value={editor.language}
-            onChange={(e) =>
+            onChange={(e) => {
               onUpdateEditorData({
                 ...editor,
                 language: e.target.value,
-              })
-            }
-          >
+              });
+            }}>
             {map(LANGUAGE_OPTIONS, (language: string) => (
               <option key={language} value={language}>
                 {startCase(language)}
@@ -45,13 +44,12 @@ const EditorConfig = () => {
           <FormLabel>Theme</FormLabel>
           <Select
             value={editor.theme}
-            onChange={(e) =>
+            onChange={(e) => {
               onUpdateEditorData({
                 ...editor,
                 theme: e.target.value,
-              })
-            }
-          >
+              });
+            }}>
             {map(THEME_OPTIONS, (name) => (
               <option key={name} value={name}>
                 {startCase(name)}
@@ -64,13 +62,12 @@ const EditorConfig = () => {
           <FormLabel>Font Size</FormLabel>
           <Select
             value={editor.fontSize}
-            onChange={(e) =>
+            onChange={(e) => {
               onUpdateEditorData({
                 ...editor,
                 fontSize: toNumber(e.target.value),
-              })
-            }
-          >
+              });
+            }}>
             {map(FONT_SIZES, (size) => (
               <option key={size} value={size}>
                 {`${size}px`}

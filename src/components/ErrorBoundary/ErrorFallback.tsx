@@ -12,8 +12,7 @@ const ErrorFallback: React.FC<FallbackProps> = ({ resetErrorBoundary }) => {
       as={Flex}
       justifyContent="center"
       alignItems="center"
-      minHeight="100vh"
-    >
+      minHeight="100vh">
       <BrandLogo />
       <Text mb={2}>Something went wrong!</Text>
       <Button
@@ -23,8 +22,7 @@ const ErrorFallback: React.FC<FallbackProps> = ({ resetErrorBoundary }) => {
         bgGradient={PRIMARY_GRADIENT_COLOR}
         color="white"
         size="md"
-        onClick={resetErrorBoundary}
-      >
+        onClick={resetErrorBoundary}>
         Home
       </Button>
     </Box>

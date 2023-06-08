@@ -10,8 +10,7 @@ const Loader = () => {
       direction="column"
       as={Flex}
       justifyContent="center"
-      alignItems="center"
-    >
+      alignItems="center">
       <BrandLogo logoSize="large" />
       <Spinner size="lg" />
     </Box>
