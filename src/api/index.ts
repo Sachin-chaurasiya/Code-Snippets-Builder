@@ -1,6 +1,7 @@
 import { Account, Client, Databases } from 'appwrite';
+import { ROUTES } from 'constants/common';
 import { Server } from 'utils/Config';
-import { getUniqueId } from 'utils/EditorUtils';
+import { v4 as generateUniqueId } from 'uuid';
 
 const initClient = () => {
   const client = new Client()
@@ -41,7 +42,7 @@ export const API_CLIENT = {
   emailLogin: async (email: string, password: string, name?: string) => {
     try {
       const user = await API_CLIENT.account.create(
-        getUniqueId(),
+        generateUniqueId(),
         email,
         password,
         name
@@ -57,6 +58,7 @@ export const API_CLIENT = {
   logout: async () => {
     try {
       await API_CLIENT.account.deleteSession('current');
+      window.location.href = ROUTES.LOGIN;
     } catch (error) {
       // handle error
     }

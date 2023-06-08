@@ -6,6 +6,7 @@ export interface NavItemProps extends FlexProps {
   icon: IconType;
   children: ReactNode;
   path: string;
+  handleClick?: () => void;
 }
 
 export interface LinkItemProps {

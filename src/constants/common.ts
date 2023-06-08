@@ -3,6 +3,9 @@ import { CSSProperties } from 'react';
 export const ROUTES = {
   HOME: '/',
   EDITOR: '/editor',
+  LOGIN: '/login',
+  SIGN_UP: '/signup',
+  PROFILE: '/profile',
 };
 
 export const INITIAL_CONTEXT_DATA = {
