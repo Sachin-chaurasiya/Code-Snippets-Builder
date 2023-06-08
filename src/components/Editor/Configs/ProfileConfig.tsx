@@ -32,22 +32,21 @@ const ProfileConfig = () => {
           <CustomSwitch
             id="profile-info"
             isChecked={Boolean(profile.isVisible)}
-            onChange={(e) =>
-              onUpdateProfileData({ ...profile, isVisible: e.target.checked })
-            }
+            onChange={(e) => {
+              onUpdateProfileData({ ...profile, isVisible: e.target.checked });
+            }}
           />
         </FormControl>
         <FormControl>
           <FormLabel>Platform</FormLabel>
           <Select
             value={profile.platform}
-            onChange={(e) =>
+            onChange={(e) => {
               onUpdateProfileData({
                 ...profile,
                 platform: e.target.value,
-              })
-            }
-          >
+              });
+            }}>
             {map(SUPPORTED_PROFILES, ({ label, value }) => (
               <option key={value} value={value}>
                 {label}
@@ -59,12 +58,12 @@ const ProfileConfig = () => {
           <FormLabel>Username</FormLabel>
           <Input
             value={profile.username}
-            onChange={(e) =>
+            onChange={(e) => {
               onUpdateProfileData({
                 ...profile,
                 username: e.target.value,
-              })
-            }
+              });
+            }}
           />
         </FormControl>
       </VStack>

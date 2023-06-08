@@ -33,8 +33,7 @@ const CodeEditor = () => {
     <>
       <Box
         className="window"
-        style={{ background: `${CODE_EDITOR_BACKGROUND_COLOR}` }}
-      >
+        style={{ background: `${CODE_EDITOR_BACKGROUND_COLOR}` }}>
         <TitleBar />
 
         <CodeMirror
@@ -52,7 +51,9 @@ const CodeEditor = () => {
           height="100%"
           theme={theme as ReactCodeMirrorProps['theme']}
           extensions={extensions}
-          onChange={(code) => setCode(code)}
+          onChange={(code) => {
+            setCode(code);
+          }}
         />
       </Box>
     </>

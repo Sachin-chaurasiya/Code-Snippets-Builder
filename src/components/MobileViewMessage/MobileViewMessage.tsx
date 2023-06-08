@@ -11,8 +11,7 @@ const MobileViewMessage = () => {
       justifyContent="center"
       alignItems="center"
       minHeight="100vh"
-      gap={8}
-    >
+      gap={8}>
       <BrandLogo gap={4} />
       <Text fontSize="md" textAlign="center">
         For the best experience, please use the desktop version of our website.

@@ -29,7 +29,9 @@ const TextNode: FC<NodeProps> = ({ selected, dragging }) => {
         color={HANDLE_COLOR}
         keepAspectRatio
         isVisible={selected}
-        onResizeEnd={(_, param) => setParams(param)}
+        onResizeEnd={(_, param) => {
+          setParams(param);
+        }}
       />
       <CustomHandle
         top="50%"

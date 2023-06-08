@@ -16,8 +16,7 @@ const NavItem = ({ icon, children, path, ...rest }: NavItemProps) => {
     <Link
       href={path}
       style={{ textDecoration: 'none', marginBottom: '4px', display: 'block' }}
-      _focus={{ boxShadow: 'none' }}
-    >
+      _focus={{ boxShadow: 'none' }}>
       <Flex
         align="center"
         p="4"
@@ -31,8 +30,7 @@ const NavItem = ({ icon, children, path, ...rest }: NavItemProps) => {
         }}
         bgGradient={isActiveItem ? PRIMARY_GRADIENT_COLOR : ''}
         color={isActiveItem ? 'white' : ''}
-        {...rest}
-      >
+        {...rest}>
         {icon && (
           <Icon
             mr="4"

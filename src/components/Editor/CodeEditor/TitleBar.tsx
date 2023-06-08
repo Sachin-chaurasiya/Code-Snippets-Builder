@@ -40,8 +40,7 @@ const TitleBar = () => {
       position="relative"
       height="45px"
       alignItems="center"
-      style={{ background: 'rgba(255, 255, 255, 0.06)' }}
-    >
+      style={{ background: 'rgba(255, 255, 255, 0.06)' }}>
       <EditorTitleIcon />
       {showFileName ? (
         <Box
@@ -58,8 +57,7 @@ const TitleBar = () => {
           height="40px"
           cursor="default"
           zIndex={1}
-          style={{ background: CODE_EDITOR_BACKGROUND_COLOR }}
-        >
+          style={{ background: CODE_EDITOR_BACKGROUND_COLOR }}>
           {FileNameIcon ? (
             <IconButton
               alignItems="center"
@@ -81,7 +79,9 @@ const TitleBar = () => {
               minHeight="19px"
               minWidth="55px"
               userSelect="text"
-              onChange={(e) => setFileName(e.target.value)}
+              onChange={(e) => {
+                setFileName(e.target.value);
+              }}
             />
           </Editable>
           <IconButton
@@ -92,7 +92,9 @@ const TitleBar = () => {
             variant="ghost"
             opacity={0}
             icon={<IoMdClose fontWeight="bold" color="white" fontSize={18} />}
-            onClick={() => setShowFileName(false)}
+            onClick={() => {
+              setShowFileName(false);
+            }}
           />
         </Box>
       ) : (
@@ -101,7 +103,9 @@ const TitleBar = () => {
           aria-label="add-button"
           variant="ghost"
           icon={<HiPlus fontWeight="bold" color="white" fontSize={18} />}
-          onClick={() => setShowFileName(true)}
+          onClick={() => {
+            setShowFileName(true);
+          }}
         />
       )}
     </Flex>

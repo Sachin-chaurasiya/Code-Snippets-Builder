@@ -21,7 +21,9 @@ import { PERSONAL_WEBSITE } from 'constants/links';
 const LandingPage = () => {
   const navigate = useNavigate();
 
-  const handleGetStarted = () => navigate(ROUTES.EDITOR);
+  const handleGetStarted = () => {
+    navigate(ROUTES.EDITOR);
+  };
 
   return (
     <Box bg="white" minHeight="100vh">
@@ -43,8 +45,7 @@ const LandingPage = () => {
               bgGradient={PRIMARY_GRADIENT_COLOR}
               color="white"
               size="lg"
-              onClick={handleGetStarted}
-            >
+              onClick={handleGetStarted}>
               Get Started
             </Button>
           </Box>
@@ -99,8 +100,7 @@ const LandingPage = () => {
             bgGradient={PRIMARY_GRADIENT_COLOR}
             color="white"
             size="lg"
-            onClick={handleGetStarted}
-          >
+            onClick={handleGetStarted}>
             Get Started
           </Button>
         </Box>

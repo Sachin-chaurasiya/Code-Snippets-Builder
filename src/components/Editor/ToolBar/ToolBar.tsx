@@ -30,15 +30,13 @@ const ToolBar = () => {
       p={4}
       bg="white"
       borderRadius="md"
-      shadow="md"
-    >
+      shadow="md">
       <ButtonGroup>
         {TOOL_BAR_ITEMS.map(({ label, icon, nodeType }) => (
           <Tooltip
             key={label}
             label={`Add ${label}`}
-            borderRadius={BORDER_RADIUS_MEDIUM}
-          >
+            borderRadius={BORDER_RADIUS_MEDIUM}>
             <Button
               shadow="md"
               aria-label={`drag and drop ${toLower(label)}`}
@@ -51,7 +49,9 @@ const ToolBar = () => {
               cursor="grab"
               rightIcon={<RxDragHandleDots2 />}
               leftIcon={<Icon as={icon} fontSize="20px" />}
-              onDragStart={(event) => onDragStart(event, nodeType)}
+              onDragStart={(event) => {
+                onDragStart(event, nodeType);
+              }}
             />
           </Tooltip>
         ))}

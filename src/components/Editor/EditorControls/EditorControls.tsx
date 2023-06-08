@@ -83,23 +83,20 @@ const EditorControls = () => {
             _hover={{ background: 'white' }}
             bg="white"
             onClick={onFitViewHandler}
-            aria-label="fit view"
-          >
+            aria-label="fit view">
             <FitViewIcon />
           </Button>
         </Tooltip>
 
         <Tooltip
           label="Toggle interactivity"
-          borderRadius={BORDER_RADIUS_MEDIUM}
-        >
+          borderRadius={BORDER_RADIUS_MEDIUM}>
           <Button
             shadow="md"
             _hover={{ background: 'white' }}
             bg="white"
             onClick={onToggleInteractivity}
-            aria-label="toggle interactivity"
-          >
+            aria-label="toggle interactivity">
             {isInteractive ? <UnlockIcon /> : <LockIcon />}
           </Button>
         </Tooltip>
@@ -109,16 +106,14 @@ const EditorControls = () => {
         justifyContent="space-between"
         flex={0.3}
         borderRadius={BORDER_RADIUS_LARGE}
-        shadow="md"
-      >
+        shadow="md">
         <Tooltip label="Zoom out" borderRadius={BORDER_RADIUS_MEDIUM}>
           <Button
             _hover={{ background: 'transparent' }}
             onClick={onZoomOutHandler}
             aria-label="zoom out"
             disabled={minZoomReached}
-            variant="ghost"
-          >
+            variant="ghost">
             <MinusIcon />
           </Button>
         </Tooltip>
@@ -127,8 +122,7 @@ const EditorControls = () => {
           value={currentZoom}
           min={state.minZoom}
           max={state.maxZoom}
-          onChange={handleZoomTo}
-        >
+          onChange={handleZoomTo}>
           <SliderTrack>
             <SliderFilledTrack bgGradient={PRIMARY_GRADIENT_COLOR} />
           </SliderTrack>
@@ -140,8 +134,7 @@ const EditorControls = () => {
             onClick={onZoomInHandler}
             aria-label="zoom in"
             disabled={maxZoomReached}
-            variant="ghost"
-          >
+            variant="ghost">
             <PlusIcon />
           </Button>
         </Tooltip>

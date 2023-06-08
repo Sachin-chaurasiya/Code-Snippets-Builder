@@ -77,7 +77,9 @@ const EditorPage = () => {
   );
 
   const onConnect = useCallback(
-    (params: Connection) => setEdges((eds) => addEdge(params, eds)),
+    (params: Connection) => {
+      setEdges((eds) => addEdge(params, eds));
+    },
     [setEdges]
   );
 
@@ -113,8 +115,7 @@ const EditorPage = () => {
           style={{
             height: '80vh',
           }}
-          ref={reactFlowWrapper}
-        >
+          ref={reactFlowWrapper}>
           <ReactFlow
             nodesConnectable={false}
             nodeTypes={nodeTypes}
@@ -130,8 +131,7 @@ const EditorPage = () => {
             onConnect={onConnect}
             onInit={setReactFlowInstance}
             onDrop={onDrop}
-            onDragOver={onDragOver}
-          >
+            onDragOver={onDragOver}>
             {!hideWaterMark ? (
               <Panel position="bottom-right">
                 <BrandLogo
