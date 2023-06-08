@@ -1,4 +1,5 @@
 import { CUSTOM_NODES } from 'constants/editor';
+import { v4 as generateUniqueId } from 'uuid';
 
 export const getDragHandleByNodeType = (type: string) => {
   switch (type) {
@@ -10,3 +11,5 @@ export const getDragHandleByNodeType = (type: string) => {
     default:
   }
 };
+
+export const getUniqueId = () => generateUniqueId();

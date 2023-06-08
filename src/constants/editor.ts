@@ -1,9 +1,10 @@
-import { sortBy, uniqueId } from 'lodash';
+import { sortBy } from 'lodash';
 import { Node } from 'reactflow';
 import * as themes from '@uiw/codemirror-themes-all';
 import { langNames as languages } from '@uiw/codemirror-extensions-langs';
 import { ToolBarItemsProps } from 'components/Editor/ToolBar/ToolBar.interface';
 import { BiCodeBlock, BiImage, BiText } from 'react-icons/bi';
+import { getUniqueId } from 'utils/EditorUtils';
 
 export const GRADIENT_COLORS = [
   'linear-gradient(337deg, rgb(101, 78, 163), rgb(218, 152, 180))',
@@ -197,7 +198,7 @@ export const BORDER_RADIUS = [4, 6, 8, 10, 12];
 
 export const INITIAL_NODES: Node[] = [
   {
-    id: uniqueId('dragged'),
+    id: getUniqueId(),
     position: { x: 80, y: 50 },
     data: { label: 'Initial Code Editor Node' },
     type: 'editorNode',

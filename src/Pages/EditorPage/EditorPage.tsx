@@ -19,7 +19,6 @@ import ReactFlow, {
 import 'reactflow/dist/style.css';
 
 import ToolBar from 'components/Editor/ToolBar/ToolBar';
-import { uniqueId } from 'lodash';
 import EditorNode from 'components/Editor/CustomNodes/EditorNode';
 import { CUSTOM_NODES, INITIAL_NODES } from 'constants/editor';
 import TextNode from 'components/Editor/CustomNodes/TextNode';
@@ -27,7 +26,7 @@ import ImageNode from 'components/Editor/CustomNodes/ImageNode';
 import { useAppProvider } from 'AppProvider';
 import EditorSidebar from 'components/Editor/EditorSidebar/EditorSidebar';
 import EditorControls from 'components/Editor/EditorControls/EditorControls';
-import { getDragHandleByNodeType } from 'utils/EditorUtils';
+import { getDragHandleByNodeType, getUniqueId } from 'utils/EditorUtils';
 
 import WatermarkPanel from 'components/Editor/Panels/WatermarkPanel';
 import ProfilePanel from 'components/Editor/Panels/ProfilePanel';
@@ -64,7 +63,7 @@ const EditorPage = () => {
         y: event.clientY - (reactFlowBounds?.top ?? 0),
       }) as XYPosition;
       const newNode: Node = {
-        id: uniqueId('dragged'),
+        id: getUniqueId(),
         type,
         position,
         data: { label: `${type} node` },

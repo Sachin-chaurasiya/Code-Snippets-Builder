@@ -12,6 +12,7 @@
     "@types/node": "^12.20.55",
     "@types/react": "^18.2.6",
     "@types/react-dom": "^18.2.4",
+    "appwrite": "^11.0.0",
     "framer-motion": "^6.5.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -53,6 +54,7 @@
   "devDependencies": {
     "@types/lodash": "^4.14.194",
     "@types/react-router-dom": "^5.3.3",
+    "@types/uuid": "^9.0.1",
     "@typescript-eslint/eslint-plugin": "^5.50.0",
     "@uiw/codemirror-extensions-langs": "^4.20.2",
     "@uiw/codemirror-themes-all": "^4.20.2",
@@ -71,6 +73,7 @@
     "lint-staged": "^13.2.2",
     "lodash": "^4.17.21",
     "prettier": "^2.8.8",
-    "react-quill": "^2.0.0"
+    "react-quill": "^2.0.0",
+    "uuid": "^9.0.0"
   }
 }
