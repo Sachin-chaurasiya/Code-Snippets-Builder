@@ -8,6 +8,5 @@ export const getDragHandleByNodeType = (type: string) => {
       return '.custom_handle';
 
     default:
-      return undefined;
   }
 };
