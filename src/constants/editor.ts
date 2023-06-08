@@ -200,7 +200,7 @@ export const INITIAL_NODES: Node[] = [
   {
     id: getUniqueId(),
     position: { x: 80, y: 50 },
-    data: { label: 'Initial Code Editor Node' },
+    data: {},
     type: 'editorNode',
     dragHandle: '.node-drag-handle',
   },

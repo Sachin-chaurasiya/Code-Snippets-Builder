@@ -66,7 +66,7 @@ const EditorPage = () => {
         id: getUniqueId(),
         type,
         position,
-        data: { label: `${type} node` },
+        data: {},
         dragHandle: getDragHandleByNodeType(type),
       };
 

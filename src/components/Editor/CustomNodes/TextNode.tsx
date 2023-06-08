@@ -12,7 +12,7 @@ import { HANDLE_COLOR } from 'constants/editor';
 import React, { FC, memo, useState } from 'react';
 import { NodeProps, NodeResizer, ResizeParams } from 'reactflow';
 
-const TextNode: FC<NodeProps> = ({ selected, dragging }) => {
+const TextNode: FC<NodeProps> = ({ selected }) => {
   const [params, setParams] = useState<ResizeParams>();
 
   return (
