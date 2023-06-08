@@ -1,4 +1,3 @@
-import React, { ReactNode } from 'react';
 import {
   Box,
   Flex,
@@ -7,7 +6,6 @@ import {
   Button,
   Image,
   Stack,
-  Link,
 } from '@chakra-ui/react';
 import CodeSnippetImage from 'assets/images/code-snippet.png';
 import { RiDragDropLine } from 'react-icons/ri';
@@ -16,7 +14,8 @@ import { DiTerminal } from 'react-icons/di';
 import { useNavigate } from 'react-router-dom';
 import { PRIMARY_GRADIENT_COLOR, ROUTES } from 'constants/common';
 import { COMMON_TEXT_PROPS } from 'constants/text';
-import { PERSONAL_WEBSITE } from 'constants/links';
+import { Feature } from 'components/Feature/Feature';
+import Footer from 'components/Common/Footer/Footer';
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -76,7 +75,13 @@ const LandingPage = () => {
               description="Choose from a wide range of themes, fonts, and color schemes to make your snippets visually appealing."
             />
             <Feature
-              icon={<DiTerminal size={50} color="white" />}
+              icon={
+                <DiTerminal
+                  size={50}
+                  color="white"
+                  style={{ marginTop: '-8px' }}
+                />
+              }
               title="Multi-Language Support"
               description="Create snippets for various programming languages, including JavaScript, Python, Java, and more."
             />
@@ -106,38 +111,9 @@ const LandingPage = () => {
         </Box>
       </Box>
 
-      <Box bg="gray.100" py={4}>
-        <Box maxWidth="container.md" mx="auto" textAlign="center">
-          <Text>
-            Made with ❤️ by{' '}
-            <Link href={PERSONAL_WEBSITE}>Sachin Chaurasiya</Link>
-          </Text>
-        </Box>
-      </Box>
+      <Footer />
     </Box>
   );
 };
-
-const Feature = ({
-  icon,
-  title,
-  description,
-}: {
-  icon: ReactNode;
-  title: string;
-  description: string;
-}) => (
-  <Flex>
-    <Box boxSize={10}>{icon}</Box>
-    <Flex direction="column">
-      <Heading size="md" ml={3} color="white">
-        {title}
-      </Heading>
-      <Text color="white" ml={3}>
-        {description}
-      </Text>
-    </Flex>
-  </Flex>
-);
 
 export default LandingPage;
