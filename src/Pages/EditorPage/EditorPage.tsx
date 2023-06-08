@@ -10,7 +10,6 @@ import React, {
 import ReactFlow, {
   Connection,
   Node,
-  Panel,
   ReactFlowInstance,
   XYPosition,
   addEdge,
@@ -29,11 +28,12 @@ import { useAppProvider } from 'AppProvider';
 import EditorSidebar from 'components/Editor/EditorSidebar/EditorSidebar';
 import EditorControls from 'components/Editor/EditorControls/EditorControls';
 import { getDragHandleByNodeType } from 'utils/EditorUtils';
-import BrandLogo from 'components/Common/BrandLogo/BrandLogo';
-import ProfileInfo from 'components/Editor/ProfileInfo/ProfileInfo';
+
+import WatermarkPanel from 'components/Editor/Panels/WatermarkPanel';
+import ProfilePanel from 'components/Editor/Panels/ProfilePanel';
 
 const EditorPage = () => {
-  const { background, hideWaterMark, profile } = useAppProvider();
+  const { background } = useAppProvider();
   const [nodes, setNodes, onNodesChange] = useNodesState(INITIAL_NODES);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
 
@@ -117,6 +117,8 @@ const EditorPage = () => {
           }}
           ref={reactFlowWrapper}>
           <ReactFlow
+            zoomOnDoubleClick={false}
+            zoomOnScroll={false}
             nodesConnectable={false}
             nodeTypes={nodeTypes}
             onNodesChange={onNodesChange}
@@ -132,26 +134,8 @@ const EditorPage = () => {
             onInit={setReactFlowInstance}
             onDrop={onDrop}
             onDragOver={onDragOver}>
-            {!hideWaterMark ? (
-              <Panel position="bottom-right">
-                <BrandLogo
-                  gap={4}
-                  h="auto"
-                  textColor="white"
-                  logoType="light"
-                  textBackgroundColor="transparent"
-                  backgroundClip="inherit"
-                  logoSize="x-small"
-                  textFontSize="md"
-                  textFontWeight="normal"
-                />
-              </Panel>
-            ) : null}
-            {profile.isVisible ? (
-              <Panel position="bottom-left">
-                <ProfileInfo />
-              </Panel>
-            ) : null}
+            <WatermarkPanel />
+            <ProfilePanel />
           </ReactFlow>
         </Box>
       </Box>
