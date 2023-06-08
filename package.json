@@ -1,7 +1,6 @@
 {
   "name": "code-snippets-builder",
   "version": "0.0.10",
-  "private": true,
   "dependencies": {
     "@chakra-ui/react": "^2.6.1",
     "@emotion/react": "^11.11.0",
@@ -21,15 +20,18 @@
     "react-router-dom": "^6.11.1",
     "react-scripts": "5.0.1",
     "reactflow": "^11.7.0",
-    "typescript": "^4.9.5",
+    "typescript": "4.9.5",
     "web-vitals": "^2.1.4",
     "zustand": "^4.3.8"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "PORT=3001 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint src/**/*.{ts,tsx}",
+    "lint:fix": "eslint --fix 'src/**/*.{ts,tsx}'",
+    "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -49,11 +51,22 @@
   "devDependencies": {
     "@types/lodash": "^4.14.194",
     "@types/react-router-dom": "^5.3.3",
+    "@typescript-eslint/eslint-plugin": "^5.50.0",
     "@uiw/codemirror-extensions-langs": "^4.20.2",
     "@uiw/codemirror-themes-all": "^4.20.2",
     "@uiw/react-codemirror": "^4.20.2",
+    "eslint": "^8.0.1",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-config-standard-with-typescript": "^35.0.0",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-n": "^15.0.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-promise": "^6.0.0",
+    "eslint-plugin-react": "^7.32.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
     "html-to-image": "^1.11.11",
     "lodash": "^4.17.21",
+    "prettier": "^2.8.8",
     "react-quill": "^2.0.0"
   }
 }
