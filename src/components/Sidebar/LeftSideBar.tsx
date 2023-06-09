@@ -1,13 +1,14 @@
 import React, { FC } from 'react';
 import { Box, useColorModeValue, BoxProps, Flex } from '@chakra-ui/react';
 import NavItem from './NavItem';
-import { ROUTES } from 'constants/common';
+import { ROUTES, SESSION_KEY } from 'constants/common';
 
 import BrandLogo from 'components/Common/BrandLogo/BrandLogo';
 import { useNavigate } from 'react-router-dom';
 import { LINK_ITEMS } from 'constants/sidebar';
 import { FiLogOut } from 'react-icons/fi';
 import { API_CLIENT } from 'api';
+import Cookies from 'js-cookie';
 
 const LeftSidebar: FC<BoxProps> = () => {
   const navigate = useNavigate();
@@ -15,6 +16,18 @@ const LeftSidebar: FC<BoxProps> = () => {
   const handleNavigateHome = () => {
     navigate(ROUTES.HOME);
   };
+
+  const handleLogout = async () => {
+    try {
+      await API_CLIENT.logout();
+
+      // remove the session
+      Cookies.remove(SESSION_KEY);
+    } catch (error) {
+      // do not throw toast message for this API
+    }
+  };
+
   return (
     <Box
       as={Flex}
@@ -41,7 +54,7 @@ const LeftSidebar: FC<BoxProps> = () => {
           path="#"
           key="Logout"
           icon={FiLogOut}
-          handleClick={API_CLIENT.logout}>
+          handleClick={handleLogout}>
           Logout
         </NavItem>
       </Box>

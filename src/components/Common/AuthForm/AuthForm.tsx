@@ -1,5 +1,8 @@
 import {
   AbsoluteCenter,
+  Alert,
+  AlertDescription,
+  AlertIcon,
   Box,
   Button,
   Divider,
@@ -16,8 +19,9 @@ import {
   BORDER_RADIUS_MEDIUM,
   PRIMARY_GRADIENT_COLOR,
   ROUTES,
+  SESSION_KEY,
 } from 'constants/common';
-import React, { FC } from 'react';
+import React, { FC, useMemo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import GoogleIcon from '../Icons/GoogleIcon';
 import GitHubIcon from '../Icons/GitHubIcon';
@@ -30,6 +34,11 @@ import {
   AuthFormProps,
 } from './AuthForm.interface';
 import { isEmpty, startCase } from 'lodash';
+import { AppwriteException } from 'appwrite';
+import { getDateByDateString } from 'utils/DateTimeUtil';
+
+import Cookies from 'js-cookie';
+import { validateForm } from 'utils/FormUtils';
 
 const AuthForm: FC<AuthFormProps> = ({ formType }) => {
   const navigate = useNavigate();
@@ -47,6 +56,18 @@ const AuthForm: FC<AuthFormProps> = ({ formType }) => {
     password: '',
   });
 
+  const [formAPIError, setFormAPIError] = useState<string>('');
+
+  const formAPI = useMemo(() => {
+    return formType === 'login'
+      ? API_CLIENT.emailLogin
+      : API_CLIENT.emailSignUp;
+  }, [formType]);
+
+  /**
+   * handle the form input changes
+   * @param e ChangeEvent<HTMLInputElement>
+   */
   const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
@@ -58,43 +79,38 @@ const AuthForm: FC<AuthFormProps> = ({ formType }) => {
     }));
   };
 
-  const validateForm = (data: AuthFormData) => {
-    let isValid = true;
-    for (const key in data) {
-      if (isEmpty(data[key as keyof AuthFormData])) {
-        isValid = false;
-        setFormError((prev) => ({
-          ...prev,
-          [key]: `${startCase(key)} is required`,
-        }));
-      }
-    }
-
-    return isValid;
-  };
-
+  /**
+   * handle the form submit
+   */
   const handleSubmit = async () => {
-    const isFormValid = validateForm({
+    // reset the api error first
+    setFormAPIError('');
+
+    // validate the form data
+    const { isValid, errorObj } = validateForm<AuthFormData, AuthFormError>({
       email: formData.email,
       password: formData.password,
     });
 
-    const api =
-      formType === 'login' ? API_CLIENT.emailLogin : API_CLIENT.emailSignUp;
+    setFormError(errorObj);
 
-    if (isFormValid) {
+    // make api call if form data is valid
+    if (isValid) {
       try {
         setIsSubmitting(true);
-        const session = await api(
-          formData.email,
-          formData.password,
-          formData.name
-        );
-        if (session) {
-          navigate(ROUTES.EDITOR);
-        }
+        await formAPI(formData.email, formData.password, formData.name);
+
+        const session = await API_CLIENT.getLoggedInUserSession();
+
+        const expiry = getDateByDateString(session.expire);
+
+        // store the session
+        Cookies.set(SESSION_KEY, session.userId, { expires: expiry });
+
+        navigate(ROUTES.HOME);
       } catch (error) {
-        // handle error
+        const exception = error as AppwriteException;
+        setFormAPIError(exception.message);
       } finally {
         setIsSubmitting(false);
       }
@@ -139,6 +155,13 @@ const AuthForm: FC<AuthFormProps> = ({ formType }) => {
             </Text>
           </Box>
 
+          {formAPIError ? (
+            <Alert status="error" variant="left-accent">
+              <AlertIcon />
+              <AlertDescription>{formAPIError}</AlertDescription>
+            </Alert>
+          ) : null}
+
           {formType === 'signup' ? (
             <FormControl id="name">
               <FormLabel>Name</FormLabel>
@@ -150,10 +173,12 @@ const AuthForm: FC<AuthFormProps> = ({ formType }) => {
               />
             </FormControl>
           ) : null}
-          <FormControl id="email" isInvalid={Boolean(formError.email)}>
+          <FormControl
+            id="email"
+            isInvalid={Boolean(formError.email)}
+            isRequired>
             <FormLabel>Email address</FormLabel>
             <Input
-              required
               name="email"
               type="email"
               value={formData.email}
@@ -163,10 +188,12 @@ const AuthForm: FC<AuthFormProps> = ({ formType }) => {
               <FormErrorMessage>{formError.email}</FormErrorMessage>
             )}
           </FormControl>
-          <FormControl id="password" isInvalid={Boolean(formError.password)}>
+          <FormControl
+            id="password"
+            isInvalid={Boolean(formError.password)}
+            isRequired>
             <FormLabel>Password</FormLabel>
             <Input
-              required
               name="password"
               type="password"
               value={formData.password}
@@ -192,6 +219,7 @@ const AuthForm: FC<AuthFormProps> = ({ formType }) => {
               OR
             </AbsoluteCenter>
           </Box>
+          {/* Social Auth provider : google, github */}
           <Button
             _hover={{ bg: 'white' }}
             leftIcon={<GoogleIcon />}

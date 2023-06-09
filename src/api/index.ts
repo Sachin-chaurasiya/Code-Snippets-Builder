@@ -1,5 +1,4 @@
 import { Account, Client, Databases } from 'appwrite';
-import { ROUTES } from 'constants/common';
 import { Server } from 'utils/Config';
 import { v4 as generateUniqueId } from 'uuid';
 
@@ -16,15 +15,29 @@ const initClient = () => {
 
 export const API_CLIENT = {
   ...initClient(),
+  /**
+   *
+   * @returns current logged in user session
+   */
   getLoggedInUserSession: async () => {
-    try {
-      const session = await API_CLIENT.account.getSession('current');
+    const session = await API_CLIENT.account.getSession('current');
 
-      return session;
-    } catch (error) {
-      return undefined;
-    }
+    return session;
   },
+
+  /**
+   *
+   * @returns current logged in user data
+   */
+  getLoggedInUser: async () => {
+    const user = await API_CLIENT.account.get();
+
+    return user;
+  },
+
+  /**
+   * Create the session for google auth provider
+   */
   googleLogin: () => {
     API_CLIENT.account.createOAuth2Session(
       'google',
@@ -32,6 +45,10 @@ export const API_CLIENT = {
       `${window.location.origin}/login`
     );
   },
+
+  /**
+   * Create the session for github auth provider
+   */
   githubLogin: () => {
     API_CLIENT.account.createOAuth2Session(
       'github',
@@ -39,44 +56,46 @@ export const API_CLIENT = {
       `${window.location.origin}/login`
     );
   },
+
+  /**
+   *
+   * @param email user email
+   * @param password user password
+   * @param name user name(Optional)
+   * @returns created user data
+   */
   emailSignUp: async (email: string, password: string, name?: string) => {
-    try {
-      await API_CLIENT.account.create(
-        generateUniqueId(),
-        email,
-        password,
-        name
-      );
+    const data = await API_CLIENT.account.create(
+      generateUniqueId(),
+      email,
+      password,
+      name
+    );
 
-      const session = await API_CLIENT.getLoggedInUserSession();
-
-      return session;
-    } catch (error) {
-      // handle error
-
-      return undefined;
-    }
+    return data;
   },
+
+  /**
+   *
+   * @param email user email
+   * @param password user password
+   * @param _ user name(Optional)
+   * @returns logged in user data
+   */
   emailLogin: async (email: string, password: string, _?: string) => {
-    try {
-      const session = await API_CLIENT.account.createEmailSession(
-        email,
-        password
-      );
+    const session = await API_CLIENT.account.createEmailSession(
+      email,
+      password
+    );
 
-      return session;
-    } catch (error) {
-      // handle error
-
-      return undefined;
-    }
+    return session;
   },
+
+  /**
+   *
+   * @returns Logged out the current user
+   */
   logout: async () => {
-    try {
-      await API_CLIENT.account.deleteSession('current');
-      window.location.href = ROUTES.LOGIN;
-    } catch (error) {
-      // handle error
-    }
+    return await API_CLIENT.account.deleteSession('current');
   },
 };
