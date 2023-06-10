@@ -3,9 +3,10 @@ import { CSSProperties } from 'react';
 export const ROUTES = {
   HOME: '/',
   EDITOR: '/editor',
-  LOGIN: '/login',
+  SIGN_IN: '/signin',
   SIGN_UP: '/signup',
   PROFILE: '/profile',
+  CALLBACK: '/callback',
 };
 
 export const INITIAL_CONTEXT_DATA = {

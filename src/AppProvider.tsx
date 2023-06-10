@@ -5,7 +5,7 @@ import React, {
   useMemo,
   useState,
 } from 'react';
-import { INITIAL_CONTEXT_DATA } from './constants/common';
+import { INITIAL_CONTEXT_DATA, SESSION_KEY } from './constants/common';
 import { useMediaQuery } from '@chakra-ui/react';
 import MobileViewMessage from 'components/MobileViewMessage/MobileViewMessage';
 import { DEFAULT_EDITOR_BG_COLOR } from 'constants/editor';
@@ -15,7 +15,8 @@ import {
   ImageContextData,
   ProfileContextData,
   TextContextData,
-} from 'interface/AppProvider.interface';
+} from 'interfaces/AppProvider.interface';
+import Cookies from 'js-cookie';
 
 export const AppContext = createContext<AppContextProps>({} as AppContextProps);
 
@@ -58,6 +59,12 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
     setIsWaterMarkVisible(updatedData);
   };
 
+  const [session, setSession] = useState(Cookies.get(SESSION_KEY));
+
+  const handleUpdateSession = (updatedSession: string | undefined) => {
+    setSession(updatedSession);
+  };
+
   const contextValues = useMemo(
     () => ({
       editor: editorContextData,
@@ -72,6 +79,9 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
       onUpdateBackground: handleUpdateBackground,
       onUpdateProfileData: handleUpdateProfileData,
       onUpdateWaterMark: handleUpdateWaterMark,
+
+      session,
+      onUpdateSession: handleUpdateSession,
     }),
     [
       background,

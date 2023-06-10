@@ -1,7 +1,6 @@
-type FormType = 'login' | 'signup';
+type FormType = 'signin' | 'signup';
 
 export interface AuthFormData {
-  name?: string;
   email: string;
   password: string;
 }

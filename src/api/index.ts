@@ -1,4 +1,6 @@
 import { Account, Client, Databases } from 'appwrite';
+import { FAILURE_REDIRECT_URL, SUCCESS_REDIRECT_URL } from 'constants/links';
+import { AuthProvider } from 'interfaces/Auth.interface';
 import { Server } from 'utils/Config';
 import { v4 as generateUniqueId } from 'uuid';
 
@@ -10,7 +12,7 @@ const initClient = () => {
   const database = new Databases(client);
   const account = new Account(client);
 
-  return { database, account };
+  return { database, account, client };
 };
 
 export const API_CLIENT = {
@@ -38,22 +40,22 @@ export const API_CLIENT = {
   /**
    * Create the session for google auth provider
    */
-  googleLogin: () => {
+  googleSignIn: () => {
     API_CLIENT.account.createOAuth2Session(
-      'google',
-      `${window.location.origin}/profile`,
-      `${window.location.origin}/login`
+      AuthProvider.GOOGLE,
+      SUCCESS_REDIRECT_URL,
+      FAILURE_REDIRECT_URL
     );
   },
 
   /**
    * Create the session for github auth provider
    */
-  githubLogin: () => {
+  githubSignIn: () => {
     API_CLIENT.account.createOAuth2Session(
-      'github',
-      `${window.location.origin}/profile`,
-      `${window.location.origin}/login`
+      AuthProvider.GITHUB,
+      SUCCESS_REDIRECT_URL,
+      FAILURE_REDIRECT_URL
     );
   },
 
@@ -61,15 +63,13 @@ export const API_CLIENT = {
    *
    * @param email user email
    * @param password user password
-   * @param name user name(Optional)
    * @returns created user data
    */
-  emailSignUp: async (email: string, password: string, name?: string) => {
+  emailSignUp: async (email: string, password: string) => {
     const data = await API_CLIENT.account.create(
       generateUniqueId(),
       email,
-      password,
-      name
+      password
     );
 
     return data;
@@ -79,10 +79,9 @@ export const API_CLIENT = {
    *
    * @param email user email
    * @param password user password
-   * @param _ user name(Optional)
    * @returns logged in user data
    */
-  emailLogin: async (email: string, password: string, _?: string) => {
+  emailSignIn: async (email: string, password: string) => {
     const session = await API_CLIENT.account.createEmailSession(
       email,
       password
