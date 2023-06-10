@@ -14,6 +14,7 @@ import {
   Input,
   Stack,
   Text,
+  useToast,
 } from '@chakra-ui/react';
 import {
   BORDER_RADIUS_MEDIUM,
@@ -35,18 +36,20 @@ import {
 } from './AuthForm.interface';
 import { isEmpty, startCase } from 'lodash';
 import { AppwriteException } from 'appwrite';
-import { getDateByDateString } from 'utils/DateTimeUtil';
+import { getDateByDateString } from 'utils/DateTimeUtils';
 
 import Cookies from 'js-cookie';
 import { validateForm } from 'utils/FormUtils';
+import { useAppProvider } from 'AppProvider';
 
 const AuthForm: FC<AuthFormProps> = ({ formType }) => {
+  const { onUpdateSession } = useAppProvider();
   const navigate = useNavigate();
+  const toast = useToast();
 
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   const [formData, setFormData] = useState<AuthFormData>({
-    name: '',
     email: '',
     password: '',
   });
@@ -59,8 +62,8 @@ const AuthForm: FC<AuthFormProps> = ({ formType }) => {
   const [formAPIError, setFormAPIError] = useState<string>('');
 
   const formAPI = useMemo(() => {
-    return formType === 'login'
-      ? API_CLIENT.emailLogin
+    return formType === 'signin'
+      ? API_CLIENT.emailSignIn
       : API_CLIENT.emailSignUp;
   }, [formType]);
 
@@ -87,10 +90,9 @@ const AuthForm: FC<AuthFormProps> = ({ formType }) => {
     setFormAPIError('');
 
     // validate the form data
-    const { isValid, errorObj } = validateForm<AuthFormData, AuthFormError>({
-      email: formData.email,
-      password: formData.password,
-    });
+    const { isValid, errorObj } = validateForm<AuthFormData, AuthFormError>(
+      formData
+    );
 
     setFormError(errorObj);
 
@@ -98,16 +100,44 @@ const AuthForm: FC<AuthFormProps> = ({ formType }) => {
     if (isValid) {
       try {
         setIsSubmitting(true);
-        await formAPI(formData.email, formData.password, formData.name);
+        await formAPI(formData.email, formData.password);
 
-        const session = await API_CLIENT.getLoggedInUserSession();
+        if (formType === 'signup') {
+          navigate(ROUTES.SIGN_IN, { replace: true });
+          toast({
+            title: 'Singed Up',
+            description: 'Account created successfully!',
+            status: 'success',
+            duration: 9000,
+            isClosable: true,
+            position: 'top-right',
+          });
+        } else {
+          const session = await API_CLIENT.getLoggedInUserSession();
 
-        const expiry = getDateByDateString(session.expire);
+          toast({
+            title: 'Singed In',
+            description: 'Logged In successfully!',
+            status: 'success',
+            duration: 9000,
+            isClosable: true,
+            position: 'top-right',
+          });
 
-        // store the session
-        Cookies.set(SESSION_KEY, session.userId, { expires: expiry });
+          const expiry = getDateByDateString(session.expire);
 
-        navigate(ROUTES.HOME);
+          // store the session
+          Cookies.set(SESSION_KEY, session.userId, { expires: expiry });
+
+          // update the session
+          onUpdateSession(session.userId);
+
+          // navigate to home
+          navigate(ROUTES.HOME, { replace: true });
+
+          // reload the page
+          navigate(0);
+        }
       } catch (error) {
         const exception = error as AppwriteException;
         setFormAPIError(exception.message);
@@ -130,10 +160,10 @@ const AuthForm: FC<AuthFormProps> = ({ formType }) => {
         <Stack spacing={4}>
           <Box alignSelf="center">
             <Heading textAlign="center">
-              {formType === 'login' ? 'Login' : 'Sign Up'}
+              {formType === 'signin' ? 'Sign In' : 'Sign Up'}
             </Heading>
             <Text>
-              {formType === 'login' ? (
+              {formType === 'signin' ? (
                 <>
                   Don&apos;t have an account ?{' '}
                   <Link
@@ -146,9 +176,9 @@ const AuthForm: FC<AuthFormProps> = ({ formType }) => {
                 <>
                   Already have an account ?{' '}
                   <Link
-                    to={ROUTES.LOGIN}
+                    to={ROUTES.SIGN_IN}
                     style={{ textDecoration: 'underline' }}>
-                    Login
+                    SignIn
                   </Link>
                 </>
               )}
@@ -162,17 +192,6 @@ const AuthForm: FC<AuthFormProps> = ({ formType }) => {
             </Alert>
           ) : null}
 
-          {formType === 'signup' ? (
-            <FormControl id="name">
-              <FormLabel>Name</FormLabel>
-              <Input
-                name="name"
-                type="text"
-                value={formData.name}
-                onChange={handleOnChange}
-              />
-            </FormControl>
-          ) : null}
           <FormControl
             id="email"
             isInvalid={Boolean(formError.email)}
@@ -211,7 +230,7 @@ const AuthForm: FC<AuthFormProps> = ({ formType }) => {
             color="white"
             onClick={handleSubmit}
             isLoading={isSubmitting}>
-            {formType === 'login' ? 'Login' : 'Sign Up'}
+            {formType === 'signin' ? 'Sign In' : 'Sign Up'}
           </Button>
           <Box position="relative" py={4}>
             <Divider />
@@ -225,7 +244,8 @@ const AuthForm: FC<AuthFormProps> = ({ formType }) => {
             leftIcon={<GoogleIcon />}
             bg="white"
             border="1px"
-            onClick={API_CLIENT.googleLogin}>
+            borderColor={'gray.400'}
+            onClick={API_CLIENT.googleSignIn}>
             Continue with Google
           </Button>
           <Button
@@ -233,7 +253,8 @@ const AuthForm: FC<AuthFormProps> = ({ formType }) => {
             leftIcon={<GitHubIcon />}
             bg="white"
             border="1px"
-            onClick={API_CLIENT.githubLogin}>
+            borderColor={'gray.400'}
+            onClick={API_CLIENT.githubSignIn}>
             Continue with GitHub
           </Button>
         </Stack>

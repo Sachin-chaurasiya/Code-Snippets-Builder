@@ -31,4 +31,7 @@ export interface AppContextProps {
   onUpdateProfileData: (value: ProfileContextData) => void;
   onUpdateBackground: (value: string) => void;
   onUpdateWaterMark: (value: boolean) => void;
+
+  session: string | undefined;
+  onUpdateSession: (session: string | undefined) => void;
 }
