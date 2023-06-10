@@ -30,7 +30,11 @@ const LandingPage = () => {
     <Box bg="white" minHeight="100vh" mt={session ? '' : '64px'}>
       <Box py={16}>
         <Flex direction={['column', 'column', 'row']} justify="center">
-          <Box flex="1" pr={[0, 0, 8]} pl={[0, 0, 16]} alignSelf="center">
+          <Box
+            flex="1"
+            pr={[0, 0, 8]}
+            pl={[0, 0, 16]}
+            alignSelf={session ? '' : 'center'}>
             <Heading size="xl" mb={4} {...COMMON_TEXT_PROPS}>
               Build Beautiful Code Snippets
             </Heading>
