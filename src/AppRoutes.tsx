@@ -18,6 +18,10 @@ const SignUpPage = lazy(
   async () => await import('pages/SignUpPage/SignUpPage')
 );
 
+const DashboardPage = lazy(
+  async () => await import('pages/DashboardPage/DashboardPage')
+);
+
 const AuthCallback = lazy(async () => await import('components/AuthCallback'));
 
 interface ProtectedRouteProps {
@@ -46,6 +50,14 @@ const AppRoutes = () => {
           element={
             <ProtectedRoute>
               <EditorPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path={ROUTES.PROFILE}
+          element={
+            <ProtectedRoute>
+              <DashboardPage />
             </ProtectedRoute>
           }
         />

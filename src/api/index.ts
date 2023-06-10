@@ -1,4 +1,4 @@
-import { Account, Client, Databases } from 'appwrite';
+import { Account, Avatars, Client, Databases } from 'appwrite';
 import { FAILURE_REDIRECT_URL, SUCCESS_REDIRECT_URL } from 'constants/links';
 import { AuthProvider } from 'interfaces/Auth.interface';
 import { Server } from 'utils/Config';
@@ -11,8 +11,9 @@ const initClient = () => {
 
   const database = new Databases(client);
   const account = new Account(client);
+  const avatar = new Avatars(client);
 
-  return { database, account, client };
+  return { database, account, client, avatar };
 };
 
 export const API_CLIENT = {
@@ -35,6 +36,15 @@ export const API_CLIENT = {
     const user = await API_CLIENT.account.get();
 
     return user;
+  },
+
+  /**
+   *
+   * @param name user name
+   * @returns avatar url
+   */
+  getAvatar: (name?: string) => {
+    return API_CLIENT.avatar.getInitials(name);
   },
 
   /**

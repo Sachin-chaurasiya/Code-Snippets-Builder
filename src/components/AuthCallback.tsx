@@ -22,7 +22,7 @@ const AuthCallback = () => {
       Cookies.set(SESSION_KEY, session.userId, { expires: expiry });
 
       // navigate to home
-      navigate(ROUTES.HOME);
+      navigate(ROUTES.PROFILE);
 
       // refresh the page
       navigate(0);

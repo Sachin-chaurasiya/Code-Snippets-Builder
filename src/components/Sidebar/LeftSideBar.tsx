@@ -82,7 +82,7 @@ const LeftSidebar: FC<BoxProps> = () => {
 
       <Box>
         {loggedInUser && (
-          <NavItem path="#" key={loggedInUser.name} icon={FiUser}>
+          <NavItem path={ROUTES.PROFILE} key={loggedInUser.name} icon={FiUser}>
             {loggedInUser.name}
           </NavItem>
         )}
