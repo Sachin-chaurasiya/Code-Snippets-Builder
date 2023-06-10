@@ -3,17 +3,13 @@ import { Route, Routes } from 'react-router-dom';
 import { ROUTES } from 'constants/common';
 import Loader from 'components/Common/Loader/Loader';
 
-const HomePage = lazy(async () => await import('Pages/Home/Home'));
-const EditorPage = lazy(
-  async () => await import('Pages/EditorPage/EditorPage')
-);
-const NotFound = lazy(async () => await import('Pages/NotFound/NotFound'));
+const HomePage = lazy(async () => await import('page/Home/Home'));
+const EditorPage = lazy(async () => await import('page/EditorPage/EditorPage'));
+const NotFound = lazy(async () => await import('page/NotFound/NotFound'));
 
-const LoginPage = lazy(async () => await import('Pages/LoginPage/LoginPage'));
+const LoginPage = lazy(async () => await import('page/LoginPage/LoginPage'));
 
-const SignUpPage = lazy(
-  async () => await import('Pages/SignUpPage/SignUpPage')
-);
+const SignUpPage = lazy(async () => await import('page/SignUpPage/SignUpPage'));
 
 const AppRoutes = () => {
   return (
