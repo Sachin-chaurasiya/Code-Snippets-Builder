@@ -1,7 +1,6 @@
 import {
   Badge,
   Box,
-  Button,
   FormControl,
   FormLabel,
   Heading,
@@ -13,7 +12,8 @@ import {
 import { API_CLIENT } from 'api';
 import { Models } from 'appwrite';
 import Loader from 'components/Common/Loader/Loader';
-import { BORDER_RADIUS_LARGE, PRIMARY_GRADIENT_COLOR } from 'constants/common';
+import UpdateButton from 'components/Common/UpdateButton';
+import { BORDER_RADIUS_LARGE } from 'constants/common';
 import { isEqual } from 'lodash';
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { getFormattedDate } from 'utils/DateTimeUtils';
@@ -25,6 +25,13 @@ interface StringDataState {
   isUpdating: boolean;
 }
 
+const initialNameState = {
+  current: '',
+  updated: '',
+  hasChanged: false,
+  isUpdating: false,
+};
+
 const DashboardPage = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -32,24 +39,7 @@ const DashboardPage = () => {
     useState<Models.User<Models.Preferences>>();
   const [avatarUrl, setAvatarUrl] = useState<URL>();
 
-  const [nameState, setNameState] = useState<StringDataState>({
-    current: loggedInUser?.name ?? '',
-    updated: loggedInUser?.name ?? '',
-    hasChanged: false,
-    isUpdating: false,
-  });
-  const [emailState, setEmailState] = useState<StringDataState>({
-    current: loggedInUser?.email ?? '',
-    updated: loggedInUser?.email ?? '',
-    hasChanged: false,
-    isUpdating: false,
-  });
-  const [passwordState, setPasswordState] = useState<StringDataState>({
-    current: '',
-    updated: '',
-    hasChanged: false,
-    isUpdating: false,
-  });
+  const [nameState, setNameState] = useState<StringDataState>(initialNameState);
 
   const [prefState, setPrefState] = useState<Record<string, string>>({
     twitter: '',
@@ -65,17 +55,6 @@ const DashboardPage = () => {
       const user = await API_CLIENT.getLoggedInUser();
       setLoggedInUser(user);
       setAvatarUrl(API_CLIENT.getAvatar(user.name));
-      setNameState((prev) => ({
-        ...prev,
-        current: user.name,
-        updated: user.name,
-      }));
-      setEmailState((prev) => ({
-        ...prev,
-        current: user.email,
-        updated: user.email,
-      }));
-      setPrefState(user.prefs);
     } catch (error) {
       // handle error
     } finally {
@@ -89,22 +68,6 @@ const DashboardPage = () => {
     switch (name) {
       case 'name':
         setNameState((prev) => ({
-          ...prev,
-          updated: value,
-          hasChanged: prev.current !== value,
-        }));
-
-        break;
-      case 'email':
-        setEmailState((prev) => ({
-          ...prev,
-          updated: value,
-          hasChanged: prev.current !== value,
-        }));
-
-        break;
-      case 'password':
-        setPasswordState((prev) => ({
           ...prev,
           updated: value,
           hasChanged: prev.current !== value,
@@ -131,35 +94,7 @@ const DashboardPage = () => {
     } catch (error) {
       // handle error
     } finally {
-      setNameState((prev) => ({ ...prev, isUpdating: false }));
-    }
-  };
-  const handleEmailUpdate = async () => {
-    try {
-      setEmailState((prev) => ({ ...prev, isUpdating: true }));
-      const data = await API_CLIENT.account.updateEmail(
-        emailState.updated,
-        loggedInUser?.password ?? ''
-      );
-      setLoggedInUser(data);
-    } catch (error) {
-      // handle error
-    } finally {
-      setEmailState((prev) => ({ ...prev, isUpdating: false }));
-    }
-  };
-  const handlePasswordUpdate = async () => {
-    try {
-      setPasswordState((prev) => ({ ...prev, isUpdating: true }));
-      const data = await API_CLIENT.account.updatePassword(
-        passwordState.updated,
-        loggedInUser?.password ?? ''
-      );
-      setLoggedInUser(data);
-    } catch (error) {
-      // handle error
-    } finally {
-      setPasswordState((prev) => ({ ...prev, isUpdating: false }));
+      setNameState(initialNameState);
     }
   };
 
@@ -174,6 +109,17 @@ const DashboardPage = () => {
       setIsUpdatingPrefs(false);
     }
   };
+
+  useEffect(() => {
+    if (loggedInUser) {
+      setNameState((prev) => ({
+        ...prev,
+        current: loggedInUser.name,
+        updated: loggedInUser.name,
+      }));
+      setPrefState(loggedInUser.prefs);
+    }
+  }, [loggedInUser]);
 
   useEffect(() => {
     fetchCurrentUserData().catch(() => {
@@ -247,96 +193,12 @@ const DashboardPage = () => {
               onChange={handleOnChange}
             />
           </FormControl>
-          <Button
-            _hover={{
-              bgGradient: PRIMARY_GRADIENT_COLOR,
-            }}
-            bgGradient={PRIMARY_GRADIENT_COLOR}
-            color="white"
-            alignSelf="end"
+          <UpdateButton
             isDisabled={!nameState.hasChanged}
             isLoading={nameState.isUpdating}
             onClick={handleNameUpdate}>
             Update
-          </Button>
-        </Stack>
-      </Box>
-      <Box
-        direction="row"
-        justifyContent="space-between"
-        as={Stack}
-        bg="white"
-        p={4}
-        width="full"
-        border="1px"
-        borderColor="gray.200"
-        borderRadius={BORDER_RADIUS_LARGE}>
-        <Heading as="h6" size="sm" flex={1} alignSelf="center">
-          Update Email
-        </Heading>
-        <Stack direction="column" flex={1}>
-          <FormControl id="email">
-            <FormLabel>Email</FormLabel>
-            <Input
-              name="email"
-              type="email"
-              value={emailState.updated}
-              onChange={handleOnChange}
-            />
-          </FormControl>
-          <Button
-            _hover={{
-              bgGradient: PRIMARY_GRADIENT_COLOR,
-            }}
-            bgGradient={PRIMARY_GRADIENT_COLOR}
-            color="white"
-            alignSelf="end"
-            isDisabled={!emailState.hasChanged}
-            isLoading={emailState.isUpdating}
-            onClick={handleEmailUpdate}>
-            Update
-          </Button>
-        </Stack>
-      </Box>
-      <Box
-        direction="row"
-        justifyContent="space-between"
-        as={Stack}
-        bg="white"
-        p={4}
-        width="full"
-        border="1px"
-        borderColor="gray.200"
-        borderRadius={BORDER_RADIUS_LARGE}>
-        <Stack flex={1}>
-          <Heading as="h6" size="sm">
-            Update Password
-          </Heading>
-          <Text>A password must contain at least 8 characters.</Text>
-        </Stack>
-        <Stack direction="column" flex={1}>
-          <FormControl id="password">
-            <FormLabel>Password</FormLabel>
-            <Input
-              name="password"
-              type="password"
-              placeholder="Enter new password"
-              value={passwordState.updated}
-              onChange={handleOnChange}
-            />
-          </FormControl>
-          <Button
-            _hover={{
-              bgGradient: PRIMARY_GRADIENT_COLOR,
-            }}
-            bgGradient={PRIMARY_GRADIENT_COLOR}
-            color="white"
-            alignSelf="end"
-            isDisabled={!passwordState.hasChanged}
-            isLoading={passwordState.isUpdating}
-            onClick={handlePasswordUpdate}>
-            Update
-          </Button>
+          </UpdateButton>
         </Stack>
       </Box>
       <Box
@@ -388,18 +250,12 @@ const DashboardPage = () => {
               onChange={handlePrefChange}
             />
           </FormControl>
-          <Button
-            _hover={{
-              bgGradient: PRIMARY_GRADIENT_COLOR,
-            }}
-            bgGradient={PRIMARY_GRADIENT_COLOR}
-            color="white"
-            alignSelf="end"
+          <UpdateButton
             onClick={handlePrefUpdate}
             isLoading={isUpdatingPrefs}
             isDisabled={isEqual(loggedInUser?.prefs, prefState)}>
             Update
-          </Button>
+          </UpdateButton>
         </Stack>
       </Box>
     </Stack>
