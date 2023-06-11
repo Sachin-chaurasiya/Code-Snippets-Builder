@@ -202,6 +202,7 @@ const AuthForm: FC<AuthFormProps> = ({ formType }) => {
               type="email"
               value={formData.email}
               onChange={handleOnChange}
+              placeholder="Enter your email"
             />
             {formError.email && (
               <FormErrorMessage>{formError.email}</FormErrorMessage>
@@ -217,6 +218,7 @@ const AuthForm: FC<AuthFormProps> = ({ formType }) => {
               type="password"
               value={formData.password}
               onChange={handleOnChange}
+              placeholder="Enter your password"
             />
             {formError.password && (
               <FormErrorMessage>{formError.password}</FormErrorMessage>
