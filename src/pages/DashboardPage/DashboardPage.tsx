@@ -8,9 +8,10 @@ import {
   Input,
   Stack,
   Text,
+  useToast,
 } from '@chakra-ui/react';
 import { API_CLIENT } from 'api';
-import { Models } from 'appwrite';
+import { AppwriteException, Models } from 'appwrite';
 import Loader from 'components/Common/Loader/Loader';
 import UpdateButton from 'components/Common/UpdateButton';
 import { BORDER_RADIUS_LARGE } from 'constants/common';
@@ -25,6 +26,10 @@ interface StringDataState {
   isUpdating: boolean;
 }
 
+interface PasswordDataState extends StringDataState {
+  oldPassword: string;
+}
+
 const initialNameState = {
   current: '',
   updated: '',
@@ -32,7 +37,17 @@ const initialNameState = {
   isUpdating: false,
 };
 
+const initialPasswordState = {
+  current: '',
+  updated: '',
+  hasChanged: false,
+  isUpdating: false,
+  oldPassword: '',
+};
+
 const DashboardPage = () => {
+  const toast = useToast();
+
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const [loggedInUser, setLoggedInUser] =
@@ -46,6 +61,9 @@ const DashboardPage = () => {
     linkedin: '',
     github: '',
   });
+
+  const [passwordState, setPasswordState] =
+    useState<PasswordDataState>(initialPasswordState);
 
   const [isUpdatingPrefs, setIsUpdatingPrefs] = useState<boolean>(false);
 
@@ -74,6 +92,21 @@ const DashboardPage = () => {
         }));
 
         break;
+      case 'password':
+        setPasswordState((prev) => ({
+          ...prev,
+          updated: value,
+          hasChanged: prev.current !== value,
+        }));
+
+        break;
+      case 'oldpassword':
+        setPasswordState((prev) => ({
+          ...prev,
+          oldPassword: value,
+        }));
+
+        break;
 
       default:
         break;
@@ -91,8 +124,22 @@ const DashboardPage = () => {
       setNameState((prev) => ({ ...prev, isUpdating: true }));
       const data = await API_CLIENT.account.updateName(nameState.updated);
       setLoggedInUser(data);
+      toast({
+        description: 'Name updated successful!',
+        status: 'success',
+        duration: 2000,
+        isClosable: true,
+        position: 'top-right',
+      });
     } catch (error) {
-      // handle error
+      const exception = error as AppwriteException;
+      toast({
+        description: exception.message,
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+        position: 'top-right',
+      });
     } finally {
       setNameState(initialNameState);
     }
@@ -103,10 +150,53 @@ const DashboardPage = () => {
       setIsUpdatingPrefs(true);
       const data = await API_CLIENT.account.updatePrefs(prefState);
       setLoggedInUser(data);
+      toast({
+        description: 'Social usernames updated successful!',
+        status: 'success',
+        duration: 2000,
+        isClosable: true,
+        position: 'top-right',
+      });
     } catch (error) {
-      // handle error
+      const exception = error as AppwriteException;
+      toast({
+        description: exception.message,
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+        position: 'top-right',
+      });
     } finally {
       setIsUpdatingPrefs(false);
+    }
+  };
+
+  const handlePasswordUpdate = async () => {
+    try {
+      setPasswordState((prev) => ({ ...prev, isUpdating: true }));
+      const data = await API_CLIENT.account.updatePassword(
+        passwordState.updated,
+        passwordState.oldPassword
+      );
+      setLoggedInUser(data);
+      toast({
+        description: 'Password updated successful!',
+        status: 'success',
+        duration: 2000,
+        isClosable: true,
+        position: 'top-right',
+      });
+    } catch (error) {
+      const exception = error as AppwriteException;
+      toast({
+        description: exception.message,
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+        position: 'top-right',
+      });
+    } finally {
+      setPasswordState(initialPasswordState);
     }
   };
 
@@ -254,6 +344,51 @@ const DashboardPage = () => {
             onClick={handlePrefUpdate}
             isLoading={isUpdatingPrefs}
             isDisabled={isEqual(loggedInUser?.prefs, prefState)}>
+            Update
+          </UpdateButton>
+        </Stack>
+      </Box>
+      <Box
+        direction="row"
+        justifyContent="space-between"
+        as={Stack}
+        bg="white"
+        p={4}
+        width="full"
+        border="1px"
+        borderColor="gray.200"
+        borderRadius={BORDER_RADIUS_LARGE}>
+        <Stack flex={1}>
+          <Heading as="h6" size="sm">
+            Update Password
+          </Heading>
+          <Text>A password must contain at least 8 characters.</Text>
+        </Stack>
+        <Stack direction="column" flex={1}>
+          <FormControl id="oldpassword">
+            <FormLabel>Old Password</FormLabel>
+            <Input
+              name="oldpassword"
+              type="password"
+              placeholder="Enter old password"
+              value={passwordState.oldPassword}
+              onChange={handleOnChange}
+            />
+          </FormControl>
+          <FormControl id="password">
+            <FormLabel>New Password</FormLabel>
+            <Input
+              name="password"
+              type="password"
+              placeholder="Enter new password"
+              value={passwordState.updated}
+              onChange={handleOnChange}
+            />
+          </FormControl>
+          <UpdateButton
+            isDisabled={!passwordState.hasChanged}
+            isLoading={passwordState.isUpdating}
+            onClick={handlePasswordUpdate}>
             Update
           </UpdateButton>
         </Stack>
