@@ -189,19 +189,6 @@ const EditorPage = () => {
     nodesRef.current = nodes;
   }, [nodes]);
 
-  useEffect(() => {
-    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
-      event.preventDefault();
-      event.returnValue = '';
-    };
-
-    window.addEventListener('beforeunload', handleBeforeUnload);
-
-    return () => {
-      window.removeEventListener('beforeunload', handleBeforeUnload);
-    };
-  }, []);
-
   return (
     <Fragment>
       <Box mr={80}>
