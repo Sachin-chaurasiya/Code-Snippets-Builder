@@ -45,7 +45,7 @@ const initialPasswordState = {
   oldPassword: '',
 };
 
-const DashboardPage = () => {
+const ProfilePage = () => {
   const toast = useToast();
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -397,4 +397,4 @@ const DashboardPage = () => {
   );
 };
 
-export default DashboardPage;
+export default ProfilePage;

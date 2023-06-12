@@ -18,8 +18,8 @@ const SignUpPage = lazy(
   async () => await import('pages/SignUpPage/SignUpPage')
 );
 
-const DashboardPage = lazy(
-  async () => await import('pages/DashboardPage/DashboardPage')
+const ProfilePage = lazy(
+  async () => await import('pages/ProfilePage/ProfilePage')
 );
 
 const AuthCallback = lazy(async () => await import('components/AuthCallback'));
@@ -57,7 +57,7 @@ const AppRoutes = () => {
           path={ROUTES.PROFILE}
           element={
             <ProtectedRoute>
-              <DashboardPage />
+              <ProfilePage />
             </ProtectedRoute>
           }
         />
