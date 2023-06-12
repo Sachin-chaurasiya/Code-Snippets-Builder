@@ -7,15 +7,23 @@ import {
   Text,
   VStack,
 } from '@chakra-ui/react';
-import { useAppProvider } from 'AppProvider';
 import { BORDER_RADIUS, FONT_SIZES, NAMED_COLORS } from 'constants/editor';
 import { COMMON_TEXT_PROPS } from 'constants/text';
+import { NodeData } from 'interfaces/Editor.interface';
 import { map, startCase, toNumber } from 'lodash';
-import React from 'react';
+import React, { FC } from 'react';
 
-const TextConfig = () => {
-  const { text, onUpdateTextData } = useAppProvider();
+type TextConfigProps = {
+  nodeId: string;
+} & NodeData;
 
+const TextConfig: FC<TextConfigProps> = ({
+  nodeId,
+  onUpdate,
+  background,
+  fontSize,
+  borderRadius,
+}) => {
   return (
     <Box alignItems="flex-start" as={VStack} mb={4}>
       <Text fontSize="lg" fontWeight="bold" {...COMMON_TEXT_PROPS}>
@@ -26,10 +34,9 @@ const TextConfig = () => {
         <FormControl>
           <FormLabel>Background Color</FormLabel>
           <Select
-            value={text.background}
+            value={background}
             onChange={(e) => {
-              onUpdateTextData({
-                ...text,
+              onUpdate(nodeId, {
                 background: e.target.value,
               });
             }}>
@@ -43,10 +50,9 @@ const TextConfig = () => {
         <FormControl>
           <FormLabel>Font Size</FormLabel>
           <Select
-            value={text.fontSize}
+            value={fontSize}
             onChange={(e) => {
-              onUpdateTextData({
-                ...text,
+              onUpdate(nodeId, {
                 fontSize: toNumber(e.target.value),
               });
             }}>
@@ -60,10 +66,9 @@ const TextConfig = () => {
         <FormControl>
           <FormLabel>Border Radius</FormLabel>
           <Select
-            value={text.borderRadius}
+            value={borderRadius}
             onChange={(e) => {
-              onUpdateTextData({
-                ...text,
+              onUpdate(nodeId, {
                 borderRadius: e.target.value,
               });
             }}>

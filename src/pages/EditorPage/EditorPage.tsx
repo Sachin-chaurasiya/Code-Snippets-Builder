@@ -10,6 +10,7 @@ import React, {
 import ReactFlow, {
   Connection,
   Node,
+  NodeChange,
   ReactFlowInstance,
   XYPosition,
   addEdge,
@@ -26,18 +27,22 @@ import ImageNode from 'components/Editor/CustomNodes/ImageNode';
 import { useAppProvider } from 'AppProvider';
 import EditorSidebar from 'components/Editor/EditorSidebar/EditorSidebar';
 import EditorControls from 'components/Editor/EditorControls/EditorControls';
-import { getDragHandleByNodeType, getUniqueId } from 'utils/EditorUtils';
+import {
+  getDragHandleByNodeType,
+  getInitialNodeDataByType,
+  getUniqueId,
+} from 'utils/EditorUtils';
 
 import WatermarkPanel from 'components/Editor/Panels/WatermarkPanel';
 import ProfilePanel from 'components/Editor/Panels/ProfilePanel';
-import { map } from 'lodash';
+import { find, map } from 'lodash';
 import { NodeData } from 'interfaces/Editor.interface';
 
 const EditorPage = () => {
   // nodes ref to store the nodes data for passing in callback function
   const nodesRef = useRef<Array<Node<NodeData>>>([]);
 
-  const { background } = useAppProvider();
+  const { background, onUpdateSelectedNode } = useAppProvider();
 
   const [nodes, setNodes, onNodesChange] =
     useNodesState<NodeData>(INITIAL_NODES);
@@ -64,7 +69,17 @@ const EditorPage = () => {
       const existingNodes = nodesRef.current;
       const updatedNodes = map(existingNodes, (node) => {
         if (node.id === nodeId) {
-          return { ...node, data: { ...node.data, ...partialData } };
+          const updatedNode = {
+            ...node,
+            data: { ...node.data, ...partialData },
+          };
+
+          // set the updated selected node
+          if (updatedNode.selected) {
+            onUpdateSelectedNode(updatedNode);
+          }
+
+          return updatedNode;
         }
 
         return node;
@@ -85,12 +100,41 @@ const EditorPage = () => {
       const updatedNodes = map(nodes, (node) => {
         return {
           ...node,
-          data: { ...node.data, onUpdate: handleUpdateNodeData },
+          data: {
+            // on initialization add the initial data for node type
+            ...getInitialNodeDataByType(node.type ?? ''),
+            ...node.data,
+            onUpdate: handleUpdateNodeData,
+          },
         };
       });
       instance.setNodes(updatedNodes);
     },
     [setReactFlowInstance, handleUpdateNodeData]
+  );
+
+  /**
+   * Handle node changes "select" | "add" | "dimensions" | "reset" | "remove" | "position"
+   */
+  const handleNodesChange = useCallback(
+    (changes: NodeChange[]) => {
+      onNodesChange(changes);
+      map(changes, (change) => {
+        // if node is selected then updated the selected node
+        if (change.type === 'select' && change.selected) {
+          const selectedNode = find(
+            nodesRef.current,
+            (node: Node<NodeData>) => node.id === change.id
+          );
+          onUpdateSelectedNode(selectedNode);
+        }
+        // if node is not selected then set the selected node as undefined
+        if (change.type === 'select' && !change.selected) {
+          onUpdateSelectedNode(undefined);
+        }
+      });
+    },
+    [onNodesChange, nodesRef]
   );
 
   const onDrop = useCallback(
@@ -113,7 +157,10 @@ const EditorPage = () => {
         id: getUniqueId(),
         type,
         position,
-        data: { onUpdate: handleUpdateNodeData },
+        data: {
+          ...getInitialNodeDataByType(type),
+          onUpdate: handleUpdateNodeData,
+        },
         dragHandle: getDragHandleByNodeType(type),
       };
 
@@ -171,7 +218,7 @@ const EditorPage = () => {
             zoomOnScroll={false}
             nodesConnectable={false}
             nodeTypes={nodeTypes}
-            onNodesChange={onNodesChange}
+            onNodesChange={handleNodesChange}
             onEdgesChange={onEdgesChange}
             proOptions={{ hideAttribution: true }}
             nodes={nodes}
@@ -183,7 +230,9 @@ const EditorPage = () => {
             onConnect={onConnect}
             onInit={handleOnInit}
             onDrop={onDrop}
-            onDragOver={onDragOver}>
+            onDragOver={onDragOver}
+            // this is to disable multi select
+            multiSelectionKeyCode={null}>
             <WatermarkPanel />
             <ProfilePanel />
           </ReactFlow>

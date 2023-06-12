@@ -26,7 +26,7 @@ export const INITIAL_CONTEXT_DATA = {
   },
   profile: {
     platform: 'twitter',
-    username: 'sachindotcom',
+    username: '',
     isVisible: true,
   },
   hideWaterMark: false,

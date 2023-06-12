@@ -11,27 +11,17 @@ import MobileViewMessage from 'components/MobileViewMessage/MobileViewMessage';
 import { DEFAULT_EDITOR_BG_COLOR } from 'constants/editor';
 import {
   AppContextProps,
-  EditorContextData,
-  ImageContextData,
   ProfileContextData,
-  TextContextData,
 } from 'interfaces/AppProvider.interface';
 import Cookies from 'js-cookie';
+import { Node } from 'reactflow';
+import { NodeData } from 'interfaces/Editor.interface';
 
 export const AppContext = createContext<AppContextProps>({} as AppContextProps);
 
 const AppProvider = ({ children }: { children: ReactNode }) => {
   const [isMobileScreen] = useMediaQuery('(max-width: 1024px)');
 
-  const [editorContextData, setEditorContextData] = useState<EditorContextData>(
-    INITIAL_CONTEXT_DATA.editor
-  );
-  const [textContextData, setTextContextData] = useState<TextContextData>(
-    INITIAL_CONTEXT_DATA.text
-  );
-  const [imageContextData, setImageContextData] = useState<ImageContextData>(
-    INITIAL_CONTEXT_DATA.text
-  );
   const [hideWaterMark, setIsWaterMarkVisible] = useState<boolean>(
     INITIAL_CONTEXT_DATA.hideWaterMark
   );
@@ -39,15 +29,12 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
     useState<ProfileContextData>(INITIAL_CONTEXT_DATA.profile);
   const [background, setBackground] = useState<string>(DEFAULT_EDITOR_BG_COLOR);
 
-  const handleUpdateEditorData = (updatedData: EditorContextData) => {
-    setEditorContextData(updatedData);
+  const [selectedNode, setSelectedNode] = useState<Node<NodeData>>();
+
+  const handleUpdateSelectedNode = (selectedNode?: Node<NodeData>) => {
+    setSelectedNode(selectedNode);
   };
-  const handleUpdateTextData = (updatedData: TextContextData) => {
-    setTextContextData(updatedData);
-  };
-  const handleUpdateImageData = (updatedData: ImageContextData) => {
-    setImageContextData(updatedData);
-  };
+
   const handleUpdateProfileData = (updatedData: ProfileContextData) => {
     setProfileContextData(updatedData);
   };
@@ -65,32 +52,21 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
     setSession(updatedSession);
   };
 
-  const contextValues = useMemo(
+  const contextValues: AppContextProps = useMemo(
     () => ({
-      editor: editorContextData,
-      text: textContextData,
-      image: imageContextData,
       profile: profileContextData,
       hideWaterMark,
       background,
-      onUpdateEditorData: handleUpdateEditorData,
-      onUpdateTextData: handleUpdateTextData,
-      onUpdateImageData: handleUpdateImageData,
+      selectedNode,
       onUpdateBackground: handleUpdateBackground,
       onUpdateProfileData: handleUpdateProfileData,
       onUpdateWaterMark: handleUpdateWaterMark,
+      onUpdateSelectedNode: handleUpdateSelectedNode,
 
       session,
       onUpdateSession: handleUpdateSession,
     }),
-    [
-      background,
-      editorContextData,
-      textContextData,
-      imageContextData,
-      profileContextData,
-      hideWaterMark,
-    ]
+    [background, profileContextData, hideWaterMark, selectedNode]
   );
 
   return (

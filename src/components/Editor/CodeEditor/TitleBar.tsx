@@ -8,6 +8,7 @@ import {
 } from '@chakra-ui/react';
 import EditorTitleIcon from 'components/Common/Icons/EditorTitleIcon';
 import { CODE_EDITOR_BACKGROUND_COLOR } from 'constants/editor';
+import { NodeDataStore } from 'interfaces/Editor.interface';
 import { last } from 'lodash';
 import React, { useMemo, useState } from 'react';
 import { HiPlus } from 'react-icons/hi';
@@ -17,9 +18,15 @@ import {
   getIconColorByFileExtension,
 } from 'utils/IconUtils';
 
-const TitleBar = () => {
+const TitleBar = ({
+  snippetName,
+  onUpdate,
+}: {
+  snippetName: string;
+  onUpdate: (data: NodeDataStore) => void;
+}) => {
   const [showFileName, setShowFileName] = useState<boolean>(false);
-  const [fileName, setFileName] = useState<string>('');
+  const [fileName, setFileName] = useState<string>(snippetName);
 
   const FileNameIcon = useMemo(
     () => getIconByFileExtension(last(fileName.split('.')) ?? ''),
@@ -80,7 +87,9 @@ const TitleBar = () => {
               minWidth="55px"
               userSelect="text"
               onChange={(e) => {
-                setFileName(e.target.value);
+                const { value } = e.target;
+                setFileName(value);
+                onUpdate({ snippetName: value });
               }}
             />
           </Editable>
@@ -94,6 +103,7 @@ const TitleBar = () => {
             icon={<IoMdClose fontWeight="bold" color="white" fontSize={18} />}
             onClick={() => {
               setShowFileName(false);
+              onUpdate({ snippetName: '' });
             }}
           />
         </Box>

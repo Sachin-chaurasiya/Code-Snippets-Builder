@@ -7,6 +7,7 @@ import {
   HANDLE_STYLE_X,
   HANDLE_STYLE_Y,
   HANDLE_TOP_STYLE,
+  INITIAL_CONTEXT_DATA,
 } from 'constants/common';
 import { HANDLE_COLOR } from 'constants/editor';
 import { NodeData } from 'interfaces/Editor.interface';
@@ -14,7 +15,13 @@ import React, { FC, memo, useState } from 'react';
 import { NodeProps, NodeResizer, ResizeParams } from 'reactflow';
 
 const TextNode: FC<NodeProps<NodeData>> = ({ selected, id, data }) => {
-  const { text = '', onUpdate } = data;
+  const {
+    text = '',
+    onUpdate,
+    fontSize = INITIAL_CONTEXT_DATA.text.fontSize,
+    background = INITIAL_CONTEXT_DATA.text.background,
+    borderRadius = INITIAL_CONTEXT_DATA.text.borderRadius,
+  } = data;
 
   const [params, setParams] = useState<ResizeParams>();
 
@@ -58,6 +65,9 @@ const TextNode: FC<NodeProps<NodeData>> = ({ selected, id, data }) => {
         text={text}
         width={params?.width ?? 300}
         height={params?.height ?? 60}
+        background={background}
+        borderRadius={borderRadius}
+        fontSize={fontSize}
       />
       <CustomHandle
         top="50%"

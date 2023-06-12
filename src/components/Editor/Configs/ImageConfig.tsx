@@ -7,15 +7,21 @@ import {
   Text,
   VStack,
 } from '@chakra-ui/react';
-import { useAppProvider } from 'AppProvider';
 import { BORDER_RADIUS } from 'constants/editor';
 import { COMMON_TEXT_PROPS } from 'constants/text';
+import { NodeData } from 'interfaces/Editor.interface';
 import { map } from 'lodash';
-import React from 'react';
+import React, { FC } from 'react';
 
-const ImageConfig = () => {
-  const { image, onUpdateImageData } = useAppProvider();
+type ImageConfigProps = {
+  nodeId: string;
+} & NodeData;
 
+const ImageConfig: FC<ImageConfigProps> = ({
+  nodeId,
+  onUpdate,
+  borderRadius,
+}) => {
   return (
     <Box alignItems="flex-start" as={VStack} mb={4}>
       <Text fontSize="lg" fontWeight="bold" {...COMMON_TEXT_PROPS}>
@@ -26,10 +32,9 @@ const ImageConfig = () => {
         <FormControl>
           <FormLabel>Border Radius</FormLabel>
           <Select
-            value={image.borderRadius}
+            value={borderRadius}
             onChange={(e) => {
-              onUpdateImageData({
-                ...image,
+              onUpdate(nodeId, {
                 borderRadius: e.target.value,
               });
             }}>

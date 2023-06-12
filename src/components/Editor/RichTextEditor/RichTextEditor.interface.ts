@@ -3,4 +3,7 @@ export interface RichtextEditorProps {
   height: number;
   onUpdate: (text: string) => void;
   text: string;
+  background: string;
+  borderRadius: string;
+  fontSize: number;
 }

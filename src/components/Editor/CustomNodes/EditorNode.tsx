@@ -4,9 +4,17 @@ import { NodeProps } from 'reactflow';
 import { Box } from '@chakra-ui/react';
 import { HANDLE_COLOR } from 'constants/editor';
 import { NodeData, NodeDataStore } from 'interfaces/Editor.interface';
+import { INITIAL_CONTEXT_DATA } from 'constants/common';
 
 const EditorNode: FC<NodeProps<NodeData>> = ({ selected, data, id }) => {
-  const { onUpdate, code = '' } = data;
+  const {
+    onUpdate,
+    code = '',
+    fontSize = INITIAL_CONTEXT_DATA.editor.fontSize,
+    language = INITIAL_CONTEXT_DATA.editor.language,
+    theme = INITIAL_CONTEXT_DATA.editor.theme,
+    snippetName = '',
+  } = data;
 
   const handleUpdate = (data: NodeDataStore) => {
     if (onUpdate) {
@@ -18,7 +26,14 @@ const EditorNode: FC<NodeProps<NodeData>> = ({ selected, data, id }) => {
     <Box
       border={selected ? '1px' : ''}
       borderColor={selected ? HANDLE_COLOR : ''}>
-      <CodeEditor onUpdate={handleUpdate} snippetCode={code} />
+      <CodeEditor
+        snippetName={snippetName}
+        onUpdate={handleUpdate}
+        snippetCode={code}
+        editorTheme={theme}
+        language={language}
+        fontSize={fontSize}
+      />
     </Box>
   );
 };

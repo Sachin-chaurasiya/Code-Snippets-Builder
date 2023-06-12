@@ -1,4 +1,3 @@
-import { useAppProvider } from 'AppProvider';
 import { FORMAT_OPTIONS, MODULES } from 'constants/rich-text-editor';
 import React, { FC, useEffect, useRef, useState } from 'react';
 import ReactQuill from 'react-quill';
@@ -11,9 +10,10 @@ const RichTextEditor: FC<RichtextEditorProps> = ({
   height,
   onUpdate,
   text: updatedText,
+  background,
+  borderRadius,
+  fontSize,
 }) => {
-  const { text } = useAppProvider();
-
   const editorRef = useRef<ReactQuill>(null);
 
   const [value, setValue] = useState(updatedText);
@@ -30,11 +30,11 @@ const RichTextEditor: FC<RichtextEditorProps> = ({
       placeholder="Write something awesome..."
       ref={editorRef}
       style={{
-        background: text.background,
-        borderRadius: text.borderRadius,
+        background,
+        borderRadius,
         width: `${width}px`,
         minHeight: `${height}px`,
-        fontSize: `${text.fontSize}px`,
+        fontSize,
       }}
       formats={FORMAT_OPTIONS}
       modules={MODULES}

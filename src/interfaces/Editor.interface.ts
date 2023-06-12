@@ -1,8 +1,26 @@
-export type NodeDataStore = Record<string, string | number | unknown>;
+export type NodeDataStore = CodeEditorNodeData & ImageNodeData & TextNodeData;
+
+export interface CommonNodeData {
+  fontSize?: number;
+  borderRadius?: string;
+}
+
+export type CodeEditorNodeData = {
+  code?: string;
+  language?: string;
+  theme?: string;
+  snippetName?: string;
+} & CommonNodeData;
+
+export type ImageNodeData = {
+  imageSource?: string;
+} & CommonNodeData;
+
+export type TextNodeData = {
+  text?: string;
+  background?: string;
+} & CommonNodeData;
 
 export type NodeData = {
   onUpdate: (nodeId: string, partialData: NodeDataStore) => void;
-  code?: string;
-  imageSource?: string;
-  text?: string;
 } & NodeDataStore;
