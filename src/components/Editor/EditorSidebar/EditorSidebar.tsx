@@ -8,8 +8,12 @@ import ProfileConfig from 'components/Editor/Configs/ProfileConfig';
 
 import { COMMON_TEXT_PROPS } from 'constants/text';
 import BackgroundConfig from '../Configs/BackgroundConfig';
+import { useAppProvider } from 'AppProvider';
+import { CUSTOM_NODES } from 'constants/editor';
 
 const EditorSidebar: FC<BoxProps> = () => {
+  const { selectedNode } = useAppProvider();
+
   return (
     <Box
       bg={useColorModeValue('white', 'gray.900')}
@@ -29,11 +33,19 @@ const EditorSidebar: FC<BoxProps> = () => {
           Configure
         </Text>
       </Flex>
-      <ProfileConfig />
+
+      {selectedNode?.type === CUSTOM_NODES.EDITOR_NODE && (
+        <EditorConfig nodeId={selectedNode.id} {...selectedNode.data} />
+      )}
+      {selectedNode?.type === CUSTOM_NODES.TEXT_NODE && (
+        <TextConfig nodeId={selectedNode.id} {...selectedNode.data} />
+      )}
+      {selectedNode?.type === CUSTOM_NODES.IMAGE_NODE && (
+        <ImageConfig nodeId={selectedNode.id} {...selectedNode.data} />
+      )}
+
       <BackgroundConfig />
-      <EditorConfig />
-      <TextConfig />
-      <ImageConfig />
+      <ProfileConfig />
     </Box>
   );
 };

@@ -1,4 +1,3 @@
-import { useAppProvider } from 'AppProvider';
 import { FORMAT_OPTIONS, MODULES } from 'constants/rich-text-editor';
 import React, { FC, useEffect, useRef, useState } from 'react';
 import ReactQuill from 'react-quill';
@@ -6,12 +5,18 @@ import 'react-quill/dist/quill.bubble.css';
 import './rich-text-editor.css';
 import { RichtextEditorProps } from './RichTextEditor.interface';
 
-const RichTextEditor: FC<RichtextEditorProps> = ({ width, height }) => {
-  const { text } = useAppProvider();
-
+const RichTextEditor: FC<RichtextEditorProps> = ({
+  width,
+  height,
+  onUpdate,
+  text: updatedText,
+  background,
+  borderRadius,
+  fontSize,
+}) => {
   const editorRef = useRef<ReactQuill>(null);
 
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState(updatedText);
 
   useEffect(() => {
     const element = document.querySelector('[contenteditable="true"]');
@@ -25,17 +30,20 @@ const RichTextEditor: FC<RichtextEditorProps> = ({ width, height }) => {
       placeholder="Write something awesome..."
       ref={editorRef}
       style={{
-        background: text.background,
-        borderRadius: text.borderRadius,
+        background,
+        borderRadius,
         width: `${width}px`,
         minHeight: `${height}px`,
-        fontSize: `${text.fontSize}px`,
+        fontSize,
       }}
       formats={FORMAT_OPTIONS}
       modules={MODULES}
       theme="bubble"
       value={value}
-      onChange={setValue}
+      onChange={(value) => {
+        setValue(value);
+        onUpdate(value);
+      }}
     />
   );
 };

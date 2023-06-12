@@ -1,3 +1,6 @@
+import { Node } from 'reactflow';
+import { NodeData } from './Editor.interface';
+
 export interface EditorContextData {
   language: string;
   theme: string;
@@ -20,17 +23,13 @@ export interface ProfileContextData {
 
 export interface AppContextProps {
   background: string;
-  editor: EditorContextData;
-  text: TextContextData;
-  image: ImageContextData;
   profile: ProfileContextData;
   hideWaterMark: boolean;
-  onUpdateEditorData: (value: EditorContextData) => void;
-  onUpdateTextData: (value: TextContextData) => void;
-  onUpdateImageData: (value: ImageContextData) => void;
+  selectedNode?: Node<NodeData>;
   onUpdateProfileData: (value: ProfileContextData) => void;
   onUpdateBackground: (value: string) => void;
   onUpdateWaterMark: (value: boolean) => void;
+  onUpdateSelectedNode: (selectedNode?: Node<NodeData>) => void;
 
   session: string | undefined;
   onUpdateSession: (session: string | undefined) => void;
