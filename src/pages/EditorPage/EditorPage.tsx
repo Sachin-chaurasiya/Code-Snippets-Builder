@@ -30,10 +30,18 @@ import { getDragHandleByNodeType, getUniqueId } from 'utils/EditorUtils';
 
 import WatermarkPanel from 'components/Editor/Panels/WatermarkPanel';
 import ProfilePanel from 'components/Editor/Panels/ProfilePanel';
+import { map } from 'lodash';
+import { NodeData } from 'interfaces/Editor.interface';
 
 const EditorPage = () => {
+  // nodes ref to store the nodes data for passing in callback function
+  const nodesRef = useRef<Array<Node<NodeData>>>([]);
+
   const { background } = useAppProvider();
-  const [nodes, setNodes, onNodesChange] = useNodesState(INITIAL_NODES);
+
+  const [nodes, setNodes, onNodesChange] =
+    useNodesState<NodeData>(INITIAL_NODES);
+
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
 
   const reactFlowWrapper = useRef<HTMLDivElement>(null);
@@ -45,6 +53,45 @@ const EditorPage = () => {
     event.preventDefault();
     event.dataTransfer.dropEffect = 'move';
   }, []);
+
+  /**
+   * update the node data of given nodeId
+   * @param nodeId node ID
+   * @param partialData data record of the node
+   */
+  const handleUpdateNodeData: NodeData['onUpdate'] = useCallback(
+    (nodeId, partialData) => {
+      const existingNodes = nodesRef.current;
+      const updatedNodes = map(existingNodes, (node) => {
+        if (node.id === nodeId) {
+          return { ...node, data: { ...node.data, ...partialData } };
+        }
+
+        return node;
+      });
+
+      setNodes(updatedNodes);
+    },
+    [nodesRef, setNodes]
+  );
+
+  /**
+   * set the instance of reactFlow and attach the handleUpdateNodeData on every node
+   */
+  const handleOnInit = useCallback(
+    (instance: ReactFlowInstance) => {
+      setReactFlowInstance(instance);
+      const nodes = instance.getNodes();
+      const updatedNodes = map(nodes, (node) => {
+        return {
+          ...node,
+          data: { ...node.data, onUpdate: handleUpdateNodeData },
+        };
+      });
+      instance.setNodes(updatedNodes);
+    },
+    [setReactFlowInstance, handleUpdateNodeData]
+  );
 
   const onDrop = useCallback(
     (event: React.DragEvent) => {
@@ -62,17 +109,17 @@ const EditorPage = () => {
         x: event.clientX - (reactFlowBounds?.left ?? 0),
         y: event.clientY - (reactFlowBounds?.top ?? 0),
       }) as XYPosition;
-      const newNode: Node = {
+      const newNode: Node<NodeData> = {
         id: getUniqueId(),
         type,
         position,
-        data: {},
+        data: { onUpdate: handleUpdateNodeData },
         dragHandle: getDragHandleByNodeType(type),
       };
 
       setNodes((nds) => nds.concat(newNode));
     },
-    [reactFlowInstance, setNodes]
+    [reactFlowInstance, setNodes, handleUpdateNodeData]
   );
 
   const onConnect = useCallback(
@@ -90,6 +137,10 @@ const EditorPage = () => {
     }),
     []
   );
+
+  useEffect(() => {
+    nodesRef.current = nodes;
+  }, [nodes]);
 
   useEffect(() => {
     const handleBeforeUnload = (event: BeforeUnloadEvent) => {
@@ -130,7 +181,7 @@ const EditorPage = () => {
               borderRadius: 6,
             }}
             onConnect={onConnect}
-            onInit={setReactFlowInstance}
+            onInit={handleOnInit}
             onDrop={onDrop}
             onDragOver={onDragOver}>
             <WatermarkPanel />

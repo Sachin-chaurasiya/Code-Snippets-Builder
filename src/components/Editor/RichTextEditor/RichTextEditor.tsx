@@ -6,12 +6,17 @@ import 'react-quill/dist/quill.bubble.css';
 import './rich-text-editor.css';
 import { RichtextEditorProps } from './RichTextEditor.interface';
 
-const RichTextEditor: FC<RichtextEditorProps> = ({ width, height }) => {
+const RichTextEditor: FC<RichtextEditorProps> = ({
+  width,
+  height,
+  onUpdate,
+  text: updatedText,
+}) => {
   const { text } = useAppProvider();
 
   const editorRef = useRef<ReactQuill>(null);
 
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState(updatedText);
 
   useEffect(() => {
     const element = document.querySelector('[contenteditable="true"]');
@@ -35,7 +40,10 @@ const RichTextEditor: FC<RichtextEditorProps> = ({ width, height }) => {
       modules={MODULES}
       theme="bubble"
       value={value}
-      onChange={setValue}
+      onChange={(value) => {
+        setValue(value);
+        onUpdate(value);
+      }}
     />
   );
 };

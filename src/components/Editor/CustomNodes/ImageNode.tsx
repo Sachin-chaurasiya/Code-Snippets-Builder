@@ -1,13 +1,26 @@
-import React, { FC, memo, useState } from 'react';
+import React, { FC, memo, useEffect, useState } from 'react';
 import AddMediaModal from '../../Modals/AddMediaModal/AddMediaModal';
 import { NodeProps, NodeResizer } from 'reactflow';
 import { Image } from '@chakra-ui/react';
 import { useAppProvider } from 'AppProvider';
 import { HANDLE_COLOR } from 'constants/editor';
+import { NodeData } from 'interfaces/Editor.interface';
 
-const ImageNode: FC<NodeProps> = ({ selected }) => {
+const ImageNode: FC<NodeProps<NodeData>> = ({ selected, id, data }) => {
   const { image } = useAppProvider();
-  const [source, setSource] = useState<string>('');
+  const { imageSource = '', onUpdate } = data;
+
+  const [source, setSource] = useState<string>(imageSource);
+
+  const handleUpdate = (imageSource: string) => {
+    if (onUpdate) {
+      onUpdate(id, { imageSource });
+    }
+  };
+
+  useEffect(() => {
+    handleUpdate(source);
+  }, [source]);
 
   return (
     <>

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { FC, useEffect, useMemo, useState } from 'react';
 import './code-editor.css';
 import { useAppProvider } from 'AppProvider';
 import { Box } from '@chakra-ui/react';
@@ -8,8 +8,15 @@ import { langs } from '@uiw/codemirror-extensions-langs';
 import * as themes from '@uiw/codemirror-themes-all';
 import { CODE_EDITOR_BACKGROUND_COLOR } from 'constants/editor';
 
-const CodeEditor = () => {
-  const [code, setCode] = useState<string>('// Put your code snippet here');
+interface CodeEditorProps {
+  onUpdate: (data: Record<string, string>) => void;
+  snippetCode: string;
+}
+
+const CodeEditor: FC<CodeEditorProps> = ({ onUpdate, snippetCode }) => {
+  const [code, setCode] = useState<string>(
+    snippetCode || '// Put your code snippet here'
+  );
   const { editor } = useAppProvider();
 
   const theme = useMemo(
@@ -21,6 +28,10 @@ const CodeEditor = () => {
     () => [langs[editor.language as keyof typeof langs]()],
     [editor.language]
   );
+
+  useEffect(() => {
+    onUpdate({ code });
+  }, [code]);
 
   useEffect(() => {
     const element = document.querySelector('[contenteditable="true"]');
