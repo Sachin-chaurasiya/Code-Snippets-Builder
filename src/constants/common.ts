@@ -7,6 +7,7 @@ export const ROUTES = {
   SIGN_UP: '/signup',
   PROFILE: '/profile',
   CALLBACK: '/callback',
+  DASHBOARD: '/dashboard',
 };
 
 export const INITIAL_CONTEXT_DATA = {
