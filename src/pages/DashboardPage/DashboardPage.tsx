@@ -6,6 +6,12 @@ import {
   Grid,
   Heading,
   Image,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
   Spinner,
   Stack,
   Text,
@@ -27,6 +33,8 @@ import { Snippet, SnippetData } from 'interfaces/AppProvider.interface';
 import { map, startCase } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { BsPlus } from 'react-icons/bs';
+import { MdDelete } from 'react-icons/md';
+import { RxCopy } from 'react-icons/rx';
 import { useNavigate } from 'react-router-dom';
 import { getUniqueId } from 'utils/EditorUtils';
 
@@ -40,6 +48,9 @@ const DashboardPage = () => {
   const [selectedTemplate, setTemplate] = useState<string>('');
 
   const [isFetching, setIsFetching] = useState<boolean>(false);
+  const [isDeleting, setIsDeleting] = useState<boolean>(false);
+  const [isDuplicating, setIsDuplicating] = useState<boolean>(false);
+  const [deleteId, setDeleteId] = useState<string>('');
 
   const [snippets, setSnippets] = useState<Models.DocumentList<SnippetData>>();
 
@@ -111,6 +122,74 @@ const DashboardPage = () => {
     }
   };
 
+  const duplicateSnippet = async (data: Snippet) => {
+    const uniqueId = getUniqueId();
+
+    try {
+      setIsDuplicating(true);
+
+      const snippet = await API_CLIENT.database.createDocument<SnippetData>(
+        DATABASE_ID,
+        COLLECTION_ID,
+        uniqueId,
+        data
+      );
+
+      setSnippets((prev) => ({
+        ...prev,
+        documents: [...(prev?.documents ?? []), snippet],
+        total: (prev?.total ?? 0) + 1,
+      }));
+      toast({
+        description: 'Snippet duplicated successfully!',
+        status: 'success',
+        duration: 2000,
+        position: 'top-right',
+      });
+    } catch (error) {
+      const exception = error as AppwriteException;
+      toast({
+        description: exception.message,
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+        position: 'top-right',
+      });
+    } finally {
+      setIsDuplicating(false);
+    }
+  };
+
+  const deleteSnippet = async (id: string) => {
+    try {
+      setIsDeleting(true);
+      await API_CLIENT.database.deleteDocument(DATABASE_ID, COLLECTION_ID, id);
+      setSnippets((prev) => ({
+        ...prev,
+        documents: prev?.documents.filter((doc) => doc.$id !== id) ?? [],
+        total: (prev?.total ?? 0) - 1,
+      }));
+      toast({
+        description: 'Snippet deleted successfully!',
+        status: 'success',
+        duration: 2000,
+        position: 'top-right',
+      });
+    } catch (error) {
+      const exception = error as AppwriteException;
+      toast({
+        description: exception.message,
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+        position: 'top-right',
+      });
+    } finally {
+      setIsDeleting(false);
+      setDeleteId('');
+    }
+  };
+
   useEffect(() => {
     fetchSnippets();
   }, []);
@@ -168,11 +247,52 @@ const DashboardPage = () => {
                 ratio={1}
                 borderRadius={BORDER_RADIUS_LARGE}>
                 <Button
-                  variant="link"
-                  as="a"
-                  href={`${ROUTES.EDITOR}?id=${snippet.$id ?? ''}`}
-                  bg="transparent">
+                  role="group"
+                  position="relative"
+                  bg="transparent"
+                  _hover={{ bg: 'transparent' }}
+                  onClick={() => {
+                    handleNavigate(snippet.$id);
+                  }}>
+                  <Stack
+                    zIndex={5}
+                    _groupHover={{ display: 'flex' }}
+                    position="absolute"
+                    direction="row"
+                    display={'none'}>
+                    <Button
+                      variant="ghost"
+                      color="white"
+                      _hover={{ color: 'gray.600', bg: 'gray.100' }}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        setDeleteId(snippet.$id);
+                      }}>
+                      <MdDelete />
+                    </Button>
+                    <Button
+                      isLoading={isDuplicating}
+                      variant="ghost"
+                      color="white"
+                      _hover={{ color: 'gray.600', bg: 'gray.100' }}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        duplicateSnippet({
+                          background: snippet.background,
+                          hideWaterMark: snippet.hideWaterMark,
+                          profileInfo: snippet.profileInfo,
+                          nodes: snippet.nodes,
+                          creator: snippet.creator,
+                          snapshot: snippet.snapshot,
+                        });
+                      }}>
+                      <RxCopy />
+                    </Button>
+                  </Stack>
                   <Image
+                    _groupHover={{ opacity: 0.8 }}
                     borderRadius={BORDER_RADIUS_MEDIUM}
                     src={
                       API_CLIENT.storage.getFilePreview(
@@ -212,6 +332,44 @@ const DashboardPage = () => {
           </Grid>
         )}
       </Stack>
+      {deleteId ? (
+        <Modal
+          isCentered
+          isOpen={Boolean(deleteId)}
+          onClose={() => {
+            setIsDeleting(false);
+          }}>
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader>Are you sure?</ModalHeader>
+
+            <ModalBody>
+              The snippet will be permanently deleted. This action is
+              irreversible.
+            </ModalBody>
+
+            <ModalFooter>
+              <Button
+                variant="ghost"
+                mr={3}
+                onClick={() => {
+                  setDeleteId('');
+                }}>
+                Close
+              </Button>
+              <Button
+                isLoading={isDeleting}
+                variant="solid"
+                colorScheme="red"
+                onClick={() => {
+                  deleteSnippet(deleteId);
+                }}>
+                Delete
+              </Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
+      ) : null}
     </Box>
   );
 };

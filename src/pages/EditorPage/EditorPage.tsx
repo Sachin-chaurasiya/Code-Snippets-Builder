@@ -355,6 +355,21 @@ const EditorPage = () => {
     }
   }, [isNeedUpdate, nodes]);
 
+  useEffect(() => {
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+      event.preventDefault();
+      if (isNeedUpdate) {
+        event.returnValue = 'You have unfinished change!';
+      }
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, [isNeedUpdate]);
+
   if (isLoading) {
     return <Loader />;
   }
