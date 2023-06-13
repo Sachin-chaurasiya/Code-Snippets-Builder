@@ -67,4 +67,4 @@ It builds the app for production to the `build` folder. It correctly bundles Rea
 
 ## 🛡️ License
 
-Your GitHub Contributions is licensed under the MIT License - see the [LICENSE](https://github.com/Sachin-chaurasiya/Code-Snippets-Builder/blob/main/LICENSE) file for details.
+Your Code Snippet Builder is licensed under the MIT License - see the [LICENSE](https://github.com/Sachin-chaurasiya/Code-Snippets-Builder/blob/main/LICENSE) file for details.
