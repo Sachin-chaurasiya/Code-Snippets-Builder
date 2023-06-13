@@ -170,7 +170,14 @@ const EditorPage = () => {
         { snapshot: newSnapshotId }
       );
     } catch (error) {
-      // do not throw error for this API
+      const exception = error as AppwriteException;
+      toast({
+        description: exception.message,
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+        position: 'top-right',
+      });
     }
   };
 
