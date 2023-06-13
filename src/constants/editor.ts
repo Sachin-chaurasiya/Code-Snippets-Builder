@@ -1,9 +1,13 @@
-import { sortBy, uniqueId } from 'lodash';
+import { sortBy } from 'lodash';
 import { Node } from 'reactflow';
 import * as themes from '@uiw/codemirror-themes-all';
 import { langNames as languages } from '@uiw/codemirror-extensions-langs';
 import { ToolBarItemsProps } from 'components/Editor/ToolBar/ToolBar.interface';
 import { BiCodeBlock, BiImage, BiText } from 'react-icons/bi';
+import { getUniqueId } from 'utils/EditorUtils';
+import EditorNode from 'components/Editor/CustomNodes/EditorNode';
+import TextNode from 'components/Editor/CustomNodes/TextNode';
+import ImageNode from 'components/Editor/CustomNodes/ImageNode';
 
 export const GRADIENT_COLORS = [
   'linear-gradient(337deg, rgb(101, 78, 163), rgb(218, 152, 180))',
@@ -197,9 +201,9 @@ export const BORDER_RADIUS = [4, 6, 8, 10, 12];
 
 export const INITIAL_NODES: Node[] = [
   {
-    id: uniqueId('dragged'),
-    position: { x: 80, y: 50 },
-    data: { label: 'Initial Code Editor Node' },
+    id: getUniqueId(),
+    position: { x: 270, y: 202 },
+    data: {},
     type: 'editorNode',
     dragHandle: '.node-drag-handle',
   },
@@ -232,3 +236,11 @@ export const TOOL_BAR_ITEMS: ToolBarItemsProps[] = [
   { label: 'Text', icon: BiText, nodeType: CUSTOM_NODES.TEXT_NODE },
   { label: 'Image', icon: BiImage, nodeType: CUSTOM_NODES.IMAGE_NODE },
 ];
+
+export const NODE_TYPES = {
+  [CUSTOM_NODES.EDITOR_NODE]: EditorNode,
+  [CUSTOM_NODES.TEXT_NODE]: TextNode,
+  [CUSTOM_NODES.IMAGE_NODE]: ImageNode,
+};
+
+export const UPDATE_SNIPPET_TIME = 2000;

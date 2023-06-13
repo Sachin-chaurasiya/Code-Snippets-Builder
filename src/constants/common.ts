@@ -3,6 +3,11 @@ import { CSSProperties } from 'react';
 export const ROUTES = {
   HOME: '/',
   EDITOR: '/editor',
+  SIGN_IN: '/signin',
+  SIGN_UP: '/signup',
+  PROFILE: '/profile',
+  CALLBACK: '/callback',
+  DASHBOARD: '/dashboard',
 };
 
 export const INITIAL_CONTEXT_DATA = {
@@ -22,7 +27,7 @@ export const INITIAL_CONTEXT_DATA = {
   },
   profile: {
     platform: 'twitter',
-    username: 'sachindotcom',
+    username: '',
     isVisible: true,
   },
   hideWaterMark: false,
@@ -63,3 +68,9 @@ export const BORDER_RADIUS_LARGE = '6px';
 export const APP_TEXT_COLOR = '#2d3748';
 export const PRIMARY_GRADIENT_COLOR =
   'linear-gradient(135deg, rgb(102, 126, 234), rgb(118, 75, 162))';
+
+export const SESSION_KEY = 'code_snippet_builder_session';
+
+export const DATABASE_ID = 'CodeSnippetBuilder';
+export const COLLECTION_ID = 'snippet_entity';
+export const BUCKET_ID = 'snippet_images';

@@ -8,7 +8,8 @@ import {
 } from '@chakra-ui/react';
 import EditorTitleIcon from 'components/Common/Icons/EditorTitleIcon';
 import { CODE_EDITOR_BACKGROUND_COLOR } from 'constants/editor';
-import { last } from 'lodash';
+import { NodeDataStore } from 'interfaces/Editor.interface';
+import { isEqual, last } from 'lodash';
 import React, { useMemo, useState } from 'react';
 import { HiPlus } from 'react-icons/hi';
 import { IoMdClose } from 'react-icons/io';
@@ -17,9 +18,18 @@ import {
   getIconColorByFileExtension,
 } from 'utils/IconUtils';
 
-const TitleBar = () => {
-  const [showFileName, setShowFileName] = useState<boolean>(false);
-  const [fileName, setFileName] = useState<string>('');
+const TitleBar = ({
+  snippetName,
+  onUpdate,
+  isSnippetNameVisible,
+}: {
+  snippetName: string;
+  isSnippetNameVisible: boolean;
+  onUpdate: (data: NodeDataStore) => void;
+}) => {
+  const [showFileName, setShowFileName] =
+    useState<boolean>(isSnippetNameVisible);
+  const [fileName, setFileName] = useState<string>(snippetName);
 
   const FileNameIcon = useMemo(
     () => getIconByFileExtension(last(fileName.split('.')) ?? ''),
@@ -67,7 +77,7 @@ const TitleBar = () => {
               icon={<FileNameIcon fontSize={16} color={fileNameIconColor} />}
             />
           ) : null}
-          <Editable placeholder="Untitled">
+          <Editable placeholder="Untitled" value={fileName}>
             <EditablePreview />
             <EditableInput
               _hover={{ outline: 'none', border: 'none' }}
@@ -80,7 +90,14 @@ const TitleBar = () => {
               minWidth="55px"
               userSelect="text"
               onChange={(e) => {
-                setFileName(e.target.value);
+                const { value } = e.target;
+                setFileName(value);
+                onUpdate({ snippetName: value });
+              }}
+              onBlur={() => {
+                if (!isEqual(snippetName, fileName)) {
+                  onUpdate({ snippetName: fileName });
+                }
               }}
             />
           </Editable>
@@ -94,6 +111,7 @@ const TitleBar = () => {
             icon={<IoMdClose fontWeight="bold" color="white" fontSize={18} />}
             onClick={() => {
               setShowFileName(false);
+              onUpdate({ snippetName: '', isSnippetNameVisible: false });
             }}
           />
         </Box>
@@ -105,6 +123,7 @@ const TitleBar = () => {
           icon={<HiPlus fontWeight="bold" color="white" fontSize={18} />}
           onClick={() => {
             setShowFileName(true);
+            onUpdate({ isSnippetNameVisible: true });
           }}
         />
       )}

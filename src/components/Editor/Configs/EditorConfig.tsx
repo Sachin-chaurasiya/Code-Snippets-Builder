@@ -7,15 +7,23 @@ import {
   Text,
   VStack,
 } from '@chakra-ui/react';
-import { useAppProvider } from 'AppProvider';
 import { FONT_SIZES, LANGUAGE_OPTIONS, THEME_OPTIONS } from 'constants/editor';
 import { COMMON_TEXT_PROPS } from 'constants/text';
+import { NodeData } from 'interfaces/Editor.interface';
 import { map, startCase, toNumber } from 'lodash';
-import React from 'react';
+import React, { FC } from 'react';
 
-const EditorConfig = () => {
-  const { editor, onUpdateEditorData } = useAppProvider();
+type EditorConfigProps = {
+  nodeId: string;
+} & NodeData;
 
+const EditorConfig: FC<EditorConfigProps> = ({
+  nodeId,
+  onUpdate,
+  language,
+  theme,
+  fontSize,
+}) => {
   return (
     <Box alignItems="flex-start" as={VStack} mb={4}>
       <Text fontSize="lg" fontWeight="bold" {...COMMON_TEXT_PROPS}>
@@ -26,10 +34,9 @@ const EditorConfig = () => {
         <FormControl>
           <FormLabel>Language</FormLabel>
           <Select
-            value={editor.language}
+            value={language}
             onChange={(e) => {
-              onUpdateEditorData({
-                ...editor,
+              onUpdate(nodeId, {
                 language: e.target.value,
               });
             }}>
@@ -43,10 +50,9 @@ const EditorConfig = () => {
         <FormControl>
           <FormLabel>Theme</FormLabel>
           <Select
-            value={editor.theme}
+            value={theme}
             onChange={(e) => {
-              onUpdateEditorData({
-                ...editor,
+              onUpdate(nodeId, {
                 theme: e.target.value,
               });
             }}>
@@ -61,10 +67,9 @@ const EditorConfig = () => {
         <FormControl>
           <FormLabel>Font Size</FormLabel>
           <Select
-            value={editor.fontSize}
+            value={fontSize}
             onChange={(e) => {
-              onUpdateEditorData({
-                ...editor,
+              onUpdate(nodeId, {
                 fontSize: toNumber(e.target.value),
               });
             }}>

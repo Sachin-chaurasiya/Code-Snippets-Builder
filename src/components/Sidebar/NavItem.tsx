@@ -4,7 +4,13 @@ import { useLocation } from 'react-router-dom';
 import { NavItemProps } from './Sidebar.interface';
 import { PRIMARY_GRADIENT_COLOR } from 'constants/common';
 
-const NavItem = ({ icon, children, path, ...rest }: NavItemProps) => {
+const NavItem = ({
+  icon,
+  children,
+  path,
+  handleClick,
+  ...rest
+}: NavItemProps) => {
   const location = useLocation();
 
   const isActiveItem = useMemo(
@@ -16,7 +22,8 @@ const NavItem = ({ icon, children, path, ...rest }: NavItemProps) => {
     <Link
       href={path}
       style={{ textDecoration: 'none', marginBottom: '4px', display: 'block' }}
-      _focus={{ boxShadow: 'none' }}>
+      _focus={{ boxShadow: 'none' }}
+      onClick={handleClick}>
       <Flex
         align="center"
         p="4"

@@ -16,8 +16,10 @@ import { PRIMARY_GRADIENT_COLOR, ROUTES } from 'constants/common';
 import { COMMON_TEXT_PROPS } from 'constants/text';
 import { Feature } from 'components/Feature/Feature';
 import Footer from 'components/Common/Footer/Footer';
+import { useAppProvider } from 'AppProvider';
 
 const LandingPage = () => {
+  const { session } = useAppProvider();
   const navigate = useNavigate();
 
   const handleGetStarted = () => {
@@ -25,10 +27,14 @@ const LandingPage = () => {
   };
 
   return (
-    <Box bg="white" minHeight="100vh">
+    <Box bg="white" minHeight="100vh" mt={session ? '' : '64px'}>
       <Box py={16}>
         <Flex direction={['column', 'column', 'row']} justify="center">
-          <Box flex="1" pr={[0, 0, 8]} pl={[0, 0, 16]}>
+          <Box
+            flex="1"
+            pr={[0, 0, 8]}
+            pl={[0, 0, 16]}
+            alignSelf={session ? '' : 'center'}>
             <Heading size="xl" mb={4} {...COMMON_TEXT_PROPS}>
               Build Beautiful Code Snippets
             </Heading>

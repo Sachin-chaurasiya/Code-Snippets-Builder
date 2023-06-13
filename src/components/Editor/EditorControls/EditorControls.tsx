@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ReactFlowState, useReactFlow, useStore, useStoreApi } from 'reactflow';
 import { shallow } from 'zustand/shallow';
 import FitViewIcon from 'components/Common/Icons/FitViewIcon';
@@ -12,6 +12,9 @@ import {
   SliderFilledTrack,
   SliderThumb,
   SliderTrack,
+  Spinner,
+  Stack,
+  Text,
   Tooltip,
 } from '@chakra-ui/react';
 import PlusIcon from '../../Common/Icons/PlusIcon';
@@ -22,13 +25,15 @@ import {
   PRIMARY_GRADIENT_COLOR,
 } from 'constants/common';
 
+import { FcCheckmark } from 'react-icons/fc';
+
 const selector = (s: ReactFlowState) => ({
   isInteractive: s.nodesDraggable || s.nodesConnectable || s.elementsSelectable,
   minZoomReached: s.transform[2] <= s.minZoom,
   maxZoomReached: s.transform[2] >= s.maxZoom,
 });
 
-const EditorControls = () => {
+const EditorControls = ({ isUpdating }: { isUpdating: boolean }) => {
   const store = useStoreApi();
 
   const state = store.getState();
@@ -72,7 +77,9 @@ const EditorControls = () => {
     setCurrentZoom(updatedState.transform[2]);
   };
 
-  store.subscribe(handleSubscription);
+  useEffect(() => {
+    store.subscribe(handleSubscription);
+  }, []);
 
   return (
     <Box as={Flex} mb={4} justifyContent="space-between">
@@ -101,44 +108,59 @@ const EditorControls = () => {
           </Button>
         </Tooltip>
       </Flex>
-      <Flex
-        bg="white"
-        justifyContent="space-between"
-        flex={0.3}
-        borderRadius={BORDER_RADIUS_LARGE}
-        shadow="md">
-        <Tooltip label="Zoom out" borderRadius={BORDER_RADIUS_MEDIUM}>
-          <Button
-            _hover={{ background: 'transparent' }}
-            onClick={onZoomOutHandler}
-            aria-label="zoom out"
-            disabled={minZoomReached}
-            variant="ghost">
-            <MinusIcon />
-          </Button>
-        </Tooltip>
-        <Slider
-          step={0.1}
-          value={currentZoom}
-          min={state.minZoom}
-          max={state.maxZoom}
-          onChange={handleZoomTo}>
-          <SliderTrack>
-            <SliderFilledTrack bgGradient={PRIMARY_GRADIENT_COLOR} />
-          </SliderTrack>
-          <SliderThumb />
-        </Slider>
-        <Tooltip label="Zoom in" borderRadius={BORDER_RADIUS_MEDIUM}>
-          <Button
-            _hover={{ background: 'transparent' }}
-            onClick={onZoomInHandler}
-            aria-label="zoom in"
-            disabled={maxZoomReached}
-            variant="ghost">
-            <PlusIcon />
-          </Button>
-        </Tooltip>
-      </Flex>
+      <Stack w="full" flex={0.5} direction="row" spacing={4}>
+        <Stack direction="row" spacing={2} align="center">
+          {isUpdating ? (
+            <>
+              <Spinner size="sm" />
+              <Text>Saving</Text>
+            </>
+          ) : (
+            <>
+              <FcCheckmark />
+              <Text>Saved</Text>
+            </>
+          )}
+        </Stack>
+        <Flex
+          flex={1}
+          bg="white"
+          justifyContent="space-between"
+          borderRadius={BORDER_RADIUS_LARGE}
+          shadow="md">
+          <Tooltip label="Zoom out" borderRadius={BORDER_RADIUS_MEDIUM}>
+            <Button
+              _hover={{ background: 'transparent' }}
+              onClick={onZoomOutHandler}
+              aria-label="zoom out"
+              disabled={minZoomReached}
+              variant="ghost">
+              <MinusIcon />
+            </Button>
+          </Tooltip>
+          <Slider
+            step={0.1}
+            value={currentZoom}
+            min={state.minZoom}
+            max={state.maxZoom}
+            onChange={handleZoomTo}>
+            <SliderTrack>
+              <SliderFilledTrack bgGradient={PRIMARY_GRADIENT_COLOR} />
+            </SliderTrack>
+            <SliderThumb />
+          </Slider>
+          <Tooltip label="Zoom in" borderRadius={BORDER_RADIUS_MEDIUM}>
+            <Button
+              _hover={{ background: 'transparent' }}
+              onClick={onZoomInHandler}
+              aria-label="zoom in"
+              disabled={maxZoomReached}
+              variant="ghost">
+              <PlusIcon />
+            </Button>
+          </Tooltip>
+        </Flex>
+      </Stack>
     </Box>
   );
 };
