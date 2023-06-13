@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { Box, Flex, useColorModeValue, Text, BoxProps } from '@chakra-ui/react';
+import { Box, Flex, useColorModeValue, Text } from '@chakra-ui/react';
 
 import EditorConfig from 'components/Editor/Configs/EditorConfig';
 import TextConfig from 'components/Editor/Configs/TextConfig';
@@ -10,8 +10,16 @@ import { COMMON_TEXT_PROPS } from 'constants/text';
 import BackgroundConfig from '../Configs/BackgroundConfig';
 import { useAppProvider } from 'AppProvider';
 import { CUSTOM_NODES } from 'constants/editor';
+import { EditorSidebarProps } from 'interfaces/Editor.interface';
 
-const EditorSidebar: FC<BoxProps> = () => {
+const EditorSidebar: FC<EditorSidebarProps> = ({
+  background,
+  profile,
+  hideWaterMark,
+  onUpdateBackground,
+  onUpdateProfileData,
+  onUpdateWaterMark,
+}) => {
   const { selectedNode } = useAppProvider();
 
   return (
@@ -44,8 +52,16 @@ const EditorSidebar: FC<BoxProps> = () => {
         <ImageConfig nodeId={selectedNode.id} {...selectedNode.data} />
       )}
 
-      <BackgroundConfig />
-      <ProfileConfig />
+      <BackgroundConfig
+        background={background}
+        hideWaterMark={hideWaterMark}
+        onUpdateBackground={onUpdateBackground}
+        onUpdateWaterMark={onUpdateWaterMark}
+      />
+      <ProfileConfig
+        profile={profile}
+        onUpdateProfileData={onUpdateProfileData}
+      />
     </Box>
   );
 };

@@ -1,9 +1,8 @@
-import { Box } from '@chakra-ui/react';
+import { Box, useToast } from '@chakra-ui/react';
 import React, {
   Fragment,
   useCallback,
   useEffect,
-  useMemo,
   useRef,
   useState,
 } from 'react';
@@ -20,32 +19,66 @@ import ReactFlow, {
 import 'reactflow/dist/style.css';
 
 import ToolBar from 'components/Editor/ToolBar/ToolBar';
-import EditorNode from 'components/Editor/CustomNodes/EditorNode';
-import { CUSTOM_NODES, INITIAL_NODES } from 'constants/editor';
-import TextNode from 'components/Editor/CustomNodes/TextNode';
-import ImageNode from 'components/Editor/CustomNodes/ImageNode';
+import { NODE_TYPES, UPDATE_SNIPPET_TIME } from 'constants/editor';
 import { useAppProvider } from 'AppProvider';
 import EditorSidebar from 'components/Editor/EditorSidebar/EditorSidebar';
 import EditorControls from 'components/Editor/EditorControls/EditorControls';
 import {
   getDragHandleByNodeType,
   getInitialNodeDataByType,
+  getParsedValue,
+  getStringifiedValue,
   getUniqueId,
 } from 'utils/EditorUtils';
 
 import WatermarkPanel from 'components/Editor/Panels/WatermarkPanel';
 import ProfilePanel from 'components/Editor/Panels/ProfilePanel';
-import { find, map } from 'lodash';
+import { find, map, toNumber } from 'lodash';
 import { NodeData } from 'interfaces/Editor.interface';
+import { useLocation, useNavigate } from 'react-router-dom';
+import {
+  BORDER_RADIUS_LARGE,
+  COLLECTION_ID,
+  DATABASE_ID,
+  INITIAL_CONTEXT_DATA,
+  ROUTES,
+} from 'constants/common';
+import Loader from 'components/Common/Loader/Loader';
+import { AppwriteException } from 'appwrite';
+import { API_CLIENT } from 'api';
+import {
+  ProfileData,
+  Snippet,
+  SnippetData,
+} from 'interfaces/AppProvider.interface';
 
 const EditorPage = () => {
+  const toast = useToast();
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const [hideWaterMark, setIsWaterMarkVisible] = useState<boolean>(
+    INITIAL_CONTEXT_DATA.hideWaterMark
+  );
+
+  const [profileData, setProfileData] = useState<ProfileData>(
+    INITIAL_CONTEXT_DATA.profile
+  );
+
+  const [background, setBackground] = useState<string>('');
+
   // nodes ref to store the nodes data for passing in callback function
   const nodesRef = useRef<Array<Node<NodeData>>>([]);
 
-  const { background, onUpdateSelectedNode } = useAppProvider();
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const [nodes, setNodes, onNodesChange] =
-    useNodesState<NodeData>(INITIAL_NODES);
+  const [isNeedUpdate, setIsNeedUpdate] = useState<boolean>(false);
+
+  const [snippetData, setSnippetData] = useState<SnippetData>();
+
+  const { onUpdateSelectedNode } = useAppProvider();
+
+  const [nodes, setNodes, onNodesChange] = useNodesState<NodeData>([]);
 
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
 
@@ -54,10 +87,7 @@ const EditorPage = () => {
   const [reactFlowInstance, setReactFlowInstance] =
     useState<ReactFlowInstance>();
 
-  const onDragOver = useCallback((event: React.DragEvent) => {
-    event.preventDefault();
-    event.dataTransfer.dropEffect = 'move';
-  }, []);
+  const [timeoutId, setTimeoutId] = useState<number>();
 
   /**
    * update the node data of given nodeId
@@ -85,10 +115,93 @@ const EditorPage = () => {
         return node;
       });
 
+      setIsNeedUpdate(true);
       setNodes(updatedNodes);
     },
     [nodesRef, setNodes]
   );
+
+  const handleSnippetDataInit = (data: SnippetData) => {
+    setSnippetData(data);
+    setBackground(data.background);
+    setProfileData(getParsedValue(data.profileInfo));
+    setIsWaterMarkVisible(data.hideWaterMark);
+    const nodesList = getParsedValue(data.nodes) as Array<Node<NodeData>>;
+    const nodesWithUpdateHandler = map(nodesList, (node) => ({
+      ...node,
+      data: { ...node.data, onUpdate: handleUpdateNodeData },
+    }));
+
+    setNodes(nodesWithUpdateHandler);
+  };
+
+  const fetchSnippetData = async (snippetId: string) => {
+    try {
+      const data = await API_CLIENT.database.getDocument<SnippetData>(
+        DATABASE_ID,
+        COLLECTION_ID,
+        snippetId
+      );
+
+      handleSnippetDataInit(data);
+
+      setIsLoading(false);
+    } catch (error) {
+      const exception = error as AppwriteException;
+      toast({
+        description: exception.message,
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+        position: 'top-right',
+      });
+      navigate(ROUTES.DASHBOARD);
+    }
+  };
+
+  const updateSnippetData = async (updatedData: Partial<Snippet>) => {
+    if (snippetData?.$id) {
+      try {
+        const data = await API_CLIENT.database.updateDocument<SnippetData>(
+          DATABASE_ID,
+          COLLECTION_ID,
+          snippetData.$id,
+          updatedData
+        );
+
+        handleSnippetDataInit(data);
+        setIsNeedUpdate(false);
+      } catch (error) {
+        const exception = error as AppwriteException;
+        toast({
+          description: exception.message,
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
+          position: 'top-right',
+        });
+      }
+    }
+  };
+
+  const handleUpdateProfileData = (updatedData: ProfileData) => {
+    updateSnippetData({ profileInfo: getStringifiedValue(updatedData) });
+    setProfileData(updatedData);
+  };
+
+  const handleUpdateBackground = (updatedData: string) => {
+    updateSnippetData({ background: updatedData });
+    setBackground(updatedData);
+  };
+  const handleUpdateWaterMark = (updatedData: boolean) => {
+    updateSnippetData({ hideWaterMark: updatedData });
+    setIsWaterMarkVisible(updatedData);
+  };
+
+  const onDragOver = useCallback((event: React.DragEvent) => {
+    event.preventDefault();
+    event.dataTransfer.dropEffect = 'move';
+  }, []);
 
   /**
    * set the instance of reactFlow and attach the handleUpdateNodeData on every node
@@ -118,6 +231,10 @@ const EditorPage = () => {
    */
   const handleNodesChange = useCallback(
     (changes: NodeChange[]) => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+
       onNodesChange(changes);
       map(changes, (change) => {
         // if node is selected then updated the selected node
@@ -133,8 +250,12 @@ const EditorPage = () => {
           onUpdateSelectedNode(undefined);
         }
       });
+      const id = setTimeout(() => {
+        setIsNeedUpdate(true);
+        setTimeoutId(toNumber(id));
+      }, UPDATE_SNIPPET_TIME);
     },
-    [onNodesChange, nodesRef]
+    [onNodesChange, nodesRef, timeoutId]
   );
 
   const onDrop = useCallback(
@@ -176,18 +297,32 @@ const EditorPage = () => {
     [setEdges]
   );
 
-  const nodeTypes = useMemo(
-    () => ({
-      [CUSTOM_NODES.EDITOR_NODE]: EditorNode,
-      [CUSTOM_NODES.TEXT_NODE]: TextNode,
-      [CUSTOM_NODES.IMAGE_NODE]: ImageNode,
-    }),
-    []
-  );
-
   useEffect(() => {
     nodesRef.current = nodes;
   }, [nodes]);
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const id = searchParams.get('id');
+
+    if (!id) {
+      // No ID found in the search parameters, redirect to another page
+      navigate(ROUTES.DASHBOARD);
+    } else {
+      // fetch the snippet data
+      fetchSnippetData(id);
+    }
+  }, [location.search]);
+
+  useEffect(() => {
+    if (isNeedUpdate) {
+      updateSnippetData({ nodes: getStringifiedValue(nodes) });
+    }
+  }, [isNeedUpdate, nodes]);
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <Fragment>
@@ -204,7 +339,7 @@ const EditorPage = () => {
             zoomOnDoubleClick={false}
             zoomOnScroll={false}
             nodesConnectable={false}
-            nodeTypes={nodeTypes}
+            nodeTypes={NODE_TYPES}
             onNodesChange={handleNodesChange}
             onEdgesChange={onEdgesChange}
             proOptions={{ hideAttribution: true }}
@@ -212,7 +347,7 @@ const EditorPage = () => {
             edges={edges}
             style={{
               background,
-              borderRadius: 6,
+              borderRadius: BORDER_RADIUS_LARGE,
             }}
             onConnect={onConnect}
             onInit={handleOnInit}
@@ -220,12 +355,19 @@ const EditorPage = () => {
             onDragOver={onDragOver}
             // this is to disable multi select
             multiSelectionKeyCode={null}>
-            <WatermarkPanel />
-            <ProfilePanel />
+            <WatermarkPanel hideWaterMark={hideWaterMark} />
+            <ProfilePanel profile={profileData} />
           </ReactFlow>
         </Box>
       </Box>
-      <EditorSidebar />
+      <EditorSidebar
+        background={background}
+        hideWaterMark={hideWaterMark}
+        profile={profileData}
+        onUpdateBackground={handleUpdateBackground}
+        onUpdateProfileData={handleUpdateProfileData}
+        onUpdateWaterMark={handleUpdateWaterMark}
+      />
     </Fragment>
   );
 };

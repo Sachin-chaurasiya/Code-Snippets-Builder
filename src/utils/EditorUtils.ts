@@ -43,3 +43,11 @@ export const getInitialNodeDataByType = (type: string): NodeDataStore => {
       return {};
   }
 };
+
+export const getStringifiedValue = (data: unknown) => {
+  return JSON.stringify(data);
+};
+
+export const getParsedValue = (data: string) => {
+  return JSON.parse(data);
+};

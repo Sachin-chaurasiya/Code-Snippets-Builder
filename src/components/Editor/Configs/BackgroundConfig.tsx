@@ -8,17 +8,20 @@ import {
   Text,
   VStack,
 } from '@chakra-ui/react';
-import { useAppProvider } from 'AppProvider';
+
 import CustomSwitch from 'components/Common/CustomSwitch/CustomSwitch';
 import { GRADIENT_COLORS } from 'constants/editor';
 import { COMMON_TEXT_PROPS } from 'constants/text';
-import React from 'react';
+import { EditorSidebarProps } from 'interfaces/Editor.interface';
+import React, { FC } from 'react';
 import { BiCheckCircle } from 'react-icons/bi';
 
-const BackgroundConfig = () => {
-  const { background, onUpdateBackground, hideWaterMark, onUpdateWaterMark } =
-    useAppProvider();
-
+const BackgroundConfig: FC<
+  Pick<
+    EditorSidebarProps,
+    'background' | 'onUpdateBackground' | 'hideWaterMark' | 'onUpdateWaterMark'
+  >
+> = ({ background, onUpdateBackground, hideWaterMark, onUpdateWaterMark }) => {
   return (
     <Box alignItems="flex-start" as={VStack} mb={4}>
       <Text fontSize="lg" fontWeight="bold" {...COMMON_TEXT_PROPS}>

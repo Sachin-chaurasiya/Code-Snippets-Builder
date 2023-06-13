@@ -212,9 +212,7 @@ const ProfilePage = () => {
   }, [loggedInUser]);
 
   useEffect(() => {
-    fetchCurrentUserData().catch(() => {
-      // handle error
-    });
+    fetchCurrentUserData();
   }, []);
 
   if (isLoading) {

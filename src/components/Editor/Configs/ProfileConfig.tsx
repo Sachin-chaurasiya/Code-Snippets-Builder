@@ -9,18 +9,18 @@ import {
   Text,
   VStack,
 } from '@chakra-ui/react';
-import { useAppProvider } from 'AppProvider';
 import { API_CLIENT } from 'api';
 import { Models } from 'appwrite';
 import CustomSwitch from 'components/Common/CustomSwitch/CustomSwitch';
 import { SUPPORTED_PROFILES } from 'constants/profile';
 import { COMMON_TEXT_PROPS } from 'constants/text';
+import { EditorSidebarProps } from 'interfaces/Editor.interface';
 import { get, map } from 'lodash';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { FC, useEffect, useMemo, useState } from 'react';
 
-const ProfileConfig = () => {
-  const { profile, onUpdateProfileData } = useAppProvider();
-
+const ProfileConfig: FC<
+  Pick<EditorSidebarProps, 'profile' | 'onUpdateProfileData'>
+> = ({ profile, onUpdateProfileData }) => {
   const [loggedInUser, setLoggedInUser] =
     useState<Models.User<Models.Preferences>>();
 
@@ -46,9 +46,7 @@ const ProfileConfig = () => {
   }, [loggedInUser]);
 
   useEffect(() => {
-    fetchCurrentUserData().catch(() => {
-      // handle error
-    });
+    fetchCurrentUserData();
   }, []);
 
   const platformUserName = useMemo(() => {

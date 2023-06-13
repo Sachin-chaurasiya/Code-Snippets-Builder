@@ -1,3 +1,5 @@
+import { ProfileData } from './AppProvider.interface';
+
 export type NodeDataStore = CodeEditorNodeData & ImageNodeData & TextNodeData;
 
 export interface CommonNodeData {
@@ -24,3 +26,12 @@ export type TextNodeData = {
 export type NodeData = {
   onUpdate: (nodeId: string, partialData: NodeDataStore) => void;
 } & NodeDataStore;
+
+export interface EditorSidebarProps {
+  background: string;
+  profile: ProfileData;
+  hideWaterMark: boolean;
+  onUpdateProfileData: (value: ProfileData) => void;
+  onUpdateBackground: (value: string) => void;
+  onUpdateWaterMark: (value: boolean) => void;
+}

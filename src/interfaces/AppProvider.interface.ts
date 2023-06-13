@@ -1,5 +1,6 @@
 import { Node } from 'reactflow';
 import { NodeData } from './Editor.interface';
+import { Models } from 'appwrite';
 
 export interface EditorContextData {
   language: string;
@@ -15,22 +16,26 @@ export interface TextContextData {
 export interface ImageContextData {
   borderRadius: string;
 }
-export interface ProfileContextData {
+export interface ProfileData {
   platform: string;
   username: string;
   isVisible: boolean;
 }
 
 export interface AppContextProps {
-  background: string;
-  profile: ProfileContextData;
-  hideWaterMark: boolean;
   selectedNode?: Node<NodeData>;
-  onUpdateProfileData: (value: ProfileContextData) => void;
-  onUpdateBackground: (value: string) => void;
-  onUpdateWaterMark: (value: boolean) => void;
   onUpdateSelectedNode: (selectedNode?: Node<NodeData>) => void;
 
   session: string | undefined;
   onUpdateSession: (session: string | undefined) => void;
 }
+
+export interface Snippet {
+  background: string;
+  hideWaterMark: boolean;
+  profileInfo: string;
+  nodes: string;
+  creator: string;
+}
+
+export type SnippetData = Models.Document & Snippet;
