@@ -1,7 +1,6 @@
 <h1 align="center">Code Snippets Builder</h1>
 <p align="center">
-<img width="228" alt="image" src="https://github.com/Sachin-chaurasiya/Code-Snippets-Builder/assets/59080942/d67adff6-dc50-4f31-9e27-14faf063f8b0">
-
+<img width="228" alt="240715596-d67adff6-dc50-4f31-9e27-14faf063f8b0" src="https://github.com/Sachin-chaurasiya/Code-Snippets-Builder/assets/59080942/9b0f5606-15f5-48ec-b3ba-d1da41d39c9a">
 </p> 
 <h3 align="center">Start Building Beautiful Code Snippets Today!</h3>
 <p align="center">With our drag and drop code snippet builder, you can effortlessly showcase your code in a visually appealing and professional manner.</p>
@@ -10,7 +9,7 @@
 
 Create stunning code snippets for different programming languages with ease. Customize the appearance, choose from various templates, and enhance your code documentation.
 
-![image](https://github.com/Sachin-chaurasiya/Code-Snippets-Builder/assets/59080942/f3463237-77b5-4741-932f-53e611d8214c)
+![image (31)](https://github.com/Sachin-chaurasiya/Code-Snippets-Builder/assets/59080942/1a5c6da9-d94d-4d89-aff2-439839449cdb)
 
 ## Features
 
