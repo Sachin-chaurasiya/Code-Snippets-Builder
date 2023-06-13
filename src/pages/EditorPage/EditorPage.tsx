@@ -136,11 +136,11 @@ const EditorPage = () => {
     snippetId: string,
     existingSnapShotId: string
   ) => {
-    try {
-      const newSnapshotId = getUniqueId();
-      const blob = await toBlob(
-        document.querySelector('.react-flow') as HTMLElement,
-        {
+    const node = document.querySelector('.react-flow');
+    if (node) {
+      try {
+        const newSnapshotId = getUniqueId();
+        const blob = await toBlob(node as HTMLElement, {
           filter: (node) => {
             // we don't want to add the minimap and the controls to the image
             if (
@@ -153,31 +153,31 @@ const EditorPage = () => {
             return true;
           },
           quality: 1,
-        }
-      );
-      const file = new File([blob as Blob], newSnapshotId, {
-        type: 'image/png',
-      });
+        });
+        const file = new File([blob as Blob], newSnapshotId, {
+          type: 'image/png',
+        });
 
-      // delete the existing file
-      await API_CLIENT.storage.deleteFile(BUCKET_ID, existingSnapShotId);
+        // delete the existing file
+        await API_CLIENT.storage.deleteFile(BUCKET_ID, existingSnapShotId);
 
-      await API_CLIENT.storage.createFile(BUCKET_ID, newSnapshotId, file);
-      await API_CLIENT.database.updateDocument(
-        DATABASE_ID,
-        COLLECTION_ID,
-        snippetId,
-        { snapshot: newSnapshotId }
-      );
-    } catch (error) {
-      const exception = error as AppwriteException;
-      toast({
-        description: exception.message,
-        status: 'error',
-        duration: 9000,
-        isClosable: true,
-        position: 'top-right',
-      });
+        await API_CLIENT.storage.createFile(BUCKET_ID, newSnapshotId, file);
+        await API_CLIENT.database.updateDocument(
+          DATABASE_ID,
+          COLLECTION_ID,
+          snippetId,
+          { snapshot: newSnapshotId }
+        );
+      } catch (error) {
+        const exception = error as AppwriteException;
+        toast({
+          description: exception.message,
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
+          position: 'top-right',
+        });
+      }
     }
   };
 
@@ -192,7 +192,7 @@ const EditorPage = () => {
       handleSnippetDataInit(data);
       setIsLoading(false);
 
-      await handleUpdateSnippetSnapshot(data.$id, data.snapshot);
+      handleUpdateSnippetSnapshot(data.$id, data.snapshot);
     } catch (error) {
       const exception = error as AppwriteException;
       toast({
