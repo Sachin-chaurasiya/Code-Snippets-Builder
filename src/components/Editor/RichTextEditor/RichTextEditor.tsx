@@ -4,6 +4,7 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.bubble.css';
 import './rich-text-editor.css';
 import { RichtextEditorProps } from './RichTextEditor.interface';
+import { isEqual } from 'lodash';
 
 const RichTextEditor: FC<RichtextEditorProps> = ({
   width,
@@ -42,7 +43,11 @@ const RichTextEditor: FC<RichtextEditorProps> = ({
       value={value}
       onChange={(value) => {
         setValue(value);
-        onUpdate(value);
+      }}
+      onBlur={() => {
+        if (!isEqual(updatedText, value)) {
+          onUpdate(value);
+        }
       }}
     />
   );

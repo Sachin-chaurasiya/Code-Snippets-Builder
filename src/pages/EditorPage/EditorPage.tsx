@@ -210,12 +210,14 @@ const EditorPage = () => {
     if (snippetData?.$id) {
       try {
         setIsUpdating(true);
-        await API_CLIENT.database.updateDocument<SnippetData>(
+        const data = await API_CLIENT.database.updateDocument<SnippetData>(
           DATABASE_ID,
           COLLECTION_ID,
           snippetData.$id,
           updatedData
         );
+
+        setSnippetData(data);
 
         setIsNeedUpdate(false);
       } catch (error) {
@@ -376,6 +378,12 @@ const EditorPage = () => {
       window.removeEventListener('beforeunload', handleBeforeUnload);
     };
   }, [isNeedUpdate]);
+
+  useEffect(() => {
+    if (!isNeedUpdate && snippetData) {
+      handleUpdateSnippetSnapshot(snippetData.$id, snippetData.snapshot);
+    }
+  }, [isNeedUpdate, snippetData]);
 
   if (isLoading) {
     return <Loader />;

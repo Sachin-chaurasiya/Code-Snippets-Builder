@@ -7,6 +7,7 @@ import { langs } from '@uiw/codemirror-extensions-langs';
 import * as themes from '@uiw/codemirror-themes-all';
 import { CODE_EDITOR_BACKGROUND_COLOR } from 'constants/editor';
 import { NodeDataStore } from 'interfaces/Editor.interface';
+import { isEqual } from 'lodash';
 
 interface CodeEditorProps {
   onUpdate: (data: NodeDataStore) => void;
@@ -40,10 +41,6 @@ const CodeEditor: FC<CodeEditorProps> = ({
     () => [langs[language as keyof typeof langs]()],
     [language]
   );
-
-  useEffect(() => {
-    onUpdate({ code });
-  }, [code]);
 
   useEffect(() => {
     const element = document.querySelector('[contenteditable="true"]');
@@ -80,6 +77,11 @@ const CodeEditor: FC<CodeEditorProps> = ({
           extensions={extensions}
           onChange={(code) => {
             setCode(code);
+          }}
+          onBlur={() => {
+            if (!isEqual(snippetCode, code)) {
+              onUpdate({ code });
+            }
           }}
         />
       </Box>
