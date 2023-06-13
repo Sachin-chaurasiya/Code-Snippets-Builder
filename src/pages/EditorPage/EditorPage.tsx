@@ -183,9 +183,9 @@ const EditorPage = () => {
       );
 
       handleSnippetDataInit(data);
-      handleUpdateSnippetSnapshot(data.$id, data.snapshot);
-
       setIsLoading(false);
+
+      await handleUpdateSnippetSnapshot(data.$id, data.snapshot);
     } catch (error) {
       const exception = error as AppwriteException;
       toast({
