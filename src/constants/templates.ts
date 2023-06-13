@@ -14,6 +14,7 @@ export const SIMPLE_GRADIENT: Snippet = {
   }),
   nodes: getStringifiedValue([]),
   creator: '',
+  snapshot: '',
 };
 
 export const DEFAULT_TEMPLATE: Snippet = {
@@ -26,6 +27,7 @@ export const DEFAULT_TEMPLATE: Snippet = {
   }),
   nodes: getStringifiedValue([]),
   creator: '',
+  snapshot: '',
 };
 
 export const SIMPLE_GRADIENT_WITH_CODE_EDITOR: Snippet = {
@@ -38,6 +40,7 @@ export const SIMPLE_GRADIENT_WITH_CODE_EDITOR: Snippet = {
   }),
   nodes: getStringifiedValue(INITIAL_NODES),
   creator: '',
+  snapshot: '',
 };
 
 export const TEMPLATES = [

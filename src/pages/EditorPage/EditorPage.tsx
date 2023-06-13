@@ -35,6 +35,7 @@ import { NodeData } from 'interfaces/Editor.interface';
 import { useLocation, useNavigate } from 'react-router-dom';
 import {
   BORDER_RADIUS_LARGE,
+  BUCKET_ID,
   COLLECTION_ID,
   DATABASE_ID,
   INITIAL_CONTEXT_DATA,
@@ -48,6 +49,7 @@ import {
   Snippet,
   SnippetData,
 } from 'interfaces/AppProvider.interface';
+import { toBlob } from 'html-to-image';
 
 const EditorPage = () => {
   const toast = useToast();
@@ -81,6 +83,8 @@ const EditorPage = () => {
     useState<ReactFlowInstance>();
 
   const [timeoutId, setTimeoutId] = useState<number>();
+
+  const [isUpdating, setIsUpdating] = useState<boolean>(false);
 
   /**
    * update the node data of given nodeId
@@ -128,6 +132,48 @@ const EditorPage = () => {
     setNodes(nodesWithUpdateHandler);
   };
 
+  const handleUpdateSnippetSnapshot = async (
+    snippetId: string,
+    existingSnapShotId: string
+  ) => {
+    try {
+      const newSnapshotId = getUniqueId();
+      const blob = await toBlob(
+        document.querySelector('.react-flow') as HTMLElement,
+        {
+          filter: (node) => {
+            // we don't want to add the minimap and the controls to the image
+            if (
+              node?.classList?.contains('react-flow__minimap') ||
+              node?.classList?.contains('react-flow__controls')
+            ) {
+              return false;
+            }
+
+            return true;
+          },
+          quality: 1,
+        }
+      );
+      const file = new File([blob as Blob], newSnapshotId, {
+        type: 'image/png',
+      });
+
+      // delete the existing file
+      await API_CLIENT.storage.deleteFile(BUCKET_ID, existingSnapShotId);
+
+      await API_CLIENT.storage.createFile(BUCKET_ID, newSnapshotId, file);
+      await API_CLIENT.database.updateDocument(
+        DATABASE_ID,
+        COLLECTION_ID,
+        snippetId,
+        { snapshot: newSnapshotId }
+      );
+    } catch (error) {
+      // do not throw error for this API
+    }
+  };
+
   const fetchSnippetData = async (snippetId: string) => {
     try {
       const data = await API_CLIENT.database.getDocument<SnippetData>(
@@ -137,6 +183,7 @@ const EditorPage = () => {
       );
 
       handleSnippetDataInit(data);
+      handleUpdateSnippetSnapshot(data.$id, data.snapshot);
 
       setIsLoading(false);
     } catch (error) {
@@ -155,14 +202,14 @@ const EditorPage = () => {
   const updateSnippetData = async (updatedData: Partial<Snippet>) => {
     if (snippetData?.$id) {
       try {
-        const data = await API_CLIENT.database.updateDocument<SnippetData>(
+        setIsUpdating(true);
+        await API_CLIENT.database.updateDocument<SnippetData>(
           DATABASE_ID,
           COLLECTION_ID,
           snippetData.$id,
           updatedData
         );
 
-        handleSnippetDataInit(data);
         setIsNeedUpdate(false);
       } catch (error) {
         const exception = error as AppwriteException;
@@ -173,6 +220,8 @@ const EditorPage = () => {
           isClosable: true,
           position: 'top-right',
         });
+      } finally {
+        setIsUpdating(false);
       }
     }
   };
@@ -314,7 +363,7 @@ const EditorPage = () => {
     <Fragment>
       <Box mr={80}>
         <ToolBar />
-        <EditorControls />
+        <EditorControls isUpdating={isUpdating} />
         <Box
           borderRadius={4}
           style={{

@@ -17,6 +17,7 @@ import { AppwriteException, Models, Query } from 'appwrite';
 import {
   BORDER_RADIUS_LARGE,
   BORDER_RADIUS_MEDIUM,
+  BUCKET_ID,
   COLLECTION_ID,
   DATABASE_ID,
   ROUTES,
@@ -27,7 +28,6 @@ import { map, startCase } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { BsPlus } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
-import { getFormattedDate } from 'utils/DateTimeUtils';
 import { getUniqueId } from 'utils/EditorUtils';
 
 const DashboardPage = () => {
@@ -75,14 +75,20 @@ const DashboardPage = () => {
       ...data,
       creator: session ?? '',
     };
+    const uniqueId = getUniqueId();
+
+    const file = new File([], uniqueId, { type: 'image/png' });
 
     try {
       setIsCreating(true);
+
+      await API_CLIENT.storage.createFile(BUCKET_ID, uniqueId, file);
+
       const snippet = await API_CLIENT.database.createDocument(
         DATABASE_ID,
         COLLECTION_ID,
-        getUniqueId(),
-        dataWithCreator
+        uniqueId,
+        { ...dataWithCreator, snapshot: uniqueId }
       );
       handleNavigate(snippet.$id);
       toast({
@@ -126,7 +132,7 @@ const DashboardPage = () => {
                 <Button
                   aspectRatio="auto"
                   bg="transparent"
-                  _hover={{ background: 'gray.100' }}
+                  _hover={{ background: 'transparent' }}
                   onClick={() => {
                     setTemplate(template.name);
                     createSnippet(template.data);
@@ -156,24 +162,32 @@ const DashboardPage = () => {
           <Grid templateColumns="repeat(4, 1fr)" gap={4}>
             {map(snippets?.documents, (snippet) => (
               <AspectRatio
+                maxHeight="200px"
+                maxWidth="300px"
                 key={snippet.$id}
                 ratio={1}
-                maxHeight="200px"
                 borderRadius={BORDER_RADIUS_LARGE}>
                 <Button
                   variant="link"
                   as="a"
                   href={`${ROUTES.EDITOR}?id=${snippet.$id ?? ''}`}
-                  color="white"
-                  bgGradient={snippet.background}
-                  _hover={{ background: snippet.background }}>
-                  <Text>{getFormattedDate(snippet.$createdAt)}</Text>
+                  bg="transparent">
+                  <Image
+                    borderRadius={BORDER_RADIUS_MEDIUM}
+                    src={
+                      API_CLIENT.storage.getFilePreview(
+                        BUCKET_ID,
+                        snippet.snapshot
+                      ).href
+                    }
+                  />
                 </Button>
               </AspectRatio>
             ))}
             <AspectRatio
-              ratio={1}
               maxHeight="200px"
+              maxWidth="300px"
+              ratio={1}
               border="1px"
               borderStyle="dashed"
               borderColor="gray.400"

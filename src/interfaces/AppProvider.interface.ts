@@ -36,6 +36,7 @@ export interface Snippet {
   profileInfo: string;
   nodes: string;
   creator: string;
+  snapshot: string;
 }
 
 export type SnippetData = Models.Document & Snippet;
