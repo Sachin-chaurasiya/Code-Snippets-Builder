@@ -7,13 +7,10 @@ import React, {
   useState,
 } from 'react';
 import ReactFlow, {
-  Connection,
   Node,
   NodeChange,
   ReactFlowInstance,
   XYPosition,
-  addEdge,
-  useEdgesState,
   useNodesState,
 } from 'reactflow';
 import 'reactflow/dist/style.css';
@@ -56,15 +53,15 @@ const EditorPage = () => {
   const toast = useToast();
   const location = useLocation();
   const navigate = useNavigate();
+  const { onUpdateSelectedNode } = useAppProvider();
 
+  // snippet background states
   const [hideWaterMark, setIsWaterMarkVisible] = useState<boolean>(
     INITIAL_CONTEXT_DATA.hideWaterMark
   );
-
   const [profileData, setProfileData] = useState<ProfileData>(
     INITIAL_CONTEXT_DATA.profile
   );
-
   const [background, setBackground] = useState<string>('');
 
   // nodes ref to store the nodes data for passing in callback function
@@ -76,11 +73,7 @@ const EditorPage = () => {
 
   const [snippetData, setSnippetData] = useState<SnippetData>();
 
-  const { onUpdateSelectedNode } = useAppProvider();
-
   const [nodes, setNodes, onNodesChange] = useNodesState<NodeData>([]);
-
-  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
 
   const reactFlowWrapper = useRef<HTMLDivElement>(null);
 
@@ -290,13 +283,6 @@ const EditorPage = () => {
     [reactFlowInstance, setNodes, handleUpdateNodeData]
   );
 
-  const onConnect = useCallback(
-    (params: Connection) => {
-      setEdges((eds) => addEdge(params, eds));
-    },
-    [setEdges]
-  );
-
   useEffect(() => {
     nodesRef.current = nodes;
   }, [nodes]);
@@ -341,15 +327,12 @@ const EditorPage = () => {
             nodesConnectable={false}
             nodeTypes={NODE_TYPES}
             onNodesChange={handleNodesChange}
-            onEdgesChange={onEdgesChange}
             proOptions={{ hideAttribution: true }}
             nodes={nodes}
-            edges={edges}
             style={{
               background,
               borderRadius: BORDER_RADIUS_LARGE,
             }}
-            onConnect={onConnect}
             onInit={handleOnInit}
             onDrop={onDrop}
             onDragOver={onDragOver}

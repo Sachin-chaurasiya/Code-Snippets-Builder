@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ReactFlowState, useReactFlow, useStore, useStoreApi } from 'reactflow';
 import { shallow } from 'zustand/shallow';
 import FitViewIcon from 'components/Common/Icons/FitViewIcon';
@@ -72,7 +72,9 @@ const EditorControls = () => {
     setCurrentZoom(updatedState.transform[2]);
   };
 
-  store.subscribe(handleSubscription);
+  useEffect(() => {
+    store.subscribe(handleSubscription);
+  }, []);
 
   return (
     <Box as={Flex} mb={4} justifyContent="space-between">

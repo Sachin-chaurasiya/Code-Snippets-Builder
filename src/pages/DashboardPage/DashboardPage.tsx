@@ -3,7 +3,6 @@ import {
   Box,
   Button,
   Divider,
-  Flex,
   Grid,
   Heading,
   Image,
@@ -20,10 +19,9 @@ import {
   BORDER_RADIUS_MEDIUM,
   COLLECTION_ID,
   DATABASE_ID,
-  PRIMARY_GRADIENT_COLOR,
   ROUTES,
 } from 'constants/common';
-import { TEMPLATES } from 'constants/templates';
+import { DEFAULT_TEMPLATE, TEMPLATES } from 'constants/templates';
 import { Snippet, SnippetData } from 'interfaces/AppProvider.interface';
 import { map, startCase } from 'lodash';
 import React, { useEffect, useState } from 'react';
@@ -87,6 +85,12 @@ const DashboardPage = () => {
         dataWithCreator
       );
       handleNavigate(snippet.$id);
+      toast({
+        description: 'Snippet created successfully!',
+        status: 'success',
+        duration: 2000,
+        position: 'top-right',
+      });
     } catch (error) {
       const exception = error as AppwriteException;
       toast({
@@ -108,19 +112,7 @@ const DashboardPage = () => {
   return (
     <Box bg="white" minH="100vh" borderRadius={BORDER_RADIUS_LARGE} p={4}>
       <Stack spacing={6}>
-        <Flex gap={4}>
-          <Heading>Your Snippets</Heading>
-          <Button
-            _hover={{
-              bgGradient: PRIMARY_GRADIENT_COLOR,
-            }}
-            bgGradient={PRIMARY_GRADIENT_COLOR}
-            color="white"
-            leftIcon={<BsPlus />}
-            pl={2}>
-            New
-          </Button>
-        </Flex>
+        <Heading>Your Snippets</Heading>
         <Stack spacing={4}>
           <Heading as="h4" size="md">
             Templates
@@ -186,11 +178,21 @@ const DashboardPage = () => {
               borderStyle="dashed"
               borderColor="gray.400"
               borderRadius={BORDER_RADIUS_LARGE}>
-              <Button bg="transparent" _hover={{ background: 'gray.100' }}>
-                <Stack align="center" justify="center" color={'gray.500'}>
-                  <BsPlus fontSize={64} />
-                  <Text>Add snippet</Text>
-                </Stack>
+              <Button
+                bg="transparent"
+                _hover={{ background: 'gray.100' }}
+                onClick={() => {
+                  setTemplate('default');
+                  createSnippet(DEFAULT_TEMPLATE);
+                }}>
+                {selectedTemplate === 'default' && isCreating ? (
+                  <Spinner />
+                ) : (
+                  <Stack align="center" justify="center" color={'gray.500'}>
+                    <BsPlus fontSize={64} />
+                    <Text>Add snippet</Text>
+                  </Stack>
+                )}
               </Button>
             </AspectRatio>
           </Grid>

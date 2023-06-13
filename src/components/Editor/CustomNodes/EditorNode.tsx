@@ -14,6 +14,7 @@ const EditorNode: FC<NodeProps<NodeData>> = ({ selected, data, id }) => {
     language = INITIAL_CONTEXT_DATA.editor.language,
     theme = INITIAL_CONTEXT_DATA.editor.theme,
     snippetName = '',
+    isSnippetNameVisible,
   } = data;
 
   const handleUpdate = (data: NodeDataStore) => {
@@ -27,6 +28,7 @@ const EditorNode: FC<NodeProps<NodeData>> = ({ selected, data, id }) => {
       border={selected ? '1px' : ''}
       borderColor={selected ? HANDLE_COLOR : ''}>
       <CodeEditor
+        isSnippetNameVisible={Boolean(isSnippetNameVisible)}
         snippetName={snippetName}
         onUpdate={handleUpdate}
         snippetCode={code}

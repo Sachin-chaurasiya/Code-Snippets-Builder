@@ -15,6 +15,19 @@ export const SIMPLE_GRADIENT: Snippet = {
   nodes: getStringifiedValue([]),
   creator: '',
 };
+
+export const DEFAULT_TEMPLATE: Snippet = {
+  background: DEFAULT_EDITOR_BG_COLOR,
+  hideWaterMark: false,
+  profileInfo: getStringifiedValue({
+    platform: 'twitter',
+    username: '',
+    isVisible: true,
+  }),
+  nodes: getStringifiedValue([]),
+  creator: '',
+};
+
 export const SIMPLE_GRADIENT_WITH_CODE_EDITOR: Snippet = {
   background: 'linear-gradient(354deg, rgb(255, 117, 181), rgb(255, 184, 108))',
   hideWaterMark: false,

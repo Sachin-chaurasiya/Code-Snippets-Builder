@@ -12,6 +12,7 @@ export type CodeEditorNodeData = {
   language?: string;
   theme?: string;
   snippetName?: string;
+  isSnippetNameVisible?: boolean;
 } & CommonNodeData;
 
 export type ImageNodeData = {
