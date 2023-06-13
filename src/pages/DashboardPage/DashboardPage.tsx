@@ -12,6 +12,7 @@ import {
   Text,
   useToast,
 } from '@chakra-ui/react';
+import { useAppProvider } from 'AppProvider';
 import { API_CLIENT } from 'api';
 import { AppwriteException, Models, Query } from 'appwrite';
 import {
@@ -21,11 +22,9 @@ import {
   DATABASE_ID,
   PRIMARY_GRADIENT_COLOR,
   ROUTES,
-  SESSION_KEY,
 } from 'constants/common';
 import { TEMPLATES } from 'constants/templates';
 import { Snippet, SnippetData } from 'interfaces/AppProvider.interface';
-import Cookies from 'js-cookie';
 import { map, startCase } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { BsPlus } from 'react-icons/bs';
@@ -36,6 +35,8 @@ import { getUniqueId } from 'utils/EditorUtils';
 const DashboardPage = () => {
   const toast = useToast();
   const navigate = useNavigate();
+
+  const { session } = useAppProvider();
 
   const [isCreating, setIsCreating] = useState<boolean>(false);
   const [selectedTemplate, setTemplate] = useState<string>('');
@@ -54,7 +55,7 @@ const DashboardPage = () => {
       const snippetList = await API_CLIENT.database.listDocuments<SnippetData>(
         DATABASE_ID,
         COLLECTION_ID,
-        [Query.equal('creator', Cookies.get(SESSION_KEY) ?? '')]
+        [Query.equal('creator', session ?? '')]
       );
       setSnippets(snippetList);
     } catch (error) {
@@ -74,7 +75,7 @@ const DashboardPage = () => {
   const createSnippet = async (data: Snippet) => {
     const dataWithCreator: Snippet = {
       ...data,
-      creator: Cookies.get(SESSION_KEY) ?? '',
+      creator: session ?? '',
     };
 
     try {
