@@ -37,9 +37,7 @@ const AuthCallback = () => {
   };
 
   useEffect(() => {
-    fetchCurrentSession().catch(() => {
-      // handle error
-    });
+    fetchCurrentSession();
   }, []);
 
   if (isFetchingSession) {

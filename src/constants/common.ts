@@ -70,3 +70,7 @@ export const PRIMARY_GRADIENT_COLOR =
   'linear-gradient(135deg, rgb(102, 126, 234), rgb(118, 75, 162))';
 
 export const SESSION_KEY = 'code_snippet_builder_session';
+
+export const DATABASE_ID = 'CodeSnippetBuilder';
+export const COLLECTION_ID = 'snippet_entity';
+export const BUCKET_ID = 'snippet_images';

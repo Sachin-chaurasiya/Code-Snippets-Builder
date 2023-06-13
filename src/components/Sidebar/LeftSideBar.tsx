@@ -53,9 +53,7 @@ const LeftSidebar: FC<BoxProps> = () => {
   };
 
   useEffect(() => {
-    fetchCurrentUserData().catch(() => {
-      // handle error
-    });
+    fetchCurrentUserData();
   }, []);
 
   return (

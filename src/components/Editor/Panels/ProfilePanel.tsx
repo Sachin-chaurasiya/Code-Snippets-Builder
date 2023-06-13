@@ -1,16 +1,14 @@
 import React, { Fragment } from 'react';
 import { Panel } from 'reactflow';
 import ProfileInfo from '../ProfileInfo/ProfileInfo';
-import { useAppProvider } from 'AppProvider';
+import { ProfileData } from 'interfaces/AppProvider.interface';
 
-const ProfilePanel = () => {
-  const { profile } = useAppProvider();
-
+const ProfilePanel = ({ profile }: { profile: ProfileData }) => {
   return (
     <Fragment>
       {profile.isVisible ? (
         <Panel position="bottom-left">
-          <ProfileInfo />
+          <ProfileInfo profile={profile} />
         </Panel>
       ) : null}
     </Fragment>

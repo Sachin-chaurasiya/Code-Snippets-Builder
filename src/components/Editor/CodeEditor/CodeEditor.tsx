@@ -15,6 +15,7 @@ interface CodeEditorProps {
   language: string;
   fontSize: number;
   snippetName: string;
+  isSnippetNameVisible: boolean;
 }
 
 const CodeEditor: FC<CodeEditorProps> = ({
@@ -24,6 +25,7 @@ const CodeEditor: FC<CodeEditorProps> = ({
   language,
   fontSize,
   snippetName,
+  isSnippetNameVisible,
 }) => {
   const [code, setCode] = useState<string>(
     snippetCode || '// Put your code snippet here'
@@ -55,7 +57,11 @@ const CodeEditor: FC<CodeEditorProps> = ({
       <Box
         className="window"
         style={{ background: `${CODE_EDITOR_BACKGROUND_COLOR}` }}>
-        <TitleBar snippetName={snippetName} onUpdate={onUpdate} />
+        <TitleBar
+          isSnippetNameVisible={isSnippetNameVisible}
+          snippetName={snippetName}
+          onUpdate={onUpdate}
+        />
 
         <CodeMirror
           spellCheck={false}

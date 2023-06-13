@@ -1,11 +1,9 @@
 import { Flex, Icon, Text } from '@chakra-ui/react';
-import { useAppProvider } from 'AppProvider';
+import { ProfileData } from 'interfaces/AppProvider.interface';
 import React, { useMemo } from 'react';
 import { getProfileInfoByPlatform } from 'utils/ProfileUtils';
 
-const ProfileInfo = () => {
-  const { profile } = useAppProvider();
-
+const ProfileInfo = ({ profile }: { profile: ProfileData }) => {
   const profileInfo = useMemo(
     () => getProfileInfoByPlatform(profile.platform),
     [profile]

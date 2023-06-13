@@ -1,10 +1,8 @@
-import { useAppProvider } from 'AppProvider';
 import BrandLogo from 'components/Common/BrandLogo/BrandLogo';
 import React, { Fragment } from 'react';
 import { Panel } from 'reactflow';
 
-const WatermarkPanel = () => {
-  const { hideWaterMark } = useAppProvider();
+const WatermarkPanel = ({ hideWaterMark }: { hideWaterMark: boolean }) => {
   return (
     <Fragment>
       {!hideWaterMark ? (

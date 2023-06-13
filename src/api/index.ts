@@ -1,4 +1,4 @@
-import { Account, Avatars, Client, Databases } from 'appwrite';
+import { Account, Avatars, Client, Databases, Storage } from 'appwrite';
 import { FAILURE_REDIRECT_URL, SUCCESS_REDIRECT_URL } from 'constants/links';
 import { AuthProvider } from 'interfaces/Auth.interface';
 import { Server } from 'utils/Config';
@@ -12,8 +12,9 @@ const initClient = () => {
   const database = new Databases(client);
   const account = new Account(client);
   const avatar = new Avatars(client);
+  const storage = new Storage(client);
 
-  return { database, account, client, avatar };
+  return { database, account, client, avatar, storage };
 };
 
 export const API_CLIENT = {
