@@ -29,7 +29,8 @@
     "@typescript-eslint/consistent-type-assertions": "off",
     "@typescript-eslint/no-misused-promises": "off",
     "@typescript-eslint/triple-slash-reference": "off",
-    "@typescript-eslint/no-floating-promises": "off"
+    "@typescript-eslint/no-floating-promises": "off",
+    "no-console": "error"
   },
   "settings": {
     "import/resolver": {
