@@ -158,9 +158,6 @@ const EditorPage = () => {
           type: 'image/png',
         });
 
-        // delete the existing file
-        await API_CLIENT.storage.deleteFile(BUCKET_ID, existingSnapShotId);
-
         await API_CLIENT.storage.createFile(BUCKET_ID, newSnapshotId, file);
         await API_CLIENT.database.updateDocument(
           DATABASE_ID,
