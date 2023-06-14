@@ -101,7 +101,7 @@ const LeftSidebar: FC<BoxProps> = () => {
               path={ROUTES.PROFILE}
               key={loggedInUser.name}
               icon={FiUser}>
-              {loggedInUser.name}
+              {loggedInUser.name ?? 'Profile'}
             </NavItem>
           )}
           {isFetching && <Spinner display="block" margin="auto" size="sm" />}

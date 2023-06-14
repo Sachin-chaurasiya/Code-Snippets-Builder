@@ -268,9 +268,12 @@ const ProfilePage = () => {
         border="1px"
         borderColor="gray.200"
         borderRadius={BORDER_RADIUS_LARGE}>
-        <Heading as="h6" size="sm" flex={1} alignSelf="center">
-          Update Name
-        </Heading>
+        <Stack flex={1}>
+          <Heading as="h6" size="sm">
+            Update Name
+          </Heading>
+          <Text>These name will be shown on left sidebar.</Text>
+        </Stack>
         <Stack direction="column" flex={1}>
           <FormControl id="name">
             <FormLabel>Name</FormLabel>
