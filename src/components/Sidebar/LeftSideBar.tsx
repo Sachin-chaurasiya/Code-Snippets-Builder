@@ -16,7 +16,7 @@ import { FiLogOut, FiUser } from 'react-icons/fi';
 import { API_CLIENT } from 'api';
 import Cookies from 'js-cookie';
 import { useAppProvider } from 'AppProvider';
-import { Models } from 'appwrite';
+import { AppwriteException, Models } from 'appwrite';
 
 const LeftSidebar: FC<BoxProps> = () => {
   const navigate = useNavigate();
@@ -32,7 +32,13 @@ const LeftSidebar: FC<BoxProps> = () => {
       const user = await API_CLIENT.getLoggedInUser();
       setLoggedInUser(user);
     } catch (error) {
-      // handle error
+      const exception = error as AppwriteException;
+      if (exception.code === 401) {
+        // handle error
+        Cookies.remove(SESSION_KEY);
+        navigate(ROUTES.SIGN_IN);
+        navigate(0);
+      }
     } finally {
       setIsFetching(false);
     }
