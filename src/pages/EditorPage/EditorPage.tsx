@@ -398,6 +398,7 @@ const EditorPage = () => {
           }}
           ref={reactFlowWrapper}>
           <ReactFlow
+            id="react-flow-id"
             zoomOnDoubleClick={false}
             zoomOnScroll={false}
             nodesConnectable={false}

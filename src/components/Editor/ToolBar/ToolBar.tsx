@@ -38,6 +38,7 @@ const ToolBar = () => {
             label={`Add ${label}`}
             borderRadius={BORDER_RADIUS_MEDIUM}>
             <Button
+              id={nodeType}
               shadow="md"
               aria-label={`drag and drop ${toLower(label)}`}
               _hover={{

@@ -118,6 +118,7 @@ const ExportButton = () => {
     <Menu>
       <MenuButton>
         <Button
+          id="export-button"
           as={Box}
           _hover={{
             bgGradient: PRIMARY_GRADIENT_COLOR,

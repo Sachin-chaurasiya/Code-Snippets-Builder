@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, Fragment, useEffect, useState } from 'react';
 import {
   Box,
   useColorModeValue,
@@ -73,43 +73,48 @@ const LeftSidebar: FC<BoxProps> = () => {
   }, []);
 
   return (
-    <Box
-      as={Flex}
-      bg={useColorModeValue('white', 'gray.900')}
-      borderRight="1px"
-      borderRightColor={useColorModeValue('gray.200', 'gray.700')}
-      w="60"
-      pos="fixed"
-      h="full"
-      shadow="md"
-      overflow="auto"
-      direction="column"
-      justifyContent="space-between">
-      <Box>
-        <BrandLogo ml={2} onClick={handleNavigateHome} cursor="pointer" />
-        {LINK_ITEMS.map((link) => (
-          <NavItem path={link.path} key={link.name} icon={link.icon}>
-            {link.name}
-          </NavItem>
-        ))}
-      </Box>
+    <Fragment>
+      <Box
+        as={Flex}
+        bg={useColorModeValue('white', 'gray.900')}
+        borderRight="1px"
+        borderRightColor={useColorModeValue('gray.200', 'gray.700')}
+        w="60"
+        pos="fixed"
+        h="full"
+        shadow="md"
+        overflow="auto"
+        direction="column"
+        justifyContent="space-between">
+        <Box>
+          <BrandLogo ml={2} onClick={handleNavigateHome} cursor="pointer" />
+          {LINK_ITEMS.map((link) => (
+            <NavItem path={link.path} key={link.name} icon={link.icon}>
+              {link.name}
+            </NavItem>
+          ))}
+        </Box>
 
-      <Box>
-        {loggedInUser && !isFetching && (
-          <NavItem path={ROUTES.PROFILE} key={loggedInUser.name} icon={FiUser}>
-            {loggedInUser.name}
+        <Box>
+          {loggedInUser && !isFetching && (
+            <NavItem
+              path={ROUTES.PROFILE}
+              key={loggedInUser.name}
+              icon={FiUser}>
+              {loggedInUser.name}
+            </NavItem>
+          )}
+          {isFetching && <Spinner display="block" margin="auto" size="sm" />}
+          <NavItem
+            path="#"
+            key="Logout"
+            icon={FiLogOut}
+            handleClick={handleLogout}>
+            Logout
           </NavItem>
-        )}
-        {isFetching && <Spinner display="block" margin="auto" size="sm" />}
-        <NavItem
-          path="#"
-          key="Logout"
-          icon={FiLogOut}
-          handleClick={handleLogout}>
-          Logout
-        </NavItem>
+        </Box>
       </Box>
-    </Box>
+    </Fragment>
   );
 };
 
