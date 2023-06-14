@@ -42,13 +42,37 @@ const ProtectedRoute: FC<ProtectedRouteProps> = ({ children }) => {
   return <>{children}</>;
 };
 
+const UnProtectedRoute = ({ children }: { children: ReactNode }) => {
+  const { session } = useAppProvider();
+
+  if (session) {
+    return <Navigate to={ROUTES.HOME} replace />;
+  }
+
+  return <>{children}</>;
+};
+
 const AppRoutes = () => {
   return (
     <Suspense fallback={<Loader />}>
       <Routes>
         <Route path={ROUTES.HOME} element={<HomePage />} />
-        <Route path={ROUTES.SIGN_IN} element={<SignInPage />} />
-        <Route path={ROUTES.SIGN_UP} element={<SignUpPage />} />
+        <Route
+          path={ROUTES.SIGN_IN}
+          element={
+            <UnProtectedRoute>
+              <SignInPage />
+            </UnProtectedRoute>
+          }
+        />
+        <Route
+          path={ROUTES.SIGN_UP}
+          element={
+            <UnProtectedRoute>
+              <SignUpPage />
+            </UnProtectedRoute>
+          }
+        />
         <Route
           path={ROUTES.EDITOR}
           element={
