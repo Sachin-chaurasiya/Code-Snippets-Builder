@@ -72,7 +72,7 @@ const ProfilePage = () => {
       setIsLoading(true);
       const user = await API_CLIENT.getLoggedInUser();
       setLoggedInUser(user);
-      setAvatarUrl(API_CLIENT.getAvatar(user.name));
+      setAvatarUrl(API_CLIENT.getAvatar(user.name || user.email));
     } catch (error) {
       // handle error
     } finally {
