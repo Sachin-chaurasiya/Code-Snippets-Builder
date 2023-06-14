@@ -1,5 +1,11 @@
 import React, { FC, useEffect, useState } from 'react';
-import { Box, useColorModeValue, BoxProps, Flex } from '@chakra-ui/react';
+import {
+  Box,
+  useColorModeValue,
+  BoxProps,
+  Flex,
+  Spinner,
+} from '@chakra-ui/react';
 import NavItem from './NavItem';
 import { ROUTES, SESSION_KEY } from 'constants/common';
 
@@ -16,15 +22,19 @@ const LeftSidebar: FC<BoxProps> = () => {
   const navigate = useNavigate();
   const { onUpdateSession } = useAppProvider();
 
+  const [isFetching, setIsFetching] = useState<boolean>(false);
   const [loggedInUser, setLoggedInUser] =
     useState<Models.User<Models.Preferences>>();
 
   const fetchCurrentUserData = async () => {
     try {
+      setIsFetching(true);
       const user = await API_CLIENT.getLoggedInUser();
       setLoggedInUser(user);
     } catch (error) {
       // handle error
+    } finally {
+      setIsFetching(false);
     }
   };
 
@@ -79,11 +89,12 @@ const LeftSidebar: FC<BoxProps> = () => {
       </Box>
 
       <Box>
-        {loggedInUser && (
+        {loggedInUser && !isFetching && (
           <NavItem path={ROUTES.PROFILE} key={loggedInUser.name} icon={FiUser}>
             {loggedInUser.name}
           </NavItem>
         )}
+        {isFetching && <Spinner display="block" margin="auto" size="sm" />}
         <NavItem
           path="#"
           key="Logout"
