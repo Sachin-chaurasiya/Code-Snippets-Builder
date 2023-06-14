@@ -5,9 +5,11 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getDateByDateString } from 'utils/DateTimeUtils';
 import Loader from './Common/Loader/Loader';
-import { Text } from '@chakra-ui/react';
+import { Text, useToast } from '@chakra-ui/react';
+import { AppwriteException } from 'appwrite';
 
 const AuthCallback = () => {
+  const toast = useToast();
   const navigate = useNavigate();
   const [isFetchingSession, setIsFetchingSession] = useState<boolean>(false);
 
@@ -27,7 +29,15 @@ const AuthCallback = () => {
       // refresh the page
       navigate(0);
     } catch (error) {
-      // handle error
+      const exception = error as AppwriteException;
+
+      toast({
+        description: exception.message,
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+        position: 'top-right',
+      });
 
       // navigate to sign in page
       navigate(ROUTES.SIGN_IN);
