@@ -28,6 +28,7 @@ export interface AppContextProps {
 
   session: string | undefined;
   onUpdateSession: (session: string | undefined) => void;
+  onStartTour: () => void;
 }
 
 export interface Snippet {

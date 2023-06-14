@@ -33,7 +33,7 @@ import { Snippet, SnippetData } from 'interfaces/AppProvider.interface';
 import { map, startCase } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { BsPlus } from 'react-icons/bs';
-import { MdDelete } from 'react-icons/md';
+import { MdDelete, MdOutlineTour } from 'react-icons/md';
 import { RxCopy } from 'react-icons/rx';
 import { useNavigate } from 'react-router-dom';
 import { getUniqueId } from 'utils/EditorUtils';
@@ -42,7 +42,7 @@ const DashboardPage = () => {
   const toast = useToast();
   const navigate = useNavigate();
 
-  const { session } = useAppProvider();
+  const { session, onStartTour } = useAppProvider();
 
   const [isCreating, setIsCreating] = useState<boolean>(false);
   const [selectedTemplate, setTemplate] = useState<string>('');
@@ -197,8 +197,13 @@ const DashboardPage = () => {
   return (
     <Box bg="white" minH="100vh" borderRadius={BORDER_RADIUS_LARGE} p={4}>
       <Stack spacing={6}>
-        <Heading>Your Snippets</Heading>
-        <Stack spacing={4}>
+        <Stack justifyContent="space-between" direction="row">
+          <Heading>Your Snippets</Heading>
+          <Button leftIcon={<MdOutlineTour />} onClick={onStartTour}>
+            Tour
+          </Button>
+        </Stack>
+        <Stack spacing={4} id="templates">
           <Heading as="h4" size="md">
             Templates
           </Heading>
@@ -238,7 +243,7 @@ const DashboardPage = () => {
         {isFetching ? (
           <Spinner size="lg" css={{ margin: '16px auto !important' }} />
         ) : (
-          <Grid templateColumns="repeat(4, 1fr)" gap={4}>
+          <Grid templateColumns="repeat(4, 1fr)" gap={4} id="your-snippets">
             {map(snippets?.documents, (snippet) => (
               <AspectRatio
                 maxHeight="200px"
@@ -305,6 +310,7 @@ const DashboardPage = () => {
               </AspectRatio>
             ))}
             <AspectRatio
+              id="add-snippet-button"
               maxHeight="200px"
               maxWidth="300px"
               ratio={1}
