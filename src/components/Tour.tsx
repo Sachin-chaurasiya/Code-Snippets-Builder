@@ -13,7 +13,7 @@ const Tour: FC<Props> = ({ run, steps, callback }) => {
         disableCloseOnEsc
         scrollToFirstStep
         callback={callback}
-        locale={{ open: 'Start the tour' }}
+        locale={{ open: 'Start the tour', last: 'End Tour' }}
         styles={{
           options: {
             backgroundColor: '#ffffff',
