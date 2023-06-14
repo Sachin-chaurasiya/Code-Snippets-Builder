@@ -22,6 +22,27 @@ Choose from a wide range of themes, fonts, and color schemes to make your snippe
 ### Multi-Language Support
 Create snippets for various programming languages, including JavaScript, Python, Java, and more.
 
+## Tech Stack
+- ReactJs: Empowering the creation of UI components with its component-based architecture.
+
+- TypeScript: Enabling type safety and preventing runtime errors in the development process.
+
+- Netlify: Facilitating the seamless deployment of the project.
+
+- Appwrite Cloud
+
+  - Auth: Streamlining authentication and authorization management.
+
+  - Email/Password
+
+    - Google
+
+    - Github
+
+  - Database: Serving as a reliable storage solution for the snippets of data.
+
+  - Storage: Providing a secure and efficient repository for storing the snapshot images of code snippets.
+
 ## 🍴 Fork and Clone the Repo
 
 First, you need to fork the `Code Snippet Builder` repo. You can do this by clicking the `Fork` button on the top right corner of the repo. If you are new to forking, please watch this [YouTube Guide](https://www.youtube.com/watch?v=h8suY-Osn8Q) to get started.
