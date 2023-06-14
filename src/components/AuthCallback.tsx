@@ -21,11 +21,11 @@ const AuthCallback = () => {
       // store the session
       Cookies.set(SESSION_KEY, session.userId, { expires: expiry });
 
-      // navigate to home
-      navigate(ROUTES.PROFILE);
-
       // refresh the page
       navigate(0);
+
+      // navigate to home
+      navigate(ROUTES.DASHBOARD);
     } catch (error) {
       // handle error
 
