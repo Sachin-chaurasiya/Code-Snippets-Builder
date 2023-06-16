@@ -154,15 +154,15 @@ const AuthForm: FC<AuthFormProps> = ({ formType }) => {
         bg="white"
         px={4}
         py={6}
-        flex={0.5}
+        flex={0.35}
         shadow="md"
         borderRadius={BORDER_RADIUS_MEDIUM}>
         <Stack spacing={4}>
           <Box alignSelf="center">
-            <Heading textAlign="center">
+            <Heading pb={2} as="h3" size="lg" textAlign="center">
               {formType === 'signin' ? 'Sign In' : 'Sign Up'}
             </Heading>
-            <Text>
+            <Text pb={4}>
               {formType === 'signin' ? (
                 <>
                   Don&apos;t have an account ?{' '}
