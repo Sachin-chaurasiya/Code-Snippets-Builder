@@ -30,7 +30,7 @@ import {
 
 import WatermarkPanel from 'components/Editor/Panels/WatermarkPanel';
 import ProfilePanel from 'components/Editor/Panels/ProfilePanel';
-import { find, map, toNumber } from 'lodash';
+import { every, find, map, toNumber } from 'lodash';
 import { NodeData } from 'interfaces/Editor.interface';
 import { useLocation, useNavigate } from 'react-router-dom';
 import {
@@ -279,11 +279,18 @@ const EditorPage = () => {
    */
   const handleNodesChange = useCallback(
     (changes: NodeChange[]) => {
+      // reset the need update first
+      setIsNeedUpdate(false);
+
+      // clear the existing timeout
       if (timeoutId) {
         clearTimeout(timeoutId);
       }
 
+      // update the internal node states
       onNodesChange(changes);
+
+      // update the selected node
       map(changes, (change) => {
         // if node is selected then updated the selected node
         if (change.type === 'select' && change.selected) {
@@ -293,15 +300,22 @@ const EditorPage = () => {
           );
           onUpdateSelectedNode(selectedNode);
         }
-        // if node is not selected then set the selected node as undefined
-        if (change.type === 'select' && !change.selected) {
-          onUpdateSelectedNode(undefined);
-        }
       });
+
+      // if node is not selected then set the selected node as undefined
+      const isNoNodeSelected = every(
+        changes,
+        (change: NodeChange) => change.type === 'select' && !change.selected
+      );
+      if (isNoNodeSelected) {
+        onUpdateSelectedNode(undefined);
+      }
+
       const id = setTimeout(() => {
         setIsNeedUpdate(true);
-        setTimeoutId(toNumber(id));
       }, UPDATE_SNIPPET_TIME);
+
+      setTimeoutId(toNumber(id));
     },
     [onNodesChange, nodesRef, timeoutId]
   );
