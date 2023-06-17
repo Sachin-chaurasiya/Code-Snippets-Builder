@@ -243,4 +243,4 @@ export const NODE_TYPES = {
   [CUSTOM_NODES.IMAGE_NODE]: ImageNode,
 };
 
-export const UPDATE_SNIPPET_TIME = 2000;
+export const UPDATE_SNIPPET_TIME = 5000;
