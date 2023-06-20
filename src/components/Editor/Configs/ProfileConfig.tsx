@@ -6,17 +6,21 @@ import {
   Input,
   Select,
   Spinner,
+  Stack,
   Text,
+  Tooltip,
   VStack,
 } from '@chakra-ui/react';
 import { API_CLIENT } from 'api';
 import { Models } from 'appwrite';
 import CustomSwitch from 'components/Common/CustomSwitch/CustomSwitch';
+import { BORDER_RADIUS_MEDIUM } from 'constants/common';
 import { SUPPORTED_PROFILES } from 'constants/profile';
 import { COMMON_TEXT_PROPS } from 'constants/text';
 import { EditorSidebarProps } from 'interfaces/Editor.interface';
 import { get, map } from 'lodash';
 import React, { FC, useEffect, useMemo, useState } from 'react';
+import { BsInfoCircle } from 'react-icons/bs';
 
 const ProfileConfig: FC<
   Pick<EditorSidebarProps, 'profile' | 'onUpdateProfileData'>
@@ -95,7 +99,17 @@ const ProfileConfig: FC<
           </Select>
         </FormControl>
         <FormControl>
-          <FormLabel>Username</FormLabel>
+          <FormLabel>
+            <Tooltip
+              label="This is the username you use on social media. If you want to change it, you can do so by updating your profile information."
+              borderRadius={BORDER_RADIUS_MEDIUM}
+              placement="top">
+              <Stack align="center" direction="row" gap={1}>
+                <Text>Username</Text>
+                <BsInfoCircle />
+              </Stack>
+            </Tooltip>
+          </FormLabel>
           <Input isReadOnly value={platformUserName} />
         </FormControl>
       </VStack>

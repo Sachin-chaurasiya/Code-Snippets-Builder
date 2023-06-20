@@ -16,7 +16,7 @@ import { FiLogOut, FiUser } from 'react-icons/fi';
 import { API_CLIENT } from 'api';
 import Cookies from 'js-cookie';
 import { useAppProvider } from 'AppProvider';
-import { AppwriteException, Models } from 'appwrite';
+import { AppwriteException, Models, RealtimeResponseEvent } from 'appwrite';
 
 const LeftSidebar: FC<BoxProps> = () => {
   const navigate = useNavigate();
@@ -68,8 +68,15 @@ const LeftSidebar: FC<BoxProps> = () => {
     }
   };
 
+  const handleRealtimeChange = (
+    payload: RealtimeResponseEvent<Models.User<Models.Preferences>>
+  ) => {
+    setLoggedInUser(payload.payload);
+  };
+
   useEffect(() => {
     fetchCurrentUserData();
+    API_CLIENT.client.subscribe('account', handleRealtimeChange);
   }, []);
 
   return (
