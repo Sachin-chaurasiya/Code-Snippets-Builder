@@ -1,6 +1,6 @@
-import { Flex, Icon, Link } from '@chakra-ui/react';
+import { Flex, Icon } from '@chakra-ui/react';
 import { useMemo } from 'react';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { NavItemProps } from './Sidebar.interface';
 import { PRIMARY_GRADIENT_COLOR } from 'constants/common';
 
@@ -20,9 +20,8 @@ const NavItem = ({
 
   return (
     <Link
-      href={path}
+      to={path}
       style={{ textDecoration: 'none', marginBottom: '4px', display: 'block' }}
-      _focus={{ boxShadow: 'none' }}
       onClick={handleClick}>
       <Flex
         align="center"
