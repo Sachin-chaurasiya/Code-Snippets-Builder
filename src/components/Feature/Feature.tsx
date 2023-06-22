@@ -1,4 +1,5 @@
-import { Box, Flex, Heading, Text } from '@chakra-ui/react';
+import { Box, Heading, Stack, Text } from '@chakra-ui/react';
+import { APP_TEXT_COLOR, BORDER_RADIUS_LARGE } from 'constants/common';
 import { FC, ReactNode } from 'react';
 
 interface FeatureProps {
@@ -8,15 +9,22 @@ interface FeatureProps {
 }
 
 export const Feature: FC<FeatureProps> = ({ icon, title, description }) => (
-  <Flex>
+  <Stack
+    spacing={4}
+    bg="white"
+    align="center"
+    justifyContent="center"
+    border="1px solid transparent"
+    borderRadius={BORDER_RADIUS_LARGE}
+    p={4}>
     <Box boxSize={10}>{icon}</Box>
-    <Flex direction="column">
-      <Heading size="md" ml={3} color="white">
+    <Stack spacing={4} align="center" justifyContent="center">
+      <Heading size="md" color={APP_TEXT_COLOR}>
         {title}
       </Heading>
-      <Text color="white" ml={3}>
+      <Text color={APP_TEXT_COLOR} textAlign="center">
         {description}
       </Text>
-    </Flex>
-  </Flex>
+    </Stack>
+  </Stack>
 );

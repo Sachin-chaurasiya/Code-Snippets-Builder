@@ -5,14 +5,18 @@ import {
   Text,
   Button,
   Image,
-  Stack,
+  Grid,
 } from '@chakra-ui/react';
 import CodeSnippetImage from 'assets/images/code-snippet.png';
 import { RiDragDropLine } from 'react-icons/ri';
 import { BiCustomize } from 'react-icons/bi';
 import { DiTerminal } from 'react-icons/di';
 import { useNavigate } from 'react-router-dom';
-import { PRIMARY_GRADIENT_COLOR, ROUTES } from 'constants/common';
+import {
+  PRIMARY_COLOR,
+  PRIMARY_GRADIENT_COLOR,
+  ROUTES,
+} from 'constants/common';
 import { COMMON_TEXT_PROPS } from 'constants/text';
 import { Feature } from 'components/Feature/Feature';
 import Footer from 'components/Common/Footer/Footer';
@@ -65,18 +69,18 @@ const LandingPage = () => {
       </Box>
 
       <Box bg={PRIMARY_GRADIENT_COLOR} py={16}>
-        <Box maxWidth="container.md" mx="auto" px={4}>
+        <Box maxWidth="container.lg" mx="auto" px={4}>
           <Heading color="white" size="xl" mb={8} textAlign="center">
             Features
           </Heading>
-          <Stack spacing={6}>
+          <Grid as={Grid} templateColumns="repeat(3, 1fr)" gap={8}>
             <Feature
-              icon={<RiDragDropLine size={50} color="white" />}
+              icon={<RiDragDropLine color={PRIMARY_COLOR} size={50} />}
               title="Drag and Drop Interface"
               description="Easily drag and drop code elements to create your desired snippet structure."
             />
             <Feature
-              icon={<BiCustomize size={50} color="white" />}
+              icon={<BiCustomize size={50} color={PRIMARY_COLOR} />}
               title="Customize Appearance"
               description="Choose from a wide range of themes, fonts, and color schemes to make your snippets visually appealing."
             />
@@ -84,14 +88,14 @@ const LandingPage = () => {
               icon={
                 <DiTerminal
                   size={50}
-                  color="white"
+                  color={PRIMARY_COLOR}
                   style={{ marginTop: '-8px' }}
                 />
               }
               title="Multi-Language Support"
               description="Create snippets for various programming languages, including JavaScript, Python, Java, and more."
             />
-          </Stack>
+          </Grid>
         </Box>
       </Box>
 
