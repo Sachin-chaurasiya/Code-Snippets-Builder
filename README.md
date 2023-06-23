@@ -29,6 +29,10 @@ Create snippets for various programming languages, including JavaScript, Python,
 
 - Netlify: Facilitating the seamless deployment of the project.
 
+- React Flow: React component for building node-based editors and interactive diagrams.
+
+- ChakraUI: A simple, modular and accessible component library
+
 - Appwrite Cloud
 
   - Auth: Streamlining authentication and authorization management.
