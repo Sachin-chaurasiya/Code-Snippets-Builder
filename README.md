@@ -11,6 +11,14 @@ Create stunning code snippets for different programming languages with ease. Cus
 
 ![image (31)](https://github.com/Sachin-chaurasiya/Code-Snippets-Builder/assets/59080942/1a5c6da9-d94d-4d89-aff2-439839449cdb)
 
+## Playground Link and Demo Credentials
+
+Website: [Demo Link](https://snippetbuilder.sachinchaurasiya.dev)
+
+Email: demo@codesnippetbuilder.com
+
+Password: demo@123
+
 ## Features
 
 ### Drag and Drop Interface
