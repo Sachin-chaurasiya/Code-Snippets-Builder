@@ -14,10 +14,10 @@ const CAROUSEL_IMAGES = [
 const settings: Settings = {
   dots: false,
   arrows: false,
-  fade: true,
+  fade: false,
   infinite: true,
   autoplay: true,
-  autoplaySpeed: 2000,
+  autoplaySpeed: 3000,
   slidesToShow: 1,
   slidesToScroll: 1,
 };
