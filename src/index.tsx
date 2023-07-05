@@ -7,6 +7,8 @@ import AppProvider from 'AppProvider';
 import ErrorBoundaryComponent from 'components/ErrorBoundary/ErrorBoundary';
 import { ReactFlowProvider } from 'reactflow';
 import { ChakraProvider, theme } from '@chakra-ui/react';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 const container = document.getElementById('root');
 if (!container) throw new Error('Failed to find the root element');
