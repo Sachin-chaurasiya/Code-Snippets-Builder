@@ -1,5 +1,6 @@
 import { Box, Heading, Stack, Text } from '@chakra-ui/react';
 import { APP_TEXT_COLOR, BORDER_RADIUS_LARGE } from 'constants/common';
+import { motion } from 'framer-motion';
 import { FC, ReactNode } from 'react';
 
 interface FeatureProps {
@@ -10,6 +11,10 @@ interface FeatureProps {
 
 export const Feature: FC<FeatureProps> = ({ icon, title, description }) => (
   <Stack
+    as={motion.div}
+    whileHover={{
+      scale: 1.1,
+    }}
     spacing={4}
     bg="white"
     align="center"
