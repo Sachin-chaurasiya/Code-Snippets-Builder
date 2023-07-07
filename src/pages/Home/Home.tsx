@@ -1,13 +1,5 @@
-import {
-  Box,
-  Flex,
-  Heading,
-  Text,
-  Button,
-  Image,
-  Grid,
-} from '@chakra-ui/react';
-import CodeSnippetImage from 'assets/images/code-snippet.png';
+import { Box, Heading, Text, Button, Grid } from '@chakra-ui/react';
+
 import { RiDragDropLine } from 'react-icons/ri';
 import { BiCustomize } from 'react-icons/bi';
 import { DiTerminal } from 'react-icons/di';
@@ -21,6 +13,7 @@ import { COMMON_TEXT_PROPS } from 'constants/text';
 import { Feature } from 'components/Feature/Feature';
 import Footer from 'components/Common/Footer/Footer';
 import { useAppProvider } from 'AppProvider';
+import HomeCarousel from 'components/HomeCarousel';
 
 const LandingPage = () => {
   const { session } = useAppProvider();
@@ -33,9 +26,8 @@ const LandingPage = () => {
   return (
     <Box bg="white" minHeight="100vh" mt={session ? '' : '64px'}>
       <Box py={16}>
-        <Flex direction={['column', 'column', 'row']} justify="center">
+        <Grid templateColumns="repeat(2, 1fr)" gap={4}>
           <Box
-            flex="1"
             pr={[0, 0, 8]}
             pl={[0, 0, 16]}
             alignSelf={session ? '' : 'center'}>
@@ -58,14 +50,9 @@ const LandingPage = () => {
               Get Started
             </Button>
           </Box>
-          <Box flex="1" pr={[0, 0, 8]} pl={[0, 0, 16]}>
-            <Image
-              src={CodeSnippetImage}
-              alt="Code Snippet Builder"
-              objectFit="contain"
-            />
-          </Box>
-        </Flex>
+
+          <HomeCarousel pr={[0, 0, 8]} width={['500px', '680px']} />
+        </Grid>
       </Box>
 
       <Box bg={PRIMARY_GRADIENT_COLOR} py={16}>
@@ -120,7 +107,6 @@ const LandingPage = () => {
           </Button>
         </Box>
       </Box>
-
       <Footer />
     </Box>
   );

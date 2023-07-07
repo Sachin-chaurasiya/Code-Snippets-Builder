@@ -22,6 +22,7 @@
     "react-joyride": "^2.5.4",
     "react-router-dom": "^6.11.1",
     "react-scripts": "5.0.1",
+    "react-slick": "^0.29.0",
     "reactflow": "^11.7.0",
     "typescript": "4.9.5",
     "web-vitals": "^2.1.4",
@@ -57,6 +58,7 @@
     "@types/js-cookie": "^3.0.3",
     "@types/lodash": "^4.14.194",
     "@types/react-router-dom": "^5.3.3",
+    "@types/react-slick": "^0.23.10",
     "@types/uuid": "^9.0.1",
     "@typescript-eslint/eslint-plugin": "^5.50.0",
     "@uiw/codemirror-extensions-langs": "^4.20.2",
@@ -77,6 +79,7 @@
     "lodash": "^4.17.21",
     "prettier": "^2.8.8",
     "react-quill": "^2.0.0",
+    "slick-carousel": "^1.8.1",
     "uuid": "^9.0.0"
   }
 }
