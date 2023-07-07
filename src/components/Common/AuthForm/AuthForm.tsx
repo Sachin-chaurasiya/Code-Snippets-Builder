@@ -41,6 +41,7 @@ import { getDateByDateString } from 'utils/DateTimeUtils';
 import Cookies from 'js-cookie';
 import { validateForm } from 'utils/FormUtils';
 import { useAppProvider } from 'AppProvider';
+import PasswordInput from '../PasswordInput';
 
 const AuthForm: FC<AuthFormProps> = ({ formType }) => {
   const { onUpdateSession } = useAppProvider();
@@ -213,12 +214,9 @@ const AuthForm: FC<AuthFormProps> = ({ formType }) => {
             isInvalid={Boolean(formError.password)}
             isRequired>
             <FormLabel>Password</FormLabel>
-            <Input
-              name="password"
-              type="password"
+            <PasswordInput
               value={formData.password}
               onChange={handleOnChange}
-              placeholder="Enter your password"
             />
             {formError.password && (
               <FormErrorMessage>{formError.password}</FormErrorMessage>
