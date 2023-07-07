@@ -29,6 +29,7 @@ import {
   ROUTES,
 } from 'constants/common';
 import { DEFAULT_TEMPLATE, TEMPLATES } from 'constants/templates';
+import { motion } from 'framer-motion';
 import { Snippet, SnippetData } from 'interfaces/AppProvider.interface';
 import { map, startCase } from 'lodash';
 import React, { useEffect, useState } from 'react';
@@ -211,6 +212,10 @@ const DashboardPage = () => {
             {map(TEMPLATES, (template) => (
               <AspectRatio
                 key={template.name}
+                as={motion.div}
+                whileHover={{
+                  scale: 1.1,
+                }}
                 ratio={1}
                 borderRadius={BORDER_RADIUS_LARGE}>
                 <Button
@@ -246,6 +251,10 @@ const DashboardPage = () => {
           <Grid templateColumns="repeat(4, 1fr)" gap={4} id="your-snippets">
             {map(snippets?.documents, (snippet) => (
               <AspectRatio
+                as={motion.div}
+                whileHover={{
+                  scale: 1.1,
+                }}
                 maxHeight="200px"
                 maxWidth="300px"
                 key={snippet.$id}
@@ -310,6 +319,10 @@ const DashboardPage = () => {
               </AspectRatio>
             ))}
             <AspectRatio
+              as={motion.div}
+              whileHover={{
+                scale: 1.05,
+              }}
               id="add-snippet-button"
               maxHeight="200px"
               maxWidth="300px"

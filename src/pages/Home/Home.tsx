@@ -20,7 +20,7 @@ const LandingPage = () => {
   const navigate = useNavigate();
 
   const handleGetStarted = () => {
-    navigate(ROUTES.EDITOR);
+    navigate(ROUTES.DASHBOARD);
   };
 
   return (
@@ -51,7 +51,7 @@ const LandingPage = () => {
             </Button>
           </Box>
 
-          <HomeCarousel pr={[0, 0, 8]} width={['500px', '680px']} />
+          <HomeCarousel pr={[0, 0, 8]} width={session ? '550px' : '680px'} />
         </Grid>
       </Box>
 
