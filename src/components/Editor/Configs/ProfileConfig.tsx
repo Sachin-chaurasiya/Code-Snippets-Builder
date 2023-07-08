@@ -11,36 +11,20 @@ import {
   Tooltip,
   VStack,
 } from '@chakra-ui/react';
-import { API_CLIENT } from 'api';
-import { Models } from 'appwrite';
+import { useAppProvider } from 'AppProvider';
 import CustomSwitch from 'components/Common/CustomSwitch/CustomSwitch';
 import { BORDER_RADIUS_MEDIUM } from 'constants/common';
 import { SUPPORTED_PROFILES } from 'constants/profile';
 import { COMMON_TEXT_PROPS } from 'constants/text';
 import { EditorSidebarProps } from 'interfaces/Editor.interface';
 import { get, map } from 'lodash';
-import React, { FC, useEffect, useMemo, useState } from 'react';
+import React, { FC, useEffect, useMemo } from 'react';
 import { BsInfoCircle } from 'react-icons/bs';
 
 const ProfileConfig: FC<
   Pick<EditorSidebarProps, 'profile' | 'onUpdateProfileData'>
 > = ({ profile, onUpdateProfileData }) => {
-  const [loggedInUser, setLoggedInUser] =
-    useState<Models.User<Models.Preferences>>();
-
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-
-  const fetchCurrentUserData = async () => {
-    try {
-      setIsLoading(true);
-      const user = await API_CLIENT.getLoggedInUser();
-      setLoggedInUser(user);
-    } catch (error) {
-      // handle error
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const { loggedInUser, isFetchingUser } = useAppProvider();
 
   useEffect(() => {
     if (loggedInUser) {
@@ -49,15 +33,11 @@ const ProfileConfig: FC<
     }
   }, [loggedInUser]);
 
-  useEffect(() => {
-    fetchCurrentUserData();
-  }, []);
-
   const platformUserName = useMemo(() => {
     return get(loggedInUser?.prefs, profile.platform);
   }, [loggedInUser, profile]);
 
-  if (isLoading) {
+  if (isFetchingUser) {
     return <Spinner display="block" margin="auto" />;
   }
 

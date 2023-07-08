@@ -23,12 +23,15 @@ export interface ProfileData {
 }
 
 export interface AppContextProps {
+  isFetchingUser: boolean;
+  loggedInUser: Models.User<Models.Preferences> | undefined;
   selectedNode?: Node<NodeData>;
   onUpdateSelectedNode: (selectedNode?: Node<NodeData>) => void;
 
   session: string | undefined;
   onUpdateSession: (session: string | undefined) => void;
   onStartTour: () => void;
+  handleUpdateLoggedInUser: (payload: Models.User<Models.Preferences>) => void;
 }
 
 export interface Snippet {

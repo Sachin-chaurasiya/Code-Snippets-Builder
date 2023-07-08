@@ -4,6 +4,10 @@ import { ROUTES } from 'constants/common';
 import Loader from 'components/Common/Loader/Loader';
 import { useAppProvider } from 'AppProvider';
 
+const EmailVerificationPage = lazy(
+  async () => await import('pages/EmailVerificationPage')
+);
+
 const HomePage = lazy(async () => await import('pages/Home/Home'));
 const EditorPage = lazy(
   async () => await import('pages/EditorPage/EditorPage')
@@ -94,6 +98,14 @@ const AppRoutes = () => {
           element={
             <ProtectedRoute>
               <DashboardPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path={ROUTES.EMAIL_VERIFICATION}
+          element={
+            <ProtectedRoute>
+              <EmailVerificationPage />
             </ProtectedRoute>
           }
         />

@@ -20,6 +20,8 @@ import {
 import { useAppProvider } from 'AppProvider';
 import { API_CLIENT } from 'api';
 import { AppwriteException, Models, Query } from 'appwrite';
+import EmailVerification from 'components/Common/EmailVerification';
+import Loader from 'components/Common/Loader/Loader';
 import {
   BORDER_RADIUS_LARGE,
   BORDER_RADIUS_MEDIUM,
@@ -32,7 +34,7 @@ import { DEFAULT_TEMPLATE, TEMPLATES } from 'constants/templates';
 import { motion } from 'framer-motion';
 import { Snippet, SnippetData } from 'interfaces/AppProvider.interface';
 import { map, startCase } from 'lodash';
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { BsPlus } from 'react-icons/bs';
 import { MdDelete, MdOutlineTour } from 'react-icons/md';
 import { RxCopy } from 'react-icons/rx';
@@ -43,7 +45,8 @@ const DashboardPage = () => {
   const toast = useToast();
   const navigate = useNavigate();
 
-  const { session, onStartTour } = useAppProvider();
+  const { session, onStartTour, loggedInUser, isFetchingUser } =
+    useAppProvider();
 
   const [isCreating, setIsCreating] = useState<boolean>(false);
   const [selectedTemplate, setTemplate] = useState<string>('');
@@ -192,203 +195,215 @@ const DashboardPage = () => {
   };
 
   useEffect(() => {
-    fetchSnippets();
-  }, []);
+    if (loggedInUser?.emailVerification) {
+      fetchSnippets();
+    }
+  }, [loggedInUser]);
+
+  if (isFetchingUser) {
+    return <Loader />;
+  }
 
   return (
     <Box bg="white" minH="100vh" borderRadius={BORDER_RADIUS_LARGE} p={4}>
-      <Stack spacing={6}>
-        <Stack justifyContent="space-between" direction="row">
-          <Heading>Your Snippets</Heading>
-          <Button leftIcon={<MdOutlineTour />} onClick={onStartTour}>
-            Tour
-          </Button>
-        </Stack>
-        <Stack spacing={4} id="templates">
-          <Heading as="h4" size="md">
-            Templates
-          </Heading>
-          <Grid templateColumns="repeat(4, 1fr)" gap={4}>
-            {map(TEMPLATES, (template) => (
-              <AspectRatio
-                key={template.name}
-                as={motion.div}
-                whileHover={{
-                  scale: 1.1,
-                }}
-                ratio={1}
-                borderRadius={BORDER_RADIUS_LARGE}>
-                <Button
-                  aspectRatio="auto"
-                  bg="transparent"
-                  _hover={{ background: 'transparent' }}
-                  onClick={() => {
-                    setTemplate(template.name);
-                    createSnippet(template.data);
-                  }}>
-                  {template.name === selectedTemplate && isCreating ? (
-                    <Spinner />
-                  ) : (
-                    <Stack>
+      {loggedInUser?.emailVerification ? (
+        <Fragment>
+          <Stack spacing={6}>
+            <Stack justifyContent="space-between" direction="row">
+              <Heading>Your Snippets</Heading>
+              <Button leftIcon={<MdOutlineTour />} onClick={onStartTour}>
+                Tour
+              </Button>
+            </Stack>
+            <Stack spacing={4} id="templates">
+              <Heading as="h4" size="md">
+                Templates
+              </Heading>
+              <Grid templateColumns="repeat(4, 1fr)" gap={4}>
+                {map(TEMPLATES, (template) => (
+                  <AspectRatio
+                    key={template.name}
+                    as={motion.div}
+                    whileHover={{
+                      scale: 1.1,
+                    }}
+                    ratio={1}
+                    borderRadius={BORDER_RADIUS_LARGE}>
+                    <Button
+                      aspectRatio="auto"
+                      bg="transparent"
+                      _hover={{ background: 'transparent' }}
+                      onClick={() => {
+                        setTemplate(template.name);
+                        createSnippet(template.data);
+                      }}>
+                      {template.name === selectedTemplate && isCreating ? (
+                        <Spinner />
+                      ) : (
+                        <Stack>
+                          <Image
+                            borderRadius={BORDER_RADIUS_MEDIUM}
+                            src={template.image}
+                            width="100%"
+                            height="100%"
+                          />
+                          <Text>{startCase(template.name)}</Text>
+                        </Stack>
+                      )}
+                    </Button>
+                  </AspectRatio>
+                ))}
+              </Grid>
+            </Stack>
+            <Divider variant="dashed" />
+            {isFetching ? (
+              <Spinner size="lg" css={{ margin: '16px auto !important' }} />
+            ) : (
+              <Grid templateColumns="repeat(4, 1fr)" gap={4} id="your-snippets">
+                {map(snippets?.documents, (snippet) => (
+                  <AspectRatio
+                    as={motion.div}
+                    whileHover={{
+                      scale: 1.1,
+                    }}
+                    maxHeight="200px"
+                    maxWidth="300px"
+                    key={snippet.$id}
+                    ratio={1}
+                    borderRadius={BORDER_RADIUS_LARGE}>
+                    <Button
+                      role="group"
+                      position="relative"
+                      bg="transparent"
+                      _hover={{ bg: 'transparent' }}
+                      onClick={() => {
+                        handleNavigate(snippet.$id);
+                      }}>
+                      <Stack
+                        zIndex={5}
+                        _groupHover={{ display: 'flex' }}
+                        position="absolute"
+                        direction="row"
+                        display={'none'}>
+                        <Button
+                          variant="ghost"
+                          color="white"
+                          _hover={{ color: 'gray.600', bg: 'gray.100' }}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            setDeleteId(snippet.$id);
+                          }}>
+                          <MdDelete />
+                        </Button>
+                        <Button
+                          isLoading={isDuplicating}
+                          variant="ghost"
+                          color="white"
+                          _hover={{ color: 'gray.600', bg: 'gray.100' }}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            duplicateSnippet({
+                              background: snippet.background,
+                              hideWaterMark: snippet.hideWaterMark,
+                              profileInfo: snippet.profileInfo,
+                              nodes: snippet.nodes,
+                              creator: snippet.creator,
+                              snapshot: snippet.snapshot,
+                            });
+                          }}>
+                          <RxCopy />
+                        </Button>
+                      </Stack>
                       <Image
+                        _groupHover={{ opacity: 0.8 }}
                         borderRadius={BORDER_RADIUS_MEDIUM}
-                        src={template.image}
-                        width="100%"
-                        height="100%"
+                        src={
+                          API_CLIENT.storage.getFilePreview(
+                            BUCKET_ID,
+                            snippet.snapshot
+                          ).href
+                        }
                       />
-                      <Text>{startCase(template.name)}</Text>
-                    </Stack>
-                  )}
-                </Button>
-              </AspectRatio>
-            ))}
-          </Grid>
-        </Stack>
-        <Divider variant="dashed" />
-        {isFetching ? (
-          <Spinner size="lg" css={{ margin: '16px auto !important' }} />
-        ) : (
-          <Grid templateColumns="repeat(4, 1fr)" gap={4} id="your-snippets">
-            {map(snippets?.documents, (snippet) => (
-              <AspectRatio
-                as={motion.div}
-                whileHover={{
-                  scale: 1.1,
-                }}
-                maxHeight="200px"
-                maxWidth="300px"
-                key={snippet.$id}
-                ratio={1}
-                borderRadius={BORDER_RADIUS_LARGE}>
-                <Button
-                  role="group"
-                  position="relative"
-                  bg="transparent"
-                  _hover={{ bg: 'transparent' }}
-                  onClick={() => {
-                    handleNavigate(snippet.$id);
-                  }}>
-                  <Stack
-                    zIndex={5}
-                    _groupHover={{ display: 'flex' }}
-                    position="absolute"
-                    direction="row"
-                    display={'none'}>
-                    <Button
-                      variant="ghost"
-                      color="white"
-                      _hover={{ color: 'gray.600', bg: 'gray.100' }}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        setDeleteId(snippet.$id);
-                      }}>
-                      <MdDelete />
                     </Button>
-                    <Button
-                      isLoading={isDuplicating}
-                      variant="ghost"
-                      color="white"
-                      _hover={{ color: 'gray.600', bg: 'gray.100' }}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        duplicateSnippet({
-                          background: snippet.background,
-                          hideWaterMark: snippet.hideWaterMark,
-                          profileInfo: snippet.profileInfo,
-                          nodes: snippet.nodes,
-                          creator: snippet.creator,
-                          snapshot: snippet.snapshot,
-                        });
-                      }}>
-                      <RxCopy />
-                    </Button>
-                  </Stack>
-                  <Image
-                    _groupHover={{ opacity: 0.8 }}
-                    borderRadius={BORDER_RADIUS_MEDIUM}
-                    src={
-                      API_CLIENT.storage.getFilePreview(
-                        BUCKET_ID,
-                        snippet.snapshot
-                      ).href
-                    }
-                  />
-                </Button>
-              </AspectRatio>
-            ))}
-            <AspectRatio
-              as={motion.div}
-              whileHover={{
-                scale: 1.05,
-              }}
-              id="add-snippet-button"
-              maxHeight="200px"
-              maxWidth="300px"
-              ratio={1}
-              border="1px"
-              borderStyle="dashed"
-              borderColor="gray.400"
-              borderRadius={BORDER_RADIUS_LARGE}>
-              <Button
-                bg="transparent"
-                _hover={{ background: 'gray.100' }}
-                onClick={() => {
-                  setTemplate('default');
-                  createSnippet(DEFAULT_TEMPLATE);
-                }}>
-                {selectedTemplate === 'default' && isCreating ? (
-                  <Spinner />
-                ) : (
-                  <Stack align="center" justify="center" color={'gray.500'}>
-                    <BsPlus fontSize={64} />
-                    <Text>Add snippet</Text>
-                  </Stack>
-                )}
-              </Button>
-            </AspectRatio>
-          </Grid>
-        )}
-      </Stack>
-      {deleteId ? (
-        <Modal
-          isCentered
-          isOpen={Boolean(deleteId)}
-          onClose={() => {
-            setIsDeleting(false);
-          }}>
-          <ModalOverlay />
-          <ModalContent>
-            <ModalHeader>Are you sure?</ModalHeader>
+                  </AspectRatio>
+                ))}
+                <AspectRatio
+                  as={motion.div}
+                  whileHover={{
+                    scale: 1.05,
+                  }}
+                  id="add-snippet-button"
+                  maxHeight="200px"
+                  maxWidth="300px"
+                  ratio={1}
+                  border="1px"
+                  borderStyle="dashed"
+                  borderColor="gray.400"
+                  borderRadius={BORDER_RADIUS_LARGE}>
+                  <Button
+                    bg="transparent"
+                    _hover={{ background: 'gray.100' }}
+                    onClick={() => {
+                      setTemplate('default');
+                      createSnippet(DEFAULT_TEMPLATE);
+                    }}>
+                    {selectedTemplate === 'default' && isCreating ? (
+                      <Spinner />
+                    ) : (
+                      <Stack align="center" justify="center" color={'gray.500'}>
+                        <BsPlus fontSize={64} />
+                        <Text>Add snippet</Text>
+                      </Stack>
+                    )}
+                  </Button>
+                </AspectRatio>
+              </Grid>
+            )}
+          </Stack>
+          {deleteId ? (
+            <Modal
+              isCentered
+              isOpen={Boolean(deleteId)}
+              onClose={() => {
+                setIsDeleting(false);
+              }}>
+              <ModalOverlay />
+              <ModalContent>
+                <ModalHeader>Are you sure?</ModalHeader>
 
-            <ModalBody>
-              The snippet will be permanently deleted. This action is
-              irreversible.
-            </ModalBody>
+                <ModalBody>
+                  The snippet will be permanently deleted. This action is
+                  irreversible.
+                </ModalBody>
 
-            <ModalFooter>
-              <Button
-                variant="ghost"
-                mr={3}
-                onClick={() => {
-                  setDeleteId('');
-                }}>
-                Close
-              </Button>
-              <Button
-                isLoading={isDeleting}
-                variant="solid"
-                colorScheme="red"
-                onClick={() => {
-                  deleteSnippet(deleteId);
-                }}>
-                Delete
-              </Button>
-            </ModalFooter>
-          </ModalContent>
-        </Modal>
-      ) : null}
+                <ModalFooter>
+                  <Button
+                    variant="ghost"
+                    mr={3}
+                    onClick={() => {
+                      setDeleteId('');
+                    }}>
+                    Close
+                  </Button>
+                  <Button
+                    isLoading={isDeleting}
+                    variant="solid"
+                    colorScheme="red"
+                    onClick={() => {
+                      deleteSnippet(deleteId);
+                    }}>
+                    Delete
+                  </Button>
+                </ModalFooter>
+              </ModalContent>
+            </Modal>
+          ) : null}
+        </Fragment>
+      ) : (
+        <EmailVerification email={loggedInUser?.email ?? ''} />
+      )}
     </Box>
   );
 };

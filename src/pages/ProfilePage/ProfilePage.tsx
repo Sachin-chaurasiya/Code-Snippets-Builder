@@ -10,11 +10,13 @@ import {
   Text,
   useToast,
 } from '@chakra-ui/react';
+import { useAppProvider } from 'AppProvider';
 import { API_CLIENT } from 'api';
-import { AppwriteException, Models } from 'appwrite';
+import { AppwriteException } from 'appwrite';
 import Loader from 'components/Common/Loader/Loader';
 import UpdateButton from 'components/Common/UpdateButton';
 import { BORDER_RADIUS_LARGE } from 'constants/common';
+import { EMAIL_VERIFICATION_URL } from 'constants/links';
 import { isEqual } from 'lodash';
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { getFormattedDate } from 'utils/DateTimeUtils';
@@ -48,10 +50,9 @@ const initialPasswordState = {
 const ProfilePage = () => {
   const toast = useToast();
 
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { loggedInUser, isFetchingUser, handleUpdateLoggedInUser } =
+    useAppProvider();
 
-  const [loggedInUser, setLoggedInUser] =
-    useState<Models.User<Models.Preferences>>();
   const [avatarUrl, setAvatarUrl] = useState<URL>();
 
   const [nameState, setNameState] = useState<StringDataState>(initialNameState);
@@ -67,16 +68,24 @@ const ProfilePage = () => {
 
   const [isUpdatingPrefs, setIsUpdatingPrefs] = useState<boolean>(false);
 
-  const fetchCurrentUserData = async () => {
+  const [isSending, setIsSending] = useState<boolean>(false);
+
+  const handleSendVerification = async () => {
     try {
-      setIsLoading(true);
-      const user = await API_CLIENT.getLoggedInUser();
-      setLoggedInUser(user);
-      setAvatarUrl(API_CLIENT.getAvatar(user.name || user.email));
+      setIsSending(true);
+
+      await API_CLIENT.account.createVerification(EMAIL_VERIFICATION_URL);
+      toast({
+        description: 'Verification link sent successfully!',
+        status: 'success',
+        duration: 9000,
+        isClosable: true,
+        position: 'top-right',
+      });
     } catch (error) {
       // handle error
     } finally {
-      setIsLoading(false);
+      setIsSending(false);
     }
   };
 
@@ -123,7 +132,7 @@ const ProfilePage = () => {
     try {
       setNameState((prev) => ({ ...prev, isUpdating: true }));
       const data = await API_CLIENT.account.updateName(nameState.updated);
-      setLoggedInUser(data);
+      handleUpdateLoggedInUser(data);
       toast({
         description: 'Name updated successful!',
         status: 'success',
@@ -149,7 +158,7 @@ const ProfilePage = () => {
     try {
       setIsUpdatingPrefs(true);
       const data = await API_CLIENT.account.updatePrefs(prefState);
-      setLoggedInUser(data);
+      handleUpdateLoggedInUser(data);
       toast({
         description: 'Social usernames updated successful!',
         status: 'success',
@@ -178,7 +187,7 @@ const ProfilePage = () => {
         passwordState.updated,
         passwordState.oldPassword
       );
-      setLoggedInUser(data);
+      handleUpdateLoggedInUser(data);
       toast({
         description: 'Password updated successful!',
         status: 'success',
@@ -202,6 +211,9 @@ const ProfilePage = () => {
 
   useEffect(() => {
     if (loggedInUser) {
+      setAvatarUrl(
+        API_CLIENT.getAvatar(loggedInUser.name || loggedInUser.email)
+      );
       setNameState((prev) => ({
         ...prev,
         current: loggedInUser.name,
@@ -211,11 +223,7 @@ const ProfilePage = () => {
     }
   }, [loggedInUser]);
 
-  useEffect(() => {
-    fetchCurrentUserData();
-  }, []);
-
-  if (isLoading) {
+  if (isFetchingUser) {
     return <Loader />;
   }
 
@@ -248,15 +256,25 @@ const ProfilePage = () => {
             loggedInUser?.$createdAt ?? ''
           )}`}</Text>
         </Stack>
-        <Badge
-          p={2}
-          borderRadius={BORDER_RADIUS_LARGE}
-          alignSelf="center"
-          height="max-content"
-          variant="solid"
-          colorScheme={loggedInUser?.emailVerification ? 'green' : 'red'}>
-          {loggedInUser?.emailVerification ? 'verified' : 'unverified'}
-        </Badge>
+        <Stack align="center" justify="center">
+          <Badge
+            p={2}
+            borderRadius={BORDER_RADIUS_LARGE}
+            alignSelf="center"
+            height="max-content"
+            variant="solid"
+            colorScheme={loggedInUser?.emailVerification ? 'green' : 'gray'}>
+            {loggedInUser?.emailVerification ? 'verified' : 'unverified'}
+          </Badge>
+          {!loggedInUser?.emailVerification ? (
+            <UpdateButton
+              size="sm"
+              isLoading={isSending}
+              onClick={handleSendVerification}>
+              Verify account
+            </UpdateButton>
+          ) : null}
+        </Stack>
       </Box>
       <Box
         direction="row"
@@ -317,7 +335,7 @@ const ProfilePage = () => {
               name="twitter"
               type="text"
               placeholder="@sachindotcom"
-              value={prefState.twitter}
+              value={prefState?.twitter ?? ''}
               onChange={handlePrefChange}
             />
           </FormControl>
@@ -327,7 +345,7 @@ const ProfilePage = () => {
               name="github"
               type="text"
               placeholder="Sachin-chaurasiya"
-              value={prefState.github}
+              value={prefState?.github ?? ''}
               onChange={handlePrefChange}
             />
           </FormControl>
@@ -337,7 +355,7 @@ const ProfilePage = () => {
               name="linkedin"
               type="text"
               placeholder="sachin-chaurasiya"
-              value={prefState.linkedin}
+              value={prefState?.linkedin ?? ''}
               onChange={handlePrefChange}
             />
           </FormControl>
