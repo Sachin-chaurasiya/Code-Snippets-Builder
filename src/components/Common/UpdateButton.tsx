@@ -7,6 +7,7 @@ const UpdateButton: FC<ButtonProps> = ({
   isDisabled,
   isLoading,
   children,
+  ...rest
 }) => {
   return (
     <Button
@@ -25,7 +26,8 @@ const UpdateButton: FC<ButtonProps> = ({
       alignSelf="end"
       isDisabled={isDisabled}
       isLoading={isLoading}
-      onClick={onClick}>
+      onClick={onClick}
+      {...rest}>
       {children}
     </Button>
   );

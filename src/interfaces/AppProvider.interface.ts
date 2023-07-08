@@ -31,6 +31,7 @@ export interface AppContextProps {
   session: string | undefined;
   onUpdateSession: (session: string | undefined) => void;
   onStartTour: () => void;
+  handleUpdateLoggedInUser: (payload: Models.User<Models.Preferences>) => void;
 }
 
 export interface Snippet {

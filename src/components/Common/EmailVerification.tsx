@@ -46,7 +46,7 @@ const EmailVerification: FC<EmailVerificationProps> = ({ email }) => {
         color="white"
         size="lg"
         onClick={handleSendVerification}>
-        Send Verification link
+        Send verification link
       </Button>
     </Stack>
   );

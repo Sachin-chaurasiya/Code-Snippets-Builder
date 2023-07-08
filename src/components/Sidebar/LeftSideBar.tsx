@@ -1,4 +1,4 @@
-import React, { FC, Fragment, useEffect, useState } from 'react';
+import React, { FC, Fragment } from 'react';
 import {
   Box,
   useColorModeValue,
@@ -16,33 +16,10 @@ import { FiLogOut, FiUser } from 'react-icons/fi';
 import { API_CLIENT } from 'api';
 import Cookies from 'js-cookie';
 import { useAppProvider } from 'AppProvider';
-import { AppwriteException, Models, RealtimeResponseEvent } from 'appwrite';
 
 const LeftSidebar: FC<BoxProps> = () => {
   const navigate = useNavigate();
-  const { onUpdateSession } = useAppProvider();
-
-  const [isFetching, setIsFetching] = useState<boolean>(false);
-  const [loggedInUser, setLoggedInUser] =
-    useState<Models.User<Models.Preferences>>();
-
-  const fetchCurrentUserData = async () => {
-    try {
-      setIsFetching(true);
-      const user = await API_CLIENT.getLoggedInUser();
-      setLoggedInUser(user);
-    } catch (error) {
-      const exception = error as AppwriteException;
-      if (exception.code === 401) {
-        // handle error
-        Cookies.remove(SESSION_KEY);
-        navigate(ROUTES.SIGN_IN);
-        navigate(0);
-      }
-    } finally {
-      setIsFetching(false);
-    }
-  };
+  const { onUpdateSession, isFetchingUser, loggedInUser } = useAppProvider();
 
   const handleNavigateHome = () => {
     navigate(ROUTES.HOME);
@@ -68,17 +45,6 @@ const LeftSidebar: FC<BoxProps> = () => {
     }
   };
 
-  const handleRealtimeChange = (
-    payload: RealtimeResponseEvent<Models.User<Models.Preferences>>
-  ) => {
-    setLoggedInUser(payload.payload);
-  };
-
-  useEffect(() => {
-    fetchCurrentUserData();
-    API_CLIENT.client.subscribe('account', handleRealtimeChange);
-  }, []);
-
   return (
     <Fragment>
       <Box
@@ -103,7 +69,7 @@ const LeftSidebar: FC<BoxProps> = () => {
         </Box>
 
         <Box>
-          {loggedInUser && !isFetching && (
+          {loggedInUser && !isFetchingUser && (
             <NavItem
               path={ROUTES.PROFILE}
               key={loggedInUser.name}
@@ -111,7 +77,9 @@ const LeftSidebar: FC<BoxProps> = () => {
               {loggedInUser.name || 'Profile'}
             </NavItem>
           )}
-          {isFetching && <Spinner display="block" margin="auto" size="sm" />}
+          {isFetchingUser && (
+            <Spinner display="block" margin="auto" size="sm" />
+          )}
           <NavItem
             path="#"
             key="Logout"

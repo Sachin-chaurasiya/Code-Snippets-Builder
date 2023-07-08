@@ -6,7 +6,7 @@ import React, {
   useMemo,
   useState,
 } from 'react';
-import { SESSION_KEY } from './constants/common';
+import { ROUTES, SESSION_KEY } from './constants/common';
 import { useMediaQuery } from '@chakra-ui/react';
 import MobileViewMessage from 'components/MobileViewMessage/MobileViewMessage';
 import { AppContextProps } from 'interfaces/AppProvider.interface';
@@ -15,14 +15,15 @@ import { Node } from 'reactflow';
 import { NodeData } from 'interfaces/Editor.interface';
 import { CallBackProps, Step } from 'react-joyride';
 import Tour from 'components/Tour';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { getTourStepsByRoute } from 'utils/TourUtils';
-import { Models } from 'appwrite';
+import { AppwriteException, Models } from 'appwrite';
 import { API_CLIENT } from 'api';
 
 export const AppContext = createContext<AppContextProps>({} as AppContextProps);
 
 const AppProvider = ({ children }: { children: ReactNode }) => {
+  const navigate = useNavigate();
   const location = useLocation();
   const [isMobileScreen] = useMediaQuery('(max-width: 1024px)');
 
@@ -43,6 +44,12 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
     setSession(updatedSession);
   };
 
+  const handleUpdateLoggedInUser = (
+    payload: Models.User<Models.Preferences>
+  ) => {
+    setLoggedInUser(payload);
+  };
+
   const contextValues: AppContextProps = useMemo(
     () => ({
       selectedNode,
@@ -56,6 +63,7 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
       onStartTour: () => {
         setRunTour(true);
       },
+      handleUpdateLoggedInUser,
     }),
     [selectedNode, loggedInUser, isFetchingUser]
   );
@@ -75,9 +83,15 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
     try {
       setIsFetchingUser(true);
       const user = await API_CLIENT.getLoggedInUser();
-      setLoggedInUser(user);
+      handleUpdateLoggedInUser(user);
     } catch (error) {
-      // handle error
+      const exception = error as AppwriteException;
+      if (exception.code === 401) {
+        // handle error
+        Cookies.remove(SESSION_KEY);
+        navigate(ROUTES.SIGN_IN);
+        navigate(0);
+      }
     } finally {
       setIsFetchingUser(false);
     }
