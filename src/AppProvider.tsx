@@ -17,12 +17,19 @@ import { CallBackProps, Step } from 'react-joyride';
 import Tour from 'components/Tour';
 import { useLocation } from 'react-router-dom';
 import { getTourStepsByRoute } from 'utils/TourUtils';
+import { Models } from 'appwrite';
+import { API_CLIENT } from 'api';
 
 export const AppContext = createContext<AppContextProps>({} as AppContextProps);
 
 const AppProvider = ({ children }: { children: ReactNode }) => {
   const location = useLocation();
   const [isMobileScreen] = useMediaQuery('(max-width: 1024px)');
+
+  const [isFetchingUser, setIsFetchingUser] = useState<boolean>(false);
+
+  const [loggedInUser, setLoggedInUser] =
+    useState<Models.User<Models.Preferences>>();
 
   const [selectedNode, setSelectedNode] = useState<Node<NodeData>>();
 
@@ -43,12 +50,14 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
       onUpdateSelectedNode: handleUpdateSelectedNode,
 
       session,
+      loggedInUser,
+      isFetchingUser,
       onUpdateSession: handleUpdateSession,
       onStartTour: () => {
         setRunTour(true);
       },
     }),
-    [selectedNode]
+    [selectedNode, loggedInUser, isFetchingUser]
   );
 
   const [runTour, setRunTour] = useState<boolean>(false);
@@ -62,9 +71,25 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const fetchCurrentUserData = async () => {
+    try {
+      setIsFetchingUser(true);
+      const user = await API_CLIENT.getLoggedInUser();
+      setLoggedInUser(user);
+    } catch (error) {
+      // handle error
+    } finally {
+      setIsFetchingUser(false);
+    }
+  };
+
   useEffect(() => {
     setTourSteps(getTourStepsByRoute(location.pathname));
   }, [location.pathname]);
+
+  useEffect(() => {
+    fetchCurrentUserData();
+  }, []);
 
   return (
     <AppContext.Provider value={contextValues}>

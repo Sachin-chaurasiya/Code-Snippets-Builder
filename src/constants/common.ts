@@ -8,6 +8,7 @@ export const ROUTES = {
   PROFILE: '/profile',
   CALLBACK: '/callback',
   DASHBOARD: '/dashboard',
+  EMAIL_VERIFICATION: '/email-verification',
 };
 
 export const INITIAL_CONTEXT_DATA = {
