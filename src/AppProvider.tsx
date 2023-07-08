@@ -6,7 +6,7 @@ import React, {
   useMemo,
   useState,
 } from 'react';
-import { ROUTES, SESSION_KEY } from './constants/common';
+import { SESSION_KEY } from './constants/common';
 import { useMediaQuery } from '@chakra-ui/react';
 import MobileViewMessage from 'components/MobileViewMessage/MobileViewMessage';
 import { AppContextProps } from 'interfaces/AppProvider.interface';
@@ -15,15 +15,14 @@ import { Node } from 'reactflow';
 import { NodeData } from 'interfaces/Editor.interface';
 import { CallBackProps, Step } from 'react-joyride';
 import Tour from 'components/Tour';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { getTourStepsByRoute } from 'utils/TourUtils';
-import { AppwriteException, Models } from 'appwrite';
+import { Models } from 'appwrite';
 import { API_CLIENT } from 'api';
 
 export const AppContext = createContext<AppContextProps>({} as AppContextProps);
 
 const AppProvider = ({ children }: { children: ReactNode }) => {
-  const navigate = useNavigate();
   const location = useLocation();
   const [isMobileScreen] = useMediaQuery('(max-width: 1024px)');
 
@@ -85,12 +84,7 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
       const user = await API_CLIENT.getLoggedInUser();
       handleUpdateLoggedInUser(user);
     } catch (error) {
-      const exception = error as AppwriteException;
       // handle error
-      if (exception.code === 401) {
-        Cookies.remove(SESSION_KEY);
-        navigate(ROUTES.SIGN_IN);
-      }
     } finally {
       setIsFetchingUser(false);
     }
