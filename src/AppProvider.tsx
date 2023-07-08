@@ -86,11 +86,10 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
       handleUpdateLoggedInUser(user);
     } catch (error) {
       const exception = error as AppwriteException;
+      // handle error
       if (exception.code === 401) {
-        // handle error
         Cookies.remove(SESSION_KEY);
         navigate(ROUTES.SIGN_IN);
-        navigate(0);
       }
     } finally {
       setIsFetchingUser(false);
