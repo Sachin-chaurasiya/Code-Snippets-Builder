@@ -42,6 +42,8 @@ const EmailVerificationPage = () => {
 
     if (userId && secret) {
       handleUpdateVerification(userId, secret);
+    } else {
+      navigate(ROUTES.PROFILE);
     }
   }, [location.search]);
 
