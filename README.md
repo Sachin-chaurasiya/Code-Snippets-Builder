@@ -3,7 +3,7 @@
 <img width="228" alt="240715596-d67adff6-dc50-4f31-9e27-14faf063f8b0" src="https://github.com/Sachin-chaurasiya/Code-Snippets-Builder/assets/59080942/9b0f5606-15f5-48ec-b3ba-d1da41d39c9a">
 </p> 
 <h3 align="center">Start Building Beautiful Code Snippets Today!</h3>
-<p align="center">With our drag and drop code snippet builder, you can effortlessly showcase your code in a visually appealing and professional manner.</p>
+<p align="center">With our drag-and-drop code snippet builder, you can effortlessly showcase your code in a visually appealing and professional manner.</p>
 
 ## Build Beautiful Code Snippets
 
@@ -79,7 +79,7 @@ yarn install
 
 ### 🦄 Start the Development Mode
 
-Use the following command to start the app in the development mode:
+Use the following command to start the app in development mode:
 
 ```bash
 yarn start
@@ -100,3 +100,13 @@ It builds the app for production to the `build` folder. It correctly bundles Rea
 ## 🛡️ License
 
 Your Code Snippet Builder is licensed under the MIT License - see the [LICENSE](https://github.com/Sachin-chaurasiya/Code-Snippets-Builder/blob/main/LICENSE) file for details.
+
+## Contributors
+
+We ❤️ all contributions, big and small! Check out our [CONTRIBUTING](./CONTRIBUTING.md) guide to get started and let us know how we can help.
+
+Don't want to miss anything? Give the project a ⭐ 🚀 
+
+A HUGE THANK YOU to all our supporters!
+
+[![Stargazers repo roster for @open-metadata/OpenMetadata](https://reporoster.com/stars/Sachin-chaurasiya/Code-Snippets-Builder)](https://github.com/Sachin-chaurasiya/Code-Snippets-Builder/stargazers)
