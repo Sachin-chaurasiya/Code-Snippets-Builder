@@ -41,6 +41,7 @@ export interface Snippet {
   nodes: string;
   creator: string;
   snapshot: string;
+  cover_image_base64_url?: string;
 }
 
 export type SnippetData = Models.Document & Snippet;
