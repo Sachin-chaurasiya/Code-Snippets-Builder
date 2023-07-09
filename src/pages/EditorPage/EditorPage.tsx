@@ -35,7 +35,6 @@ import { NodeData } from 'interfaces/Editor.interface';
 import { useLocation, useNavigate } from 'react-router-dom';
 import {
   BORDER_RADIUS_LARGE,
-  BUCKET_ID,
   COLLECTION_ID,
   DATABASE_ID,
   INITIAL_CONTEXT_DATA,
@@ -49,7 +48,7 @@ import {
   Snippet,
   SnippetData,
 } from 'interfaces/AppProvider.interface';
-import { toBlob } from 'html-to-image';
+import { toPng } from 'html-to-image';
 
 const EditorPage = () => {
   const toast = useToast();
@@ -132,15 +131,11 @@ const EditorPage = () => {
     setNodes(nodesWithUpdateHandler);
   };
 
-  const handleUpdateSnippetSnapshot = async (
-    snippetId: string,
-    existingSnapShotId: string
-  ) => {
+  const handleUpdateSnippetSnapshot = async (snippetId: string) => {
     const node = document.querySelector('.react-flow');
     if (node) {
       try {
-        const newSnapshotId = getUniqueId();
-        const blob = await toBlob(node as HTMLElement, {
+        const imageBase64Url = await toPng(node as HTMLElement, {
           filter: (node) => {
             // we don't want to add the minimap and the controls to the image
             if (
@@ -154,16 +149,12 @@ const EditorPage = () => {
           },
           quality: 1,
         });
-        const file = new File([blob as Blob], newSnapshotId, {
-          type: 'image/png',
-        });
 
-        await API_CLIENT.storage.createFile(BUCKET_ID, newSnapshotId, file);
         await API_CLIENT.database.updateDocument(
           DATABASE_ID,
           COLLECTION_ID,
           snippetId,
-          { snapshot: newSnapshotId }
+          { cover_image_base64_url: imageBase64Url }
         );
       } catch (error) {
         const exception = error as AppwriteException;
@@ -189,7 +180,7 @@ const EditorPage = () => {
       handleSnippetDataInit(data);
       setIsLoading(false);
 
-      handleUpdateSnippetSnapshot(data.$id, data.snapshot);
+      handleUpdateSnippetSnapshot(data.$id);
     } catch (error) {
       const exception = error as AppwriteException;
       toast({
@@ -392,7 +383,7 @@ const EditorPage = () => {
 
   useEffect(() => {
     if (!isNeedUpdate && snippetData) {
-      handleUpdateSnippetSnapshot(snippetData.$id, snippetData.snapshot);
+      handleUpdateSnippetSnapshot(snippetData.$id);
     }
   }, [isNeedUpdate, snippetData]);
 

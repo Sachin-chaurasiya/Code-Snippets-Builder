@@ -320,6 +320,7 @@ const DashboardPage = () => {
                         _groupHover={{ opacity: 0.8 }}
                         borderRadius={BORDER_RADIUS_MEDIUM}
                         src={
+                          snippet?.cover_image_base64_url ??
                           API_CLIENT.storage.getFilePreview(
                             BUCKET_ID,
                             snippet.snapshot
