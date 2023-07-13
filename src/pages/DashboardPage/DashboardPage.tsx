@@ -92,18 +92,14 @@ const DashboardPage = () => {
     };
     const uniqueId = getUniqueId();
 
-    const file = new File([], uniqueId, { type: 'image/png' });
-
     try {
       setIsCreating(true);
-
-      await API_CLIENT.storage.createFile(BUCKET_ID, uniqueId, file);
 
       const snippet = await API_CLIENT.database.createDocument(
         DATABASE_ID,
         COLLECTION_ID,
         uniqueId,
-        { ...dataWithCreator, snapshot: uniqueId }
+        { ...dataWithCreator, snapshot: uniqueId, cover_image_base64_url: '' }
       );
       handleNavigate(snippet.$id);
       toast({
