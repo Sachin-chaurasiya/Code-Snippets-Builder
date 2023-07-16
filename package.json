@@ -23,7 +23,7 @@
     "react-router-dom": "^6.11.1",
     "react-scripts": "5.0.1",
     "react-slick": "^0.29.0",
-    "reactflow": "^11.7.0",
+    "reactflow": "^11.7.4",
     "typescript": "4.9.5",
     "web-vitals": "^2.1.4",
     "zustand": "^4.3.8"
