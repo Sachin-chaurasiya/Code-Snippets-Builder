@@ -14,6 +14,16 @@ import FirebaseImage from 'assets/dev-icons/firebase.svg';
 import VScodeImage from 'assets/dev-icons/vscode.svg';
 import WebpackImage from 'assets/dev-icons/webpack.svg';
 import TailwindImage from 'assets/dev-icons/tailwindcss.svg';
+import FlutterImage from 'assets/dev-icons/flutter.svg';
+import GatsbyImage from 'assets/dev-icons/gatsby.svg';
+import GraphqlImage from 'assets/dev-icons/graphql.svg';
+import MarkdownImage from 'assets/dev-icons/markdown.svg';
+import MaterialUIImage from 'assets/dev-icons/materialui.svg';
+import NodeJsImage from 'assets/dev-icons/nodejs.svg';
+import NpmImage from 'assets/dev-icons/npm.svg';
+import PostgresqlImage from 'assets/dev-icons/postgresql.svg';
+import ReduxImage from 'assets/dev-icons/redux.svg';
+import SQLiteImage from 'assets/dev-icons/sqlite.svg';
 
 export const DEV_IMAGES = {
   TYPESCRIPT: TypeScriptImage,
@@ -26,10 +36,20 @@ export const DEV_IMAGES = {
   AWS: AWSImage,
   BABEL: BabelImage,
   BOOTSTRAP: BootstrapImage,
-  CHAKRA: ChakraImage,
+  CHAKRA_UI: ChakraImage,
   FAST_API: FastAPIImage,
   FIREBASE: FirebaseImage,
   VSCODE: VScodeImage,
   WEBPACK: WebpackImage,
   TAILWIND_CSS: TailwindImage,
+  FLUTTER: FlutterImage,
+  GATSBY: GatsbyImage,
+  GRAPHQL: GraphqlImage,
+  MARKDOWN: MarkdownImage,
+  MATERIAL_UI: MaterialUIImage,
+  NODEJS: NodeJsImage,
+  NPM: NpmImage,
+  POSTGRESQL: PostgresqlImage,
+  REDUX: ReduxImage,
+  SQLITE: SQLiteImage,
 };

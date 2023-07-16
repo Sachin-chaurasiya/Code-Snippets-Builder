@@ -9,12 +9,14 @@ import {
   ModalContent,
   ModalHeader,
   ModalOverlay,
+  Tooltip,
   useDisclosure,
 } from '@chakra-ui/react';
-import { map } from 'lodash';
+import { map, startCase } from 'lodash';
 import React from 'react';
 import { DEV_IMAGES } from 'constants/image';
 import { RiImageAddLine } from 'react-icons/ri';
+import { BORDER_RADIUS_MEDIUM } from 'constants/common';
 
 const AddMediaModal = ({
   onSourceSelect,
@@ -40,22 +42,27 @@ const AddMediaModal = ({
           <ModalCloseButton />
           <ModalBody my={4}>
             <Grid
+              overflowY="scroll"
               templateColumns="repeat(4, 1fr)"
               gap={4}
               minHeight="30vh"
               maxHeight="70vh">
               {map(DEV_IMAGES, (source, key) => (
                 <AspectRatio key={key} ratio={1}>
-                  <Button
-                    variant="outline"
-                    aspectRatio="auto"
-                    aria-label={key}
-                    minWidth={10}
-                    onClick={() => {
-                      handleSourceSelection(source);
-                    }}>
-                    <Image src={source} />
-                  </Button>
+                  <Tooltip
+                    label={startCase(key)}
+                    borderRadius={BORDER_RADIUS_MEDIUM}>
+                    <Button
+                      variant="outline"
+                      aspectRatio="auto"
+                      aria-label={key}
+                      minWidth={10}
+                      onClick={() => {
+                        handleSourceSelection(source);
+                      }}>
+                      <Image src={source} />
+                    </Button>
+                  </Tooltip>
                 </AspectRatio>
               ))}
             </Grid>
