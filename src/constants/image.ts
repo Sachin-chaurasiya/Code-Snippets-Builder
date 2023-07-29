@@ -24,6 +24,7 @@ import NpmImage from 'assets/dev-icons/npm.svg';
 import PostgresqlImage from 'assets/dev-icons/postgresql.svg';
 import ReduxImage from 'assets/dev-icons/redux.svg';
 import SQLiteImage from 'assets/dev-icons/sqlite.svg';
+import NetlifyImage from 'assets/dev-icons/netlify.png';
 
 export const DEV_IMAGES = {
   TYPESCRIPT: TypeScriptImage,
@@ -52,4 +53,5 @@ export const DEV_IMAGES = {
   POSTGRESQL: PostgresqlImage,
   REDUX: ReduxImage,
   SQLITE: SQLiteImage,
+  NETLIFY: NetlifyImage,
 };
