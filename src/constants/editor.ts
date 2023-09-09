@@ -9,6 +9,8 @@ import EditorNode from 'components/Editor/CustomNodes/EditorNode';
 import TextNode from 'components/Editor/CustomNodes/TextNode';
 import ImageNode from 'components/Editor/CustomNodes/ImageNode';
 
+export const TRANSPARENT = 'transparent';
+
 export const GRADIENT_COLORS = [
   'linear-gradient(337deg, rgb(101, 78, 163), rgb(218, 152, 180))',
   'linear-gradient(354deg, rgb(255, 117, 181), rgb(255, 184, 108))',
@@ -45,6 +47,7 @@ export const GRADIENT_COLORS = [
   'linear-gradient(0deg, rgb(2, 80, 197), rgb(212, 63, 141))',
   'linear-gradient(0deg, rgb(255, 8, 68), rgb(255, 177, 153))',
   'linear-gradient(225deg, rgb(252, 235, 194), rgb(253, 103, 166), rgb(178, 152, 250))',
+  TRANSPARENT,
 ];
 
 export const NAMED_COLORS = [
