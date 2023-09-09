@@ -45,25 +45,28 @@ const BackgroundConfig: FC<
       <FormControl>
         <FormLabel>Fill</FormLabel>
         <SimpleGrid columns={5} gap={4}>
-          {GRADIENT_COLORS.map((c) => (
-            <Tooltip key={c} label={c} borderRadius={BORDER_RADIUS_MEDIUM}>
+          {GRADIENT_COLORS.map((bgColor) => (
+            <Tooltip
+              key={bgColor}
+              label={bgColor}
+              borderRadius={BORDER_RADIUS_MEDIUM}>
               <Button
-                aria-label={c}
-                background={c}
+                aria-label={bgColor}
+                background={bgColor}
                 height="40px"
                 width="40px"
                 padding={0}
                 minWidth="unset"
                 borderRadius={3}
-                _hover={{ background: c }}
-                border={c === TRANSPARENT ? '1px' : 'none'}
-                borderColor={c === TRANSPARENT ? 'gray.200' : TRANSPARENT}
+                _hover={{ background: bgColor }}
+                border={bgColor === TRANSPARENT ? '1px' : 'none'}
+                borderColor={bgColor === TRANSPARENT ? 'gray.200' : TRANSPARENT}
                 onClick={() => {
-                  onUpdateBackground(c);
+                  onUpdateBackground(bgColor);
                 }}>
-                {background === c ? (
+                {background === bgColor ? (
                   <BiCheckCircle
-                    color={c === TRANSPARENT ? 'black' : 'white'}
+                    color={bgColor === TRANSPARENT ? 'black' : 'white'}
                     style={{ display: 'block', margin: 'auto' }}
                   />
                 ) : (
