@@ -418,6 +418,7 @@ const EditorPage = () => {
             onInit={handleOnInit}
             onDrop={onDrop}
             onDragOver={onDragOver}
+            deleteKeyCode={['Delete', 'Backspace']}
             // this is to disable multi select
             multiSelectionKeyCode={null}>
             <WatermarkPanel hideWaterMark={hideWaterMark} />
