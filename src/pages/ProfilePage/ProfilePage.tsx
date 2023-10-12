@@ -334,7 +334,7 @@ const ProfilePage = () => {
             <Input
               name="twitter"
               type="text"
-              placeholder="@sachindotcom"
+              placeholder="@snippetbuilder"
               value={prefState?.twitter ?? ''}
               onChange={handlePrefChange}
             />
@@ -344,7 +344,7 @@ const ProfilePage = () => {
             <Input
               name="github"
               type="text"
-              placeholder="Sachin-chaurasiya"
+              placeholder="OpenSource-Journey"
               value={prefState?.github ?? ''}
               onChange={handlePrefChange}
             />
@@ -354,7 +354,7 @@ const ProfilePage = () => {
             <Input
               name="linkedin"
               type="text"
-              placeholder="sachin-chaurasiya"
+              placeholder="Snippet Builder"
               value={prefState?.linkedin ?? ''}
               onChange={handlePrefChange}
             />
