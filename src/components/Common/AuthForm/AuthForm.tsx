@@ -15,6 +15,7 @@ import {
   Stack,
   Text,
   useToast,
+  useDisclosure,
 } from '@chakra-ui/react';
 import {
   BORDER_RADIUS_MEDIUM,
@@ -45,6 +46,7 @@ import PasswordInput from '../PasswordInput';
 
 const AuthForm: FC<AuthFormProps> = ({ formType }) => {
   const { onUpdateSession } = useAppProvider();
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const navigate = useNavigate();
   const toast = useToast();
 
@@ -142,6 +144,10 @@ const AuthForm: FC<AuthFormProps> = ({ formType }) => {
       } catch (error) {
         const exception = error as AppwriteException;
         setFormAPIError(exception.message);
+        onOpen();
+        setTimeout(() => {
+          onClose();
+        }, 3000);
       } finally {
         setIsSubmitting(false);
       }
@@ -186,7 +192,7 @@ const AuthForm: FC<AuthFormProps> = ({ formType }) => {
             </Text>
           </Box>
 
-          {formAPIError ? (
+          {isOpen && formAPIError ? (
             <Alert status="error" variant="left-accent">
               <AlertIcon />
               <AlertDescription>{formAPIError}</AlertDescription>
