@@ -49,6 +49,7 @@ const AuthForm: FC<AuthFormProps> = ({ formType }) => {
   const toast = useToast();
 
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [showAlert, setShowAlert] = useState<boolean>(false);
 
   const [formData, setFormData] = useState<AuthFormData>({
     email: '',
@@ -142,6 +143,10 @@ const AuthForm: FC<AuthFormProps> = ({ formType }) => {
       } catch (error) {
         const exception = error as AppwriteException;
         setFormAPIError(exception.message);
+        setShowAlert(true);
+        setTimeout(() => {
+          setShowAlert(false);
+        }, 3000);
       } finally {
         setIsSubmitting(false);
       }
@@ -186,7 +191,7 @@ const AuthForm: FC<AuthFormProps> = ({ formType }) => {
             </Text>
           </Box>
 
-          {formAPIError ? (
+          {showAlert ? (
             <Alert status="error" variant="left-accent">
               <AlertIcon />
               <AlertDescription>{formAPIError}</AlertDescription>
