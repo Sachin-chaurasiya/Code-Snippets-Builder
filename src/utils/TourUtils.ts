@@ -2,9 +2,10 @@ import { ROUTES } from 'constants/common';
 import { Step } from 'react-joyride';
 
 export const getTourStepsByRoute = (route: string): Step[] => {
+  let steps: Step[] = [];
   switch (route) {
     case ROUTES.DASHBOARD:
-      return [
+      steps = [
         {
           content: 'These are the templates you can use right away.',
           target: '#templates',
@@ -18,8 +19,9 @@ export const getTourStepsByRoute = (route: string): Step[] => {
           target: '#add-snippet-button',
         },
       ];
+      break;
     case ROUTES.EDITOR:
-      return [
+      steps = [
         {
           content:
             'You can use the snippet area to easily create snippets by dragging and dropping nodes.',
@@ -45,8 +47,11 @@ export const getTourStepsByRoute = (route: string): Step[] => {
           target: '#editor-sidebar',
         },
       ];
+      break;
 
     default:
-      return [];
+      steps = [];
+      break;
   }
+  return steps.map((step) => ({ ...step, disableBeacon: true }));
 };
