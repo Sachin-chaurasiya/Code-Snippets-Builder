@@ -143,7 +143,12 @@ const AuthForm: FC<AuthFormProps> = ({ formType }) => {
         }
       } catch (error) {
         const exception = error as AppwriteException;
-        setFormAPIError(exception.message);
+        const exceptionMessage =
+          exception.type === 'general_argument_invalid'
+            ? (exception.message.split(':')[1] || '').trim()
+            : exception.message;
+
+        setFormAPIError(exceptionMessage);
         onOpen();
         setTimeout(() => {
           onClose();
