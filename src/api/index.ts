@@ -6,8 +6,8 @@ import { v4 as generateUniqueId } from 'uuid';
 
 const initClient = () => {
   const client = new Client()
-    .setEndpoint(Server.endpoint as string)
-    .setProject(Server.project as string);
+    .setEndpoint(Server.endpoint)
+    .setProject(Server.project);
 
   const database = new Databases(client);
   const account = new Account(client);
