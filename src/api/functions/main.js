@@ -1,4 +1,4 @@
-import { appwriteService } from './appwrite';
+import { appwriteService } from './appwrite.js';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default async ({ res, req, log, error: errorCallback }) => {
   try {
