@@ -21,20 +21,6 @@ class AppwriteService {
       return 0;
     }
   }
-
-  async getDocumentCount() {
-    try {
-      const document = await this.databases.listDocuments(
-        process.env.REACT_APP_DATABASE_ID,
-        process.env.REACT_APP_COLLECTION_ID,
-        [Query.limit(1)]
-      );
-      return document.total;
-    } catch (error) {
-      // handle error
-      return 0;
-    }
-  }
 }
 
 export const appwriteService = new AppwriteService();
