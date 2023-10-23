@@ -1,6 +1,6 @@
 import { appwriteService } from './appwrite.js';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export default async ({ res, req, log, error: errorCallback }) => {
+export default async ({ res, _req, log, error: errorCallback }) => {
   try {
     log('Fetching users count');
     const usersCount = await appwriteService.getUsersCount();
