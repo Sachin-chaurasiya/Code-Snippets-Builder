@@ -16,7 +16,7 @@ Create stunning code snippets for different programming languages with ease. Cus
 
 ## Playground Link and Demo Credentials
 
-Website: [Demo Link](https://snippetbuilder.sachinchaurasiya.dev)
+Website: [Demo Link](https://snippetbuilder.com)
 
 Email: demo@codesnippetbuilder.com
 
