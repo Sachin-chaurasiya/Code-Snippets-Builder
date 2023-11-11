@@ -75,4 +75,5 @@ export const SESSION_KEY = 'code_snippet_builder_session';
 
 export const DATABASE_ID = 'CodeSnippetBuilder';
 export const COLLECTION_ID = 'snippet_entity';
+export const FOLDER_COLLECTION_ID = 'folder_entity';
 export const BUCKET_ID = 'snippet_images';

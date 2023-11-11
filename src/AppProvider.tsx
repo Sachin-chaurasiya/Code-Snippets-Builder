@@ -79,6 +79,8 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const fetchCurrentUserData = async () => {
+    if (loggedInUser) return;
+
     try {
       setIsFetchingUser(true);
       const user = await API_CLIENT.getLoggedInUser();
