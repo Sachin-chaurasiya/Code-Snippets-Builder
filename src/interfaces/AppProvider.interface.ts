@@ -43,5 +43,9 @@ export interface Snippet {
   snapshot: string;
   cover_image_base64_url?: string;
 }
+export interface Pagination {
+  totalPages: number;
+  currentPage: number;
+}
 
 export type SnippetData = Models.Document & Snippet;

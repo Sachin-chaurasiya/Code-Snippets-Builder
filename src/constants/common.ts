@@ -8,6 +8,7 @@ export const ROUTES = {
   PROFILE: '/profile',
   CALLBACK: '/callback',
   DASHBOARD: '/dashboard',
+  TEMPLATES: '/templates',
   EMAIL_VERIFICATION: '/email-verification',
 };
 
@@ -77,3 +78,5 @@ export const DATABASE_ID = 'CodeSnippetBuilder';
 export const COLLECTION_ID = 'snippet_entity';
 export const FOLDER_COLLECTION_ID = 'folder_entity';
 export const BUCKET_ID = 'snippet_images';
+
+export const PAGE_SIZE = 10;

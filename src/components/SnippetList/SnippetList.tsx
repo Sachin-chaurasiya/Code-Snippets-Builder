@@ -10,6 +10,7 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Skeleton,
   Stack,
   useToast,
 } from '@chakra-ui/react';
@@ -18,17 +19,24 @@ import { API_CLIENT } from 'api';
 import { AppwriteException, Models, Query } from 'appwrite';
 import AddButton from 'components/AddButton/AddButton';
 import SpinnerLoader from 'components/Common/Loader/SpinnerLoader';
+import Pagination from 'components/Pagination/Pagination';
+import Sorting, { SORTING_OPTIONS } from 'components/Sorting/Sorting';
 import {
   BORDER_RADIUS_LARGE,
   BORDER_RADIUS_MEDIUM,
   BUCKET_ID,
   COLLECTION_ID,
   DATABASE_ID,
+  PAGE_SIZE,
   ROUTES,
 } from 'constants/common';
 import { DEFAULT_TEMPLATE } from 'constants/templates';
 import { motion } from 'framer-motion';
-import { Snippet, SnippetData } from 'interfaces/AppProvider.interface';
+import {
+  Pagination as PaginationType,
+  Snippet,
+  SnippetData,
+} from 'interfaces/AppProvider.interface';
 import { map } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { MdDelete } from 'react-icons/md';
@@ -48,19 +56,37 @@ const SnippetList = () => {
 
   const [snippets, setSnippets] = useState<Models.DocumentList<SnippetData>>();
 
+  const [pagination, setPagination] = useState<PaginationType>({
+    currentPage: 1,
+    totalPages: 1,
+  });
+
+  const [sortingQuery, setSortingQuery] = useState<string>(
+    Query.orderDesc(SORTING_OPTIONS[0])
+  );
+
   const handleNavigate = (id: string) => {
     navigate(`${ROUTES.EDITOR}?id=${id}`);
   };
 
-  const fetchSnippets = async () => {
+  const fetchSnippets = async (offset = 0) => {
     try {
       setIsFetching(true);
       const snippetList = await API_CLIENT.database.listDocuments<SnippetData>(
         DATABASE_ID,
         COLLECTION_ID,
-        [Query.equal('creator', session ?? '')]
+        [
+          Query.equal('creator', session ?? ''),
+          Query.limit(PAGE_SIZE),
+          Query.offset(offset),
+          sortingQuery,
+        ]
       );
       setSnippets(snippetList);
+      setPagination({
+        currentPage: Math.ceil(offset / PAGE_SIZE) + 1,
+        totalPages: Math.ceil(snippetList.total / PAGE_SIZE),
+      });
     } catch (error) {
       const exception = error as AppwriteException;
       toast({
@@ -184,89 +210,127 @@ const SnippetList = () => {
     if (loggedInUser?.emailVerification) {
       fetchSnippets();
     }
-  }, [loggedInUser]);
+  }, [loggedInUser, sortingQuery]);
 
-  if (isFetchingUser || isFetching) return <SpinnerLoader />;
+  if (isFetchingUser) return <SpinnerLoader />;
 
   return (
-    <Box p={4}>
+    <Box p={4} w="full" h="full">
+      <Stack direction="row" justifyContent="flex-end" mb={4}>
+        <Sorting onChange={setSortingQuery} />
+      </Stack>
+
       <Grid templateColumns="repeat(4, 1fr)" gap={4} id="your-snippets">
-        {map(snippets?.documents, (snippet) => (
-          <AspectRatio
-            as={motion.div}
-            whileHover={{
-              scale: 1.1,
-            }}
-            maxHeight="200px"
-            maxWidth="300px"
-            key={snippet.$id}
-            ratio={1}
-            borderRadius={BORDER_RADIUS_LARGE}>
-            <Button
-              role="group"
-              position="relative"
-              bg="transparent"
-              _hover={{ bg: 'transparent' }}
+        {isFetching ? (
+          <>
+            {map(Array.from(Array(10).keys()), (index) => (
+              <AspectRatio
+                key={index}
+                ratio={1}
+                maxHeight="200px"
+                maxWidth="250px"
+                borderRadius={BORDER_RADIUS_LARGE}>
+                <Skeleton
+                  borderRadius={BORDER_RADIUS_LARGE}
+                  startColor="gray.200"
+                  endColor="gray.100"
+                  isLoaded={false}
+                  bg="gray.500"
+                  color="white"
+                  fadeDuration={1}
+                />
+              </AspectRatio>
+            ))}
+          </>
+        ) : (
+          <>
+            {map(snippets?.documents, (snippet) => (
+              <AspectRatio
+                as={motion.div}
+                whileHover={{
+                  scale: 1.1,
+                }}
+                maxHeight="200px"
+                maxWidth="300px"
+                key={snippet.$id}
+                ratio={1}
+                borderRadius={BORDER_RADIUS_LARGE}>
+                <Button
+                  role="group"
+                  position="relative"
+                  bg="transparent"
+                  _hover={{ bg: 'transparent' }}
+                  onClick={() => {
+                    handleNavigate(snippet.$id);
+                  }}>
+                  <Stack
+                    zIndex={5}
+                    _groupHover={{ display: 'flex' }}
+                    position="absolute"
+                    direction="row"
+                    display={'none'}>
+                    <Button
+                      variant="ghost"
+                      color="white"
+                      _hover={{ color: 'gray.600', bg: 'gray.100' }}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        setDeleteId(snippet.$id);
+                      }}>
+                      <MdDelete />
+                    </Button>
+                    <Button
+                      isLoading={isDuplicating}
+                      variant="ghost"
+                      color="white"
+                      _hover={{ color: 'gray.600', bg: 'gray.100' }}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        duplicateSnippet({
+                          background: snippet.background,
+                          hideWaterMark: snippet.hideWaterMark,
+                          profileInfo: snippet.profileInfo,
+                          nodes: snippet.nodes,
+                          creator: snippet.creator,
+                          snapshot: snippet.snapshot,
+                        });
+                      }}>
+                      <RxCopy />
+                    </Button>
+                  </Stack>
+                  <Image
+                    _groupHover={{ opacity: 0.8 }}
+                    borderRadius={BORDER_RADIUS_MEDIUM}
+                    src={
+                      snippet?.cover_image_base64_url ??
+                      API_CLIENT.storage.getFilePreview(
+                        BUCKET_ID,
+                        snippet.snapshot
+                      ).href
+                    }
+                  />
+                </Button>
+              </AspectRatio>
+            ))}
+            <AddButton
               onClick={() => {
-                handleNavigate(snippet.$id);
-              }}>
-              <Stack
-                zIndex={5}
-                _groupHover={{ display: 'flex' }}
-                position="absolute"
-                direction="row"
-                display={'none'}>
-                <Button
-                  variant="ghost"
-                  color="white"
-                  _hover={{ color: 'gray.600', bg: 'gray.100' }}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    setDeleteId(snippet.$id);
-                  }}>
-                  <MdDelete />
-                </Button>
-                <Button
-                  isLoading={isDuplicating}
-                  variant="ghost"
-                  color="white"
-                  _hover={{ color: 'gray.600', bg: 'gray.100' }}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    duplicateSnippet({
-                      background: snippet.background,
-                      hideWaterMark: snippet.hideWaterMark,
-                      profileInfo: snippet.profileInfo,
-                      nodes: snippet.nodes,
-                      creator: snippet.creator,
-                      snapshot: snippet.snapshot,
-                    });
-                  }}>
-                  <RxCopy />
-                </Button>
-              </Stack>
-              <Image
-                _groupHover={{ opacity: 0.8 }}
-                borderRadius={BORDER_RADIUS_MEDIUM}
-                src={
-                  snippet?.cover_image_base64_url ??
-                  API_CLIENT.storage.getFilePreview(BUCKET_ID, snippet.snapshot)
-                    .href
-                }
-              />
-            </Button>
-          </AspectRatio>
-        ))}
-        <AddButton
-          onClick={() => {
-            createSnippet(DEFAULT_TEMPLATE);
-          }}
-          isLoading={isCreating}
-          label="Add snippet"
-        />
+                createSnippet(DEFAULT_TEMPLATE);
+              }}
+              isLoading={isCreating}
+              label="Add snippet"
+            />
+          </>
+        )}
       </Grid>
+
+      <Pagination
+        currentPage={pagination.currentPage}
+        totalPages={pagination.totalPages}
+        onChange={fetchSnippets}
+        isFetching={isFetching}
+      />
       {deleteId ? (
         <Modal
           isCentered
