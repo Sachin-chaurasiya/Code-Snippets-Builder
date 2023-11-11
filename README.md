@@ -56,8 +56,6 @@ Create snippets for various programming languages, including JavaScript, Python,
 
   - Database: Serving as a reliable storage solution for the snippets of data.
 
-  - Storage: Providing a secure and efficient repository for storing the snapshot images of code snippets.
-
 ## 🍴 Fork and Clone the Repo
 
 First, you need to fork the `Code Snippet Builder` repo. You can do this by clicking the `Fork` button on the top right corner of the repo. If you are new to forking, please watch this [YouTube Guide](https://www.youtube.com/watch?v=h8suY-Osn8Q) to get started.
