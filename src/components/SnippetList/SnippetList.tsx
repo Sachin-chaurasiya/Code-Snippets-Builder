@@ -295,6 +295,8 @@ const SnippetList = () => {
                           nodes: snippet.nodes,
                           creator: snippet.creator,
                           snapshot: snippet.snapshot,
+                          cover_image_base64_url:
+                            snippet.cover_image_base64_url,
                         });
                       }}>
                       <RxCopy />
