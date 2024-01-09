@@ -85,7 +85,10 @@ const SnippetList = () => {
       setSnippets(snippetList);
       setPagination({
         currentPage: Math.ceil(offset / PAGE_SIZE) + 1,
-        totalPages: Math.ceil(snippetList.total / PAGE_SIZE),
+        totalPages:
+          snippetList.total === 0
+            ? 1
+            : Math.ceil(snippetList.total / PAGE_SIZE),
       });
     } catch (error) {
       const exception = error as AppwriteException;
