@@ -1,5 +1,5 @@
 import { Box, Heading, Stack, Text } from '@chakra-ui/react';
-import { APP_TEXT_COLOR, BORDER_RADIUS_LARGE } from 'constants/common';
+import { APP_TEXT_COLOR } from 'constants/common';
 import { motion } from 'framer-motion';
 import { FC, ReactNode } from 'react';
 
@@ -20,7 +20,7 @@ export const Feature: FC<FeatureProps> = ({ icon, title, description }) => (
     align="center"
     justifyContent="center"
     border="1px solid transparent"
-    borderRadius={BORDER_RADIUS_LARGE}
+    borderRadius="1.25rem"
     p={4}>
     <Box boxSize={10}>{icon}</Box>
     <Stack spacing={4} align="center" justifyContent="center">

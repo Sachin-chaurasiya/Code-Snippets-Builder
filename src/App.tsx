@@ -22,7 +22,7 @@ export const App = () => {
   return (
     <Box color={APP_TEXT_COLOR} minHeight="100vh" bg={'gray.100'}>
       <LeftSidebar />
-      <Box as="main" ml={60} p="4">
+      <Box as="main" ml={60}>
         <AppRoutes />
       </Box>
     </Box>

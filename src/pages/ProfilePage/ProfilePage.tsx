@@ -1,5 +1,4 @@
 import {
-  Badge,
   Box,
   FormControl,
   FormLabel,
@@ -8,6 +7,7 @@ import {
   Input,
   Stack,
   Text,
+  Tooltip,
   useToast,
 } from '@chakra-ui/react';
 import { useAppProvider } from 'AppProvider';
@@ -15,11 +15,12 @@ import { API_CLIENT } from 'api';
 import { AppwriteException } from 'appwrite';
 import Loader from 'components/Common/Loader/Loader';
 import UpdateButton from 'components/Common/UpdateButton';
-import { BORDER_RADIUS_LARGE } from 'constants/common';
+import { BORDER_RADIUS_LARGE, BORDER_RADIUS_MEDIUM } from 'constants/common';
 import { EMAIL_VERIFICATION_URL } from 'constants/links';
 import { isEqual } from 'lodash';
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { getFormattedDate } from 'utils/DateTimeUtils';
+import { ReactComponent as VerifiedIcon } from 'assets/svg/verified.svg';
 
 interface StringDataState {
   current: string;
@@ -228,16 +229,16 @@ const ProfilePage = () => {
   }
 
   return (
-    <Stack spacing={4}>
+    <Stack spacing={4} p={4} bg="white">
       <Box
+        shadow="sm"
         direction="row"
         justifyContent="space-between"
         as={Stack}
         bg="white"
         p={4}
         width="full"
-        border="1px"
-        borderColor="gray.200"
+        border="1px solid #dce1f9"
         borderRadius={BORDER_RADIUS_LARGE}>
         <Stack direction="row" spacing={2} alignItems="center">
           <Image
@@ -257,34 +258,32 @@ const ProfilePage = () => {
           )}`}</Text>
         </Stack>
         <Stack align="center" justify="center">
-          <Badge
-            p={2}
-            borderRadius={BORDER_RADIUS_LARGE}
-            alignSelf="center"
-            height="max-content"
-            variant="solid"
-            colorScheme={loggedInUser?.emailVerification ? 'green' : 'gray'}>
-            {loggedInUser?.emailVerification ? 'verified' : 'unverified'}
-          </Badge>
-          {!loggedInUser?.emailVerification ? (
+          {loggedInUser?.emailVerification ? (
+            <Tooltip
+              label="Email verified"
+              aria-label="Email verified"
+              borderRadius={BORDER_RADIUS_MEDIUM}>
+              <VerifiedIcon height={32} width={32} />
+            </Tooltip>
+          ) : (
             <UpdateButton
               size="sm"
               isLoading={isSending}
               onClick={handleSendVerification}>
               Verify account
             </UpdateButton>
-          ) : null}
+          )}
         </Stack>
       </Box>
       <Box
+        shadow="sm"
         direction="row"
         justifyContent="space-between"
         as={Stack}
         bg="white"
         p={4}
         width="full"
-        border="1px"
-        borderColor="gray.200"
+        border="1px solid #dce1f9"
         borderRadius={BORDER_RADIUS_LARGE}>
         <Stack flex={1}>
           <Heading as="h6" size="sm">
@@ -311,14 +310,14 @@ const ProfilePage = () => {
         </Stack>
       </Box>
       <Box
+        shadow="sm"
         direction="row"
         justifyContent="space-between"
         as={Stack}
         bg="white"
         p={4}
         width="full"
-        border="1px"
-        borderColor="gray.200"
+        border="1px solid #dce1f9"
         borderRadius={BORDER_RADIUS_LARGE}>
         <Stack flex={1}>
           <Heading as="h6" size="sm">
@@ -368,14 +367,14 @@ const ProfilePage = () => {
         </Stack>
       </Box>
       <Box
+        shadow="sm"
         direction="row"
         justifyContent="space-between"
         as={Stack}
         bg="white"
         p={4}
         width="full"
-        border="1px"
-        borderColor="gray.200"
+        border="1px solid #dce1f9"
         borderRadius={BORDER_RADIUS_LARGE}>
         <Stack flex={1}>
           <Heading as="h6" size="sm">

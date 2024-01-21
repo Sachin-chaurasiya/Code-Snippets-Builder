@@ -29,20 +29,22 @@ export const Navbar = () => {
       <Stack direction={'row'} spacing={4}>
         <Button
           _hover={{ bg: 'transparent' }}
-          as={'a'}
           variant={'ghost'}
           border="1px solid #101828"
           borderRadius={BRAND_BORDER_RADIUS}
-          href={ROUTES.SIGN_IN}>
+          onClick={() => {
+            navigate(ROUTES.SIGN_IN);
+          }}>
           Sign In
         </Button>
         <Button
-          as={'a'}
           borderRadius={BRAND_BORDER_RADIUS}
-          href={ROUTES.SIGN_UP}
           _hover={{ bg: 'brand.500' }}
           bg="brand.500"
-          color="white">
+          color="white"
+          onClick={() => {
+            navigate(ROUTES.SIGN_UP);
+          }}>
           Sign Up
         </Button>
       </Stack>

@@ -84,3 +84,29 @@ export const PAGE_SIZE = 10;
 export const BRAND_BORDER_RADIUS = '150px';
 
 export const BRAND_COLOR = '#5E71E4';
+
+export const STATS = [
+  {
+    description: 'Snippets Created',
+    value: 850,
+  },
+  {
+    description: 'Snippets Shared',
+    value: 640,
+  },
+  {
+    description: 'Users Registered',
+    value: 400,
+  },
+  {
+    description: 'Templates',
+    value: 3,
+  },
+];
+
+export const MOBILE_SUPPORTED_PAGES = [
+  ROUTES.HOME,
+  ROUTES.SIGN_IN,
+  ROUTES.SIGN_UP,
+  ROUTES.CALLBACK,
+];

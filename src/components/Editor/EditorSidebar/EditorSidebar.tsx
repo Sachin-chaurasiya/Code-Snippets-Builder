@@ -27,15 +27,13 @@ const EditorSidebar: FC<EditorSidebarProps> = ({
     <Box
       id="editor-sidebar"
       bg={useColorModeValue('white', 'gray.900')}
-      borderLeft="1px"
-      borderLeftColor={useColorModeValue('gray.200', 'gray.700')}
+      borderLeft="1px solid #dce1f9"
       w="80"
       pos="fixed"
       h="full"
       right={0}
       top={0}
       bottom={0}
-      shadow="md"
       px="6"
       overflow="auto">
       <Flex h="20" justifyContent="space-between" alignItems="center" gap={2}>
