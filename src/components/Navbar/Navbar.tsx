@@ -31,7 +31,7 @@ export const Navbar = () => {
       zIndex="999">
       <Stack direction={'row'} spacing={4}>
         <BrandLogo
-          textColor={isAuthPage ? 'white' : ''}
+          textColor={isAuthPage ? 'white' : 'brand.500'}
           onClick={handleNavigateHome}
           cursor="pointer"
         />
