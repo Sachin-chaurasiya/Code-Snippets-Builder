@@ -114,11 +114,11 @@ A HUGE THANK YOU to all our supporters!
 
 ### Stargazers
 
-[![Stargazers repo roster for @open-metadata/OpenMetadata](https://reporoster.com/stars/Sachin-chaurasiya/Code-Snippets-Builder)](https://github.com/Sachin-chaurasiya/Code-Snippets-Builder/stargazers)
+[![Stargazers repo roster for Code Snippet Builder](https://reporoster.com/stars/Sachin-chaurasiya/Code-Snippets-Builder)](https://github.com/Sachin-chaurasiya/Code-Snippets-Builder/stargazers)
 
 ### Forkers
 
-[![Forkers repo roster for @sadanandpai/frontend-mini-challenges](https://reporoster.com/forks/Sachin-chaurasiya/Code-Snippets-Builder)](https://github.com/Sachin-chaurasiya/Code-Snippets-Builder/network/members)
+[![Forkers repo roster for Code Snippet Builder](https://reporoster.com/forks/Sachin-chaurasiya/Code-Snippets-Builder)](https://github.com/Sachin-chaurasiya/Code-Snippets-Builder/network/members)
 
 ### Contributors
 
