@@ -28,6 +28,7 @@ export const Navbar = () => {
       </Stack>
       <Stack direction={'row'} spacing={4}>
         <Button
+          display={{ base: 'none', md: 'block' }}
           _hover={{ bg: 'transparent' }}
           variant={'ghost'}
           border="1px solid #101828"

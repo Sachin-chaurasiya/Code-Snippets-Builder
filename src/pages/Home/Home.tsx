@@ -44,7 +44,7 @@ const LandingPage = () => {
           md: session ? '7rem' : '8rem',
         }}
         pb={{ lg: '1rem', md: '1rem', sm: '1rem' }}
-        pt={{ lg: '10rem', md: '7rem', sm: '7rem' }}>
+        pt={{ lg: '10rem', md: '10rem', sm: '10rem', base: '10rem' }}>
         <VStack
           spacing={16}
           justifyContent="center"
@@ -52,6 +52,7 @@ const LandingPage = () => {
           position="relative">
           <Box textAlign="center">
             <Image
+              display={{ base: 'none', lg: 'block', md: 'block', sm: 'block' }}
               src={ArrowImage}
               position="absolute"
               top="auto"
@@ -59,7 +60,11 @@ const LandingPage = () => {
               right="auto"
               left="4%"
             />
-            <Heading size="4xl" fontWeight={700} mb={4} color="black">
+            <Heading
+              size={{ lg: '4xl', md: '4xl', sm: '3xl', base: '3xl' }}
+              fontWeight={700}
+              mb={4}
+              color="black">
               Build Beautiful Code Snippets
             </Heading>
             <Text fontSize="xl" mb={6} color="#344054">
@@ -80,12 +85,14 @@ const LandingPage = () => {
             </Button>
           </Box>
 
-          <HomeCarousel width={{ lg: '700px', md: '600px', sm: '450px' }} />
+          <HomeCarousel
+            width={{ lg: '700px', md: '600px', sm: '450px', base: '300px' }}
+          />
         </VStack>
       </Box>
 
       <Box
-        padding={{ lg: '6rem', md: '4rem', sm: '2rem' }}
+        padding={{ lg: '6rem', md: '4rem', sm: '2rem', base: '2.5rem' }}
         pb="4rem"
         pt={{ lg: '0', md: '0' }}>
         <Grid
