@@ -6,7 +6,7 @@ import React, {
   useMemo,
   useState,
 } from 'react';
-import { SESSION_KEY } from './constants/common';
+import { MOBILE_SUPPORTED_PAGES, SESSION_KEY } from './constants/common';
 import { useMediaQuery } from '@chakra-ui/react';
 import MobileViewMessage from 'components/MobileViewMessage/MobileViewMessage';
 import { AppContextProps } from 'interfaces/AppProvider.interface';
@@ -92,6 +92,10 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const isMobileSupportedPage = useMemo(() => {
+    return MOBILE_SUPPORTED_PAGES.includes(location.pathname);
+  }, [location.pathname]);
+
   useEffect(() => {
     setTourSteps(getTourStepsByRoute(location.pathname));
   }, [location.pathname]);
@@ -103,7 +107,11 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
   return (
     <AppContext.Provider value={contextValues}>
       <Tour run={runTour} steps={tourSteps} callback={handleTourCallback} />
-      {isMobileScreen ? <MobileViewMessage /> : children}
+      {isMobileScreen && !isMobileSupportedPage ? (
+        <MobileViewMessage />
+      ) : (
+        children
+      )}
     </AppContext.Provider>
   );
 };

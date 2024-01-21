@@ -38,7 +38,13 @@ const LandingPage = () => {
 
   return (
     <Box bg="white" minHeight="100vh">
-      <Box padding={session ? '6rem' : '12rem'} pb="1rem" pt="10rem">
+      <Box
+        padding={{
+          lg: session ? '6rem' : '12rem',
+          md: session ? '7rem' : '8rem',
+        }}
+        pb={{ lg: '1rem', md: '1rem', sm: '1rem' }}
+        pt={{ lg: '10rem', md: '7rem', sm: '7rem' }}>
         <VStack
           spacing={16}
           justifyContent="center"
@@ -49,7 +55,7 @@ const LandingPage = () => {
               src={ArrowImage}
               position="absolute"
               top="auto"
-              bottom="58%"
+              bottom={{ lg: '58%', md: '50%', sm: '50%' }}
               right="auto"
               left="4%"
             />
@@ -74,12 +80,19 @@ const LandingPage = () => {
             </Button>
           </Box>
 
-          <HomeCarousel width="700px" />
+          <HomeCarousel width={{ lg: '700px', md: '600px', sm: '450px' }} />
         </VStack>
       </Box>
 
-      <Box padding="6rem" pb="4rem" pt="0">
-        <Grid as={Grid} templateColumns="repeat(4, 1fr)" gap={8} mt={16}>
+      <Box
+        padding={{ lg: '6rem', md: '4rem', sm: '2rem' }}
+        pb="4rem"
+        pt={{ lg: '0', md: '0' }}>
+        <Grid
+          as={Grid}
+          templateColumns={{ md: 'repeat(2, 1fr)', lg: 'repeat(4, 1fr)' }}
+          gap={8}
+          mt={16}>
           {STATS.map(({ description, value }, index) => (
             <StatsCard
               index={index}
@@ -111,7 +124,14 @@ const LandingPage = () => {
           <Heading color="white" size="xl" mb={8} textAlign="center">
             Features
           </Heading>
-          <Grid as={Grid} templateColumns="repeat(3, 1fr)" gap={8}>
+          <Grid
+            as={Grid}
+            templateColumns={{
+              lg: 'repeat(3, 1fr)',
+              md: 'repeat(2, 1fr)',
+              sm: 'repeat(1, 1fr)',
+            }}
+            gap={8}>
             <Feature
               icon={<RiDragDropLine color={BRAND_COLOR} size={50} />}
               title="Drag and Drop Interface"

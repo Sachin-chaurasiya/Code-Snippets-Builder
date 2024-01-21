@@ -20,7 +20,15 @@ import { Link } from 'react-router-dom';
 const Footer = () => {
   return (
     <Box as="footer" bg="brand.500" py={8} textColor="white">
-      <Grid templateColumns="repeat(3, 1fr)" gap={8} px={8} pb={4}>
+      <Grid
+        templateColumns={{
+          lg: 'repeat(3, 1fr)',
+          md: 'repeat(2, 1fr)',
+          sm: 'repeat(1, 1fr)',
+        }}
+        gap={8}
+        px={8}
+        pb={4}>
         <Box>
           <Stack spacing={0}>
             <BrandLogo ml="-10px" textColor="white" cursor="pointer" />

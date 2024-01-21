@@ -160,7 +160,7 @@ const AuthForm: FC<AuthFormProps> = ({ formType }) => {
   return (
     <Flex
       minH="100vh"
-      paddingTop="100px "
+      paddingTop="100px"
       align="center"
       justify="center"
       bg="brand.300">
@@ -169,7 +169,7 @@ const AuthForm: FC<AuthFormProps> = ({ formType }) => {
         bg="white"
         px={4}
         py={6}
-        flex={0.35}
+        flex={{ lg: 0.35, md: 0.5, sm: 0.8 }}
         shadow="md"
         borderRadius={BORDER_RADIUS_MEDIUM}>
         <Stack spacing={4}>

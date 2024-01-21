@@ -103,3 +103,9 @@ export const STATS = [
     value: 3,
   },
 ];
+
+export const MOBILE_SUPPORTED_PAGES = [
+  ROUTES.HOME,
+  ROUTES.SIGN_IN,
+  ROUTES.SIGN_UP,
+];
