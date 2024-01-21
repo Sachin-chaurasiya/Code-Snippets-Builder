@@ -229,16 +229,16 @@ const ProfilePage = () => {
   }
 
   return (
-    <Stack spacing={4} p={4}>
+    <Stack spacing={4} p={4} bg="white">
       <Box
+        shadow="sm"
         direction="row"
         justifyContent="space-between"
         as={Stack}
         bg="white"
         p={4}
         width="full"
-        border="1px"
-        borderColor="gray.200"
+        border="1px solid #dce1f9"
         borderRadius={BORDER_RADIUS_LARGE}>
         <Stack direction="row" spacing={2} alignItems="center">
           <Image
@@ -276,14 +276,14 @@ const ProfilePage = () => {
         </Stack>
       </Box>
       <Box
+        shadow="sm"
         direction="row"
         justifyContent="space-between"
         as={Stack}
         bg="white"
         p={4}
         width="full"
-        border="1px"
-        borderColor="gray.200"
+        border="1px solid #dce1f9"
         borderRadius={BORDER_RADIUS_LARGE}>
         <Stack flex={1}>
           <Heading as="h6" size="sm">
@@ -310,14 +310,14 @@ const ProfilePage = () => {
         </Stack>
       </Box>
       <Box
+        shadow="sm"
         direction="row"
         justifyContent="space-between"
         as={Stack}
         bg="white"
         p={4}
         width="full"
-        border="1px"
-        borderColor="gray.200"
+        border="1px solid #dce1f9"
         borderRadius={BORDER_RADIUS_LARGE}>
         <Stack flex={1}>
           <Heading as="h6" size="sm">
@@ -367,14 +367,14 @@ const ProfilePage = () => {
         </Stack>
       </Box>
       <Box
+        shadow="sm"
         direction="row"
         justifyContent="space-between"
         as={Stack}
         bg="white"
         p={4}
         width="full"
-        border="1px"
-        borderColor="gray.200"
+        border="1px solid #dce1f9"
         borderRadius={BORDER_RADIUS_LARGE}>
         <Stack flex={1}>
           <Heading as="h6" size="sm">

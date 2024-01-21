@@ -163,8 +163,9 @@ const AuthForm: FC<AuthFormProps> = ({ formType }) => {
       paddingTop="100px"
       align="center"
       justify="center"
-      bg="brand.300">
+      bg="white">
       <Stack
+        border="1px solid #dce1f9"
         spacing={8}
         bg="white"
         px={4}

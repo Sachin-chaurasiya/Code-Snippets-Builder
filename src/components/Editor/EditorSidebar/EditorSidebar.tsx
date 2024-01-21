@@ -27,8 +27,7 @@ const EditorSidebar: FC<EditorSidebarProps> = ({
     <Box
       id="editor-sidebar"
       bg={useColorModeValue('white', 'gray.900')}
-      borderLeft="1px"
-      borderLeftColor={useColorModeValue('gray.200', 'gray.700')}
+      borderLeft="1px solid #dce1f9"
       w="80"
       pos="fixed"
       h="full"
