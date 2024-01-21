@@ -10,7 +10,7 @@ import { BsGithub, BsTwitter } from 'react-icons/bs';
 
 const Footer = () => {
   return (
-    <Box as="footer" bg="gray.100" py={4}>
+    <Box as="footer" bg="white" py={4}>
       <Stack
         px={8}
         direction="row"
@@ -33,7 +33,7 @@ const Footer = () => {
             <Button
               leftIcon={<BsTwitter />}
               variant="ghost"
-              colorScheme="twitter">
+              colorScheme="black">
               Twitter
             </Button>
           </Link>

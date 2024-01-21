@@ -43,12 +43,7 @@ const BrandLogo: FC<BrandLogoProps> = ({
         mb="4px"
         fontSize={textFontSize ?? 'xl'}
         fontWeight={textFontWeight ?? 'bold'}
-        background={
-          textBackgroundColor ??
-          'linear-gradient(270deg, rgb(20, 30, 48), rgb(36, 59, 85))'
-        }
-        color={textColor ?? 'transparent'}
-        backgroundClip={backgroundClip ?? 'text'}>
+        color={textColor ?? 'brand.500'}>
         <span>Snippet</span>
         <span>Builder</span>
       </Text>

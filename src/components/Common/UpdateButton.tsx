@@ -1,5 +1,5 @@
 import { Button, ButtonProps } from '@chakra-ui/react';
-import { PRIMARY_GRADIENT_COLOR } from 'constants/common';
+import { BRAND_BORDER_RADIUS } from 'constants/common';
 import React, { FC } from 'react';
 
 const UpdateButton: FC<ButtonProps> = ({
@@ -12,16 +12,17 @@ const UpdateButton: FC<ButtonProps> = ({
   return (
     <Button
       _disabled={{
-        bgGradient: 'none',
+        bg: 'brand.300',
         cursor: 'not-allowed',
         _hover: {
-          bgGradient: 'none',
+          bg: 'brand.300',
         },
       }}
       _hover={{
-        bgGradient: PRIMARY_GRADIENT_COLOR,
+        bg: 'brand.500',
       }}
-      bgGradient={PRIMARY_GRADIENT_COLOR}
+      bg="brand.500"
+      borderRadius={BRAND_BORDER_RADIUS}
       color="white"
       alignSelf="end"
       isDisabled={isDisabled}

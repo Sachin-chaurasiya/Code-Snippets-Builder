@@ -1,5 +1,5 @@
 import { Box, Heading, Text, Button, Flex } from '@chakra-ui/react';
-import { PRIMARY_GRADIENT_COLOR, ROUTES } from 'constants/common';
+import { BRAND_BORDER_RADIUS, ROUTES } from 'constants/common';
 import { useNavigate } from 'react-router-dom';
 
 export const NotFound = () => {
@@ -15,12 +15,7 @@ export const NotFound = () => {
       textAlign="center"
       py={10}
       px={6}>
-      <Heading
-        display="inline-block"
-        as="h2"
-        size="2xl"
-        bgGradient={PRIMARY_GRADIENT_COLOR}
-        backgroundClip="text">
+      <Heading display="inline-block" as="h2" size="2xl" color="brand.500">
         404
       </Heading>
       <Text fontSize="18px" mt={3} mb={2}>
@@ -31,8 +26,11 @@ export const NotFound = () => {
       </Text>
 
       <Button
-        colorScheme="rgb(102, 126, 234)"
-        bgGradient={PRIMARY_GRADIENT_COLOR}
+        _hover={{
+          bg: 'brand.500',
+        }}
+        bg="brand.500"
+        borderRadius={BRAND_BORDER_RADIUS}
         color="white"
         variant="solid"
         onClick={() => {

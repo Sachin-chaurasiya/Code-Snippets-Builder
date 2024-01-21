@@ -1,6 +1,6 @@
 import { Button, Stack, Text, useToast } from '@chakra-ui/react';
 import { API_CLIENT } from 'api';
-import { PRIMARY_GRADIENT_COLOR } from 'constants/common';
+import { BRAND_BORDER_RADIUS } from 'constants/common';
 import { EMAIL_VERIFICATION_URL } from 'constants/links';
 import React, { FC, useState } from 'react';
 
@@ -40,9 +40,10 @@ const EmailVerification: FC<EmailVerificationProps> = ({ email }) => {
       <Button
         isLoading={isSending}
         _hover={{
-          bgGradient: PRIMARY_GRADIENT_COLOR,
+          bg: 'brand.500',
         }}
-        bgGradient={PRIMARY_GRADIENT_COLOR}
+        bg="brand.500"
+        borderRadius={BRAND_BORDER_RADIUS}
         color="white"
         size="lg"
         onClick={handleSendVerification}>

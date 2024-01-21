@@ -19,17 +19,15 @@ import {
 } from '@chakra-ui/react';
 import {
   BORDER_RADIUS_MEDIUM,
-  PRIMARY_GRADIENT_COLOR,
+  BRAND_BORDER_RADIUS,
   ROUTES,
   SESSION_KEY,
 } from 'constants/common';
-import React, { FC, useMemo } from 'react';
+import React, { ChangeEvent, FC, useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import GoogleIcon from '../Icons/GoogleIcon';
 import GitHubIcon from '../Icons/GitHubIcon';
 import { API_CLIENT } from 'api';
-import { useState } from 'react';
-import { ChangeEvent } from 'react';
 import {
   AuthFormData,
   AuthFormError,
@@ -160,7 +158,7 @@ const AuthForm: FC<AuthFormProps> = ({ formType }) => {
   };
 
   return (
-    <Flex minH="100vh" align="center" justify="center">
+    <Flex minH="100vh" paddingTop="100px" align="center" justify="center">
       <Stack
         spacing={8}
         bg="white"
@@ -235,9 +233,10 @@ const AuthForm: FC<AuthFormProps> = ({ formType }) => {
           </FormControl>
           <Button
             _hover={{
-              bgGradient: PRIMARY_GRADIENT_COLOR,
+              bg: 'brand.500',
             }}
-            bgGradient={PRIMARY_GRADIENT_COLOR}
+            bg="brand.500"
+            borderRadius={BRAND_BORDER_RADIUS}
             color="white"
             onClick={handleSubmit}
             isLoading={isSubmitting}>
@@ -256,6 +255,7 @@ const AuthForm: FC<AuthFormProps> = ({ formType }) => {
             bg="white"
             border="1px"
             borderColor={'gray.400'}
+            borderRadius={BRAND_BORDER_RADIUS}
             onClick={API_CLIENT.googleSignIn}>
             Continue with Google
           </Button>
@@ -265,6 +265,7 @@ const AuthForm: FC<AuthFormProps> = ({ formType }) => {
             bg="white"
             border="1px"
             borderColor={'gray.400'}
+            borderRadius={BRAND_BORDER_RADIUS}
             onClick={API_CLIENT.githubSignIn}>
             Continue with GitHub
           </Button>
