@@ -12,13 +12,19 @@ import { RiDragDropLine } from 'react-icons/ri';
 import { BiCustomize } from 'react-icons/bi';
 import { DiTerminal } from 'react-icons/di';
 import { useNavigate } from 'react-router-dom';
-import { BRAND_BORDER_RADIUS, BRAND_COLOR, ROUTES } from 'constants/common';
+import {
+  BRAND_BORDER_RADIUS,
+  BRAND_COLOR,
+  ROUTES,
+  STATS,
+} from 'constants/common';
 import { COMMON_TEXT_PROPS } from 'constants/text';
 import { Feature } from 'components/Feature/Feature';
 import Footer from 'components/Common/Footer/Footer';
 import HomeCarousel from 'components/HomeCarousel';
 import ArrowImage from 'assets/svg/arrow-image.svg';
 import { useAppProvider } from 'AppProvider';
+import StatsCard from 'components/StatsCard/StatsCard';
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -30,7 +36,7 @@ const LandingPage = () => {
 
   return (
     <Box bg="white" minHeight="100vh">
-      <Box padding={session ? '6rem' : '12rem'}>
+      <Box padding={session ? '6rem' : '12rem'} pb="1rem" pt="10rem">
         <VStack
           spacing={16}
           justifyContent="center"
@@ -68,6 +74,18 @@ const LandingPage = () => {
 
           <HomeCarousel width="700px" />
         </VStack>
+      </Box>
+
+      <Box padding="6rem" pb="4rem" pt="0">
+        <Grid as={Grid} templateColumns="repeat(4, 1fr)" gap={8} mt={16}>
+          {STATS.map(({ description, value }) => (
+            <StatsCard
+              key={description}
+              count={value}
+              description={description}
+            />
+          ))}
+        </Grid>
       </Box>
 
       <Box bg="brand.500" py={16}>
