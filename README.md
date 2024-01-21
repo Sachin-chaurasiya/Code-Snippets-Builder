@@ -12,7 +12,9 @@
 
 Create stunning code snippets for different programming languages with ease. Customize the appearance, choose from various templates, and enhance your code documentation.
 
-![image (31)](https://github.com/Sachin-chaurasiya/Code-Snippets-Builder/assets/59080942/1a5c6da9-d94d-4d89-aff2-439839449cdb)
+![freemockup](https://github.com/Sachin-chaurasiya/Code-Snippets-Builder/assets/59080942/52b97b28-0927-465f-afac-53653d4863a8)
+
+
 
 ## Playground Link and Demo Credentials
 
