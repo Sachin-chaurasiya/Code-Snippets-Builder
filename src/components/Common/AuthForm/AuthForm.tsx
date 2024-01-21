@@ -158,7 +158,12 @@ const AuthForm: FC<AuthFormProps> = ({ formType }) => {
   };
 
   return (
-    <Flex minH="100vh" paddingTop="100px" align="center" justify="center">
+    <Flex
+      minH="100vh"
+      paddingTop="100px "
+      align="center"
+      justify="center"
+      bg="brand.300">
       <Stack
         spacing={8}
         bg="white"

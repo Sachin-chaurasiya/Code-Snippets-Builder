@@ -25,6 +25,8 @@ import HomeCarousel from 'components/HomeCarousel';
 import ArrowImage from 'assets/svg/arrow-image.svg';
 import { useAppProvider } from 'AppProvider';
 import StatsCard from 'components/StatsCard/StatsCard';
+import StarsImage from 'assets/svg/stars.svg';
+import LineWavesImage from 'assets/svg/line-waves.svg';
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -78,8 +80,9 @@ const LandingPage = () => {
 
       <Box padding="6rem" pb="4rem" pt="0">
         <Grid as={Grid} templateColumns="repeat(4, 1fr)" gap={8} mt={16}>
-          {STATS.map(({ description, value }) => (
+          {STATS.map(({ description, value }, index) => (
             <StatsCard
+              index={index}
               key={description}
               count={value}
               description={description}
@@ -88,7 +91,22 @@ const LandingPage = () => {
         </Grid>
       </Box>
 
-      <Box bg="brand.500" py={16}>
+      <Box bg="brand.500" py={16} position="relative">
+        <Image
+          src={StarsImage}
+          position="absolute"
+          top="auto"
+          bottom="8px"
+          right="16px"
+        />
+        <Image
+          src={LineWavesImage}
+          position="absolute"
+          top="8px"
+          left="0"
+          bottom="auto"
+          right="auto"
+        />
         <Box maxWidth="container.lg" mx="auto" px={4}>
           <Heading color="white" size="xl" mb={8} textAlign="center">
             Features

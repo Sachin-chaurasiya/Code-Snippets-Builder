@@ -1,14 +1,16 @@
 import { Box, Heading, Image, Text } from '@chakra-ui/react';
 import { FC } from 'react';
 import StatsImage from 'assets/svg/stats.svg';
+import SpikesImage from 'assets/svg/spikes.svg';
 import CountUp from 'react-countup';
 
 interface StatsCardProps {
   count: number;
   description: string;
+  index: number;
 }
 
-const StatsCard: FC<StatsCardProps> = ({ count, description }) => {
+const StatsCard: FC<StatsCardProps> = ({ count, description, index }) => {
   return (
     <Box
       css={{
@@ -28,7 +30,7 @@ const StatsCard: FC<StatsCardProps> = ({ count, description }) => {
         {description}
       </Text>
       <Image
-        src={StatsImage}
+        src={index % 2 === 0 ? StatsImage : SpikesImage}
         position="absolute"
         top="1rem"
         bottom="auto"
