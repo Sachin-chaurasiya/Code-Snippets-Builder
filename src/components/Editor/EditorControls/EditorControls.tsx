@@ -19,11 +19,7 @@ import {
 } from '@chakra-ui/react';
 import PlusIcon from '../../Common/Icons/PlusIcon';
 import MinusIcon from '../../Common/Icons/MinusIcon';
-import {
-  BORDER_RADIUS_LARGE,
-  BORDER_RADIUS_MEDIUM,
-  PRIMARY_GRADIENT_COLOR,
-} from 'constants/common';
+import { BORDER_RADIUS_LARGE, BORDER_RADIUS_MEDIUM } from 'constants/common';
 
 import { FcCheckmark } from 'react-icons/fc';
 
@@ -145,7 +141,7 @@ const EditorControls = ({ isUpdating }: { isUpdating: boolean }) => {
             max={state.maxZoom}
             onChange={handleZoomTo}>
             <SliderTrack>
-              <SliderFilledTrack bgGradient={PRIMARY_GRADIENT_COLOR} />
+              <SliderFilledTrack bg="brand.500" />
             </SliderTrack>
             <SliderThumb />
           </Slider>

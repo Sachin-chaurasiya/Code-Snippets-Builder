@@ -12,7 +12,7 @@ import React, { useState } from 'react';
 import { BiClipboard, BiExport } from 'react-icons/bi';
 import { BsImage } from 'react-icons/bs';
 import { ExportImageConfig } from './ExportButton.interface';
-import { PRIMARY_GRADIENT_COLOR } from 'constants/common';
+import { BRAND_BORDER_RADIUS } from 'constants/common';
 
 const ExportButton = () => {
   const toast = useToast();
@@ -121,9 +121,10 @@ const ExportButton = () => {
           id="export-button"
           as={Box}
           _hover={{
-            bgGradient: PRIMARY_GRADIENT_COLOR,
+            bg: 'brand.500',
           }}
-          bgGradient={PRIMARY_GRADIENT_COLOR}
+          bg="brand.500"
+          borderRadius={BRAND_BORDER_RADIUS}
           color="white"
           isLoading={isDownLoading}
           variant="solid"

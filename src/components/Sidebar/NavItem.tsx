@@ -2,7 +2,6 @@ import { Flex, Icon } from '@chakra-ui/react';
 import { useMemo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { NavItemProps } from './Sidebar.interface';
-import { PRIMARY_GRADIENT_COLOR } from 'constants/common';
 
 const NavItem = ({
   icon,
@@ -31,10 +30,10 @@ const NavItem = ({
         role="group"
         cursor="pointer"
         _hover={{
-          bgGradient: PRIMARY_GRADIENT_COLOR,
+          bg: 'brand.500',
           color: 'white',
         }}
-        bgGradient={isActiveItem ? PRIMARY_GRADIENT_COLOR : ''}
+        bg={isActiveItem ? 'brand.500' : ''}
         color={isActiveItem ? 'white' : ''}
         {...rest}>
         {icon && (

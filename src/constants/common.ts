@@ -80,3 +80,7 @@ export const FOLDER_COLLECTION_ID = 'folder_entity';
 export const BUCKET_ID = 'snippet_images';
 
 export const PAGE_SIZE = 10;
+
+export const BRAND_BORDER_RADIUS = '150px';
+
+export const BRAND_COLOR = '#5E71E4';
