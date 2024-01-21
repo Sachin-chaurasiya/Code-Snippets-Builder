@@ -35,7 +35,6 @@ const EditorSidebar: FC<EditorSidebarProps> = ({
       right={0}
       top={0}
       bottom={0}
-      shadow="md"
       px="6"
       overflow="auto">
       <Flex h="20" justifyContent="space-between" alignItems="center" gap={2}>

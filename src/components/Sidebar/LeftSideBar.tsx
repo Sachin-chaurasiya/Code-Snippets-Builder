@@ -55,7 +55,6 @@ const LeftSidebar: FC<BoxProps> = () => {
         w="60"
         pos="fixed"
         h="full"
-        shadow="md"
         overflow="auto"
         direction="column"
         justifyContent="space-between">

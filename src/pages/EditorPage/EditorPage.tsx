@@ -393,7 +393,7 @@ const EditorPage = () => {
 
   return (
     <Fragment>
-      <Box mr={80}>
+      <Box mr={80} p={4}>
         <ToolBar />
         <EditorControls isUpdating={isUpdating} />
         <Box
