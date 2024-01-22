@@ -1,5 +1,5 @@
-import { Box, Button, Flex, Text } from '@chakra-ui/react';
-import BrandLogo from 'components/Common/BrandLogo/BrandLogo';
+import { Box, Button, Flex, Image, Text } from '@chakra-ui/react';
+import CrashedErrorImage from 'assets/svg/crashed-error.svg';
 import { BRAND_BORDER_RADIUS } from 'constants/common';
 import React from 'react';
 import { FallbackProps } from 'react-error-boundary';
@@ -13,8 +13,13 @@ const ErrorFallback: React.FC<FallbackProps> = ({ resetErrorBoundary }) => {
       justifyContent="center"
       alignItems="center"
       minHeight="100vh">
-      <BrandLogo />
-      <Text mb={2}>Something went wrong!</Text>
+      <Image
+        src={CrashedErrorImage}
+        width={{ lg: '500px', md: '500px', sm: '400px', base: '350px' }}
+      />
+      <Text mb={2} fontSize="2xl">
+        Something went wrong!
+      </Text>
       <Button
         _hover={{
           bg: 'brand.500',
