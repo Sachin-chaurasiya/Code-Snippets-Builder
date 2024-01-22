@@ -28,6 +28,7 @@ const HomeCarousel: FC<BoxProps> = (props) => {
       <Slider {...settings}>
         {CAROUSEL_IMAGES.map((url, index) => (
           <Image
+            loading="eager"
             key={index}
             src={url}
             alt="Code Snippet Builder"

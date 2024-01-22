@@ -22,9 +22,7 @@ const StatsCard: FC<StatsCardProps> = ({ count, description, index }) => {
         boxShadow: '0 0 52px rgba(30,34,52,.1)',
       }}>
       <Heading as="h2" mb="1rem" color="brand.500">
-        <span className="counterup">
-          <CountUp end={count} suffix="+" />
-        </span>
+        <CountUp end={count} suffix="+" duration={5} />
       </Heading>
       <Text fontWeight={400} fontSize="1.125rem">
         {description}
