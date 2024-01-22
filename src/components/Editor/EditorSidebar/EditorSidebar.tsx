@@ -12,6 +12,7 @@ import { useAppProvider } from 'AppProvider';
 import { CUSTOM_NODES } from 'constants/editor';
 import { EditorSidebarProps } from 'interfaces/Editor.interface';
 import { MdOutlineTour } from 'react-icons/md';
+import { BRAND_BORDER_RADIUS, BRAND_COLOR } from 'constants/common';
 
 const EditorSidebar: FC<EditorSidebarProps> = ({
   background,
@@ -40,7 +41,13 @@ const EditorSidebar: FC<EditorSidebarProps> = ({
         <Text fontSize="xl" fontWeight="bold" {...COMMON_TEXT_PROPS}>
           Configure
         </Text>
-        <Button leftIcon={<MdOutlineTour />} onClick={onStartTour}>
+        <Button
+          _hover={{ bg: 'brand.500' }}
+          textColor="white"
+          bg={BRAND_COLOR}
+          borderRadius={BRAND_BORDER_RADIUS}
+          leftIcon={<MdOutlineTour />}
+          onClick={onStartTour}>
           Tour
         </Button>
       </Flex>

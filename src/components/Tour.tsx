@@ -19,7 +19,7 @@ const Tour: FC<Props> = ({ run, steps, callback }) => {
             backgroundColor: '#ffffff',
             textColor: '#2D3748',
             arrowColor: '#ffffff',
-            primaryColor: '#7256B1',
+            primaryColor: '#5E71E4',
           },
         }}
       />
