@@ -6,12 +6,7 @@ import {
   Stack,
   Text,
 } from '@chakra-ui/react';
-import {
-  GITHUB_CONTRIBUTORS,
-  GITHUB_LINK,
-  PERSONAL_WEBSITE,
-  TWITTER_LINK,
-} from 'constants/links';
+import { GITHUB_LINK, TWITTER_LINK } from 'constants/links';
 import { BsGithub, BsTwitter } from 'react-icons/bs';
 import BrandLogo from '../BrandLogo/BrandLogo';
 import { ROUTES } from 'constants/common';
@@ -71,14 +66,7 @@ const Footer = () => {
         </Box>
       </Grid>
       <Text textAlign="center">
-        Made with ❤️ by{' '}
-        <ChakraLink href={PERSONAL_WEBSITE} target="_blank">
-          Sachin Chaurasiya{' '}
-        </ChakraLink>
-        and{' '}
-        <ChakraLink href={GITHUB_CONTRIBUTORS} target="_blank">
-          Folks
-        </ChakraLink>{' '}
+        © {new Date().getFullYear()} SnippetBuilder. All rights reserved.
       </Text>
     </Box>
   );
