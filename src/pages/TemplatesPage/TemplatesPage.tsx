@@ -1,4 +1,5 @@
 import { Box } from '@chakra-ui/react';
+import { withVerifiedUser } from 'Hoc/withVerifiedUser';
 import SnippetTemplates from 'components/SnippetTemplates/SnippetTemplates';
 import { BORDER_RADIUS_LARGE } from 'constants/common';
 import React from 'react';
@@ -11,4 +12,4 @@ const TemplatesPage = () => {
   );
 };
 
-export default TemplatesPage;
+export default withVerifiedUser(TemplatesPage);
