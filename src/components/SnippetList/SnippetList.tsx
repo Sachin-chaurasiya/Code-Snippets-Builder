@@ -234,7 +234,7 @@ const SnippetList = () => {
           onClick={() => {
             createSnippet(DEFAULT_TEMPLATE);
           }}>
-          Add Snippet
+          Create Snippet
         </Button>
         <Sorting isLoading={isFetching} onChange={setSortingQuery} />
       </Stack>
