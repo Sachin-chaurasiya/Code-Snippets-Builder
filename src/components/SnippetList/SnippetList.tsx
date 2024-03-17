@@ -17,7 +17,6 @@ import {
 import { useAppProvider } from 'AppProvider';
 import { API_CLIENT } from 'api';
 import { AppwriteException, Models, Query } from 'appwrite';
-import AddButton from 'components/AddButton/AddButton';
 import SpinnerLoader from 'components/Common/Loader/SpinnerLoader';
 import Pagination from 'components/Pagination/Pagination';
 import Sorting, { SORTING_OPTIONS } from 'components/Sorting/Sorting';
@@ -219,14 +218,31 @@ const SnippetList = () => {
 
   return (
     <Box p={4} w="full" h="full">
-      <Stack direction="row" justifyContent="flex-end" mb={4}>
-        <Sorting onChange={setSortingQuery} />
+      <Stack
+        direction="row"
+        justifyContent="space-between"
+        mb={4}
+        px={isFetching ? 0 : 4}>
+        <Button
+          _hover={{ bg: 'brand.500' }}
+          borderRadius={BORDER_RADIUS_MEDIUM}
+          bg="brand.500"
+          color="white"
+          isLoading={isCreating}
+          isDisabled={isFetching}
+          size="sm"
+          onClick={() => {
+            createSnippet(DEFAULT_TEMPLATE);
+          }}>
+          Add Snippet
+        </Button>
+        <Sorting isLoading={isFetching} onChange={setSortingQuery} />
       </Stack>
 
       <Grid templateColumns="repeat(4, 1fr)" gap={4} id="your-snippets">
         {isFetching ? (
           <>
-            {map(Array.from(Array(10).keys()), (index) => (
+            {map(Array.from(Array(12).keys()), (index) => (
               <AspectRatio
                 key={index}
                 ratio={1}
@@ -319,13 +335,6 @@ const SnippetList = () => {
                 </Button>
               </AspectRatio>
             ))}
-            <AddButton
-              onClick={() => {
-                createSnippet(DEFAULT_TEMPLATE);
-              }}
-              isLoading={isCreating}
-              label="Add snippet"
-            />
           </>
         )}
       </Grid>

@@ -79,7 +79,7 @@ export const COLLECTION_ID = 'snippet_entity';
 export const FOLDER_COLLECTION_ID = 'folder_entity';
 export const BUCKET_ID = 'snippet_images';
 
-export const PAGE_SIZE = 10;
+export const PAGE_SIZE = 12;
 
 export const BRAND_BORDER_RADIUS = '150px';
 

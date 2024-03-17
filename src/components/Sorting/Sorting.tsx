@@ -14,6 +14,7 @@ import { BiChevronDown, BiChevronUp } from 'react-icons/bi';
 import { BsArrowDown, BsArrowUp } from 'react-icons/bs';
 
 interface SortingProps {
+  isLoading: boolean;
   onChange: (query: string) => void;
 }
 
@@ -27,7 +28,7 @@ export enum SORTING_ORDER {
   DESC = 'desc',
 }
 
-const Sorting: FC<SortingProps> = ({ onChange }) => {
+const Sorting: FC<SortingProps> = ({ onChange, isLoading }) => {
   const isMounted = useRef<boolean>(false);
   const [field, setField] = useState<string>(SORTING_OPTIONS[0]);
   const [order, setOrder] = useState<string>(SORTING_ORDER.DESC);
@@ -49,7 +50,7 @@ const Sorting: FC<SortingProps> = ({ onChange }) => {
   }, [field, order]);
 
   return (
-    <ButtonGroup size="sm" isAttached variant="outline">
+    <ButtonGroup size="sm" isAttached variant="outline" isDisabled={isLoading}>
       <Menu>
         {({ isOpen }) => (
           <>
