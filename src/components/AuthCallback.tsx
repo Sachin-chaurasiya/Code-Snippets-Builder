@@ -23,8 +23,8 @@ const AuthCallback = () => {
       // store the session
       Cookies.set(SESSION_KEY, session.userId, { expires: expiry });
 
-      // navigate to home
-      navigate(ROUTES.DASHBOARD);
+      // navigate to user profile page after successful login
+      navigate(ROUTES.PROFILE);
 
       // refresh the page
       navigate(0);

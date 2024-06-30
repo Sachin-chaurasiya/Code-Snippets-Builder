@@ -88,15 +88,15 @@ export const BRAND_COLOR = '#5E71E4';
 export const STATS = [
   {
     description: 'Snippets Created',
-    value: 1280,
+    value: 1400,
   },
   {
     description: 'Snippets Shared',
-    value: 840,
+    value: 950,
   },
   {
     description: 'Users Registered',
-    value: 640,
+    value: 700,
   },
   {
     description: 'Templates',
