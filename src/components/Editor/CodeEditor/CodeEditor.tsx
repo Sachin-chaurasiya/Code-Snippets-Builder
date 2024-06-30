@@ -50,42 +50,40 @@ const CodeEditor: FC<CodeEditorProps> = ({
   }, []);
 
   return (
-    <>
-      <Box
-        className="window"
-        style={{ background: `${CODE_EDITOR_BACKGROUND_COLOR}` }}>
-        <TitleBar
-          isSnippetNameVisible={isSnippetNameVisible}
-          snippetName={snippetName}
-          onUpdate={onUpdate}
-        />
+    <Box
+      className="window"
+      style={{ background: `${CODE_EDITOR_BACKGROUND_COLOR}` }}>
+      <TitleBar
+        isSnippetNameVisible={isSnippetNameVisible}
+        snippetName={snippetName}
+        onUpdate={onUpdate}
+      />
 
-        <CodeMirror
-          spellCheck={false}
-          id="code-editor"
-          style={{ fontSize: `${fontSize}px` }}
-          basicSetup={{
-            lineNumbers: false,
-            foldGutter: false,
-            autocompletion: false,
-            highlightActiveLine: false,
-            tabSize: 4,
-          }}
-          value={code}
-          height="100%"
-          theme={theme as ReactCodeMirrorProps['theme']}
-          extensions={extensions}
-          onChange={(code) => {
-            setCode(code);
-          }}
-          onBlur={() => {
-            if (!isEqual(snippetCode, code)) {
-              onUpdate({ code });
-            }
-          }}
-        />
-      </Box>
-    </>
+      <CodeMirror
+        spellCheck={false}
+        id="code-editor"
+        style={{ fontSize: `${fontSize}px` }}
+        basicSetup={{
+          lineNumbers: false,
+          foldGutter: false,
+          autocompletion: false,
+          highlightActiveLine: false,
+          tabSize: 4,
+        }}
+        value={code}
+        height="100%"
+        theme={theme as ReactCodeMirrorProps['theme']}
+        extensions={extensions}
+        onChange={(code) => {
+          setCode(code);
+        }}
+        onBlur={() => {
+          if (!isEqual(snippetCode, code)) {
+            onUpdate({ code });
+          }
+        }}
+      />
+    </Box>
   );
 };
 

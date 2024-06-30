@@ -34,7 +34,6 @@ import { every, find, map, toNumber } from 'lodash';
 import { NodeData } from 'interfaces/Editor.interface';
 import { useLocation, useNavigate } from 'react-router-dom';
 import {
-  BORDER_RADIUS_LARGE,
   COLLECTION_ID,
   DATABASE_ID,
   INITIAL_CONTEXT_DATA,
@@ -57,7 +56,7 @@ const EditorPage = () => {
   const { onUpdateSelectedNode } = useAppProvider();
 
   // snippet background states
-  const [hideWaterMark, setIsWaterMarkVisible] = useState<boolean>(
+  const [isWaterMarkVisible, setIsWaterMarkVisible] = useState<boolean>(
     INITIAL_CONTEXT_DATA.hideWaterMark
   );
   const [profileData, setProfileData] = useState<ProfileData>(
@@ -413,7 +412,6 @@ const EditorPage = () => {
             nodes={nodes}
             style={{
               background,
-              borderRadius: BORDER_RADIUS_LARGE,
             }}
             onInit={handleOnInit}
             onDrop={onDrop}
@@ -421,14 +419,14 @@ const EditorPage = () => {
             deleteKeyCode={['Delete', 'Backspace']}
             // this is to disable multi select
             multiSelectionKeyCode={null}>
-            <WatermarkPanel hideWaterMark={hideWaterMark} />
+            <WatermarkPanel hideWaterMark={isWaterMarkVisible} />
             <ProfilePanel profile={profileData} />
           </ReactFlow>
         </Box>
       </Box>
       <EditorSidebar
         background={background}
-        hideWaterMark={hideWaterMark}
+        hideWaterMark={isWaterMarkVisible}
         profile={profileData}
         onUpdateBackground={handleUpdateBackground}
         onUpdateProfileData={handleUpdateProfileData}

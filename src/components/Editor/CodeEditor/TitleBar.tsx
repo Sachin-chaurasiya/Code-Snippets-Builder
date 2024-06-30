@@ -50,6 +50,9 @@ const TitleBar = ({
       position="relative"
       height="45px"
       alignItems="center"
+      borderRadius="10px"
+      borderBottomLeftRadius="0px"
+      borderBottomRightRadius="0px"
       style={{ background: 'rgba(255, 255, 255, 0.06)' }}>
       <EditorTitleIcon />
       {showFileName ? (
