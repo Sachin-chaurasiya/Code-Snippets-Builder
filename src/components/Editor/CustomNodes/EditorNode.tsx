@@ -26,7 +26,8 @@ const EditorNode: FC<NodeProps<NodeData>> = ({ selected, data, id }) => {
   return (
     <Box
       border={selected ? '1px' : ''}
-      borderColor={selected ? HANDLE_COLOR : ''}>
+      borderColor={selected ? HANDLE_COLOR : ''}
+      borderRadius="10px">
       <CodeEditor
         isSnippetNameVisible={Boolean(isSnippetNameVisible)}
         snippetName={snippetName}

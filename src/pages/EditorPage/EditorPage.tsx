@@ -24,8 +24,10 @@ import {
   getDragHandleByNodeType,
   getInitialNodeDataByType,
   getParsedValue,
+  getSnippetSnapshot,
   getStringifiedValue,
   getUniqueId,
+  isAllowedToUpdate,
 } from 'utils/EditorUtils';
 
 import WatermarkPanel from 'components/Editor/Panels/WatermarkPanel';
@@ -34,7 +36,6 @@ import { every, find, map, toNumber } from 'lodash';
 import { NodeData } from 'interfaces/Editor.interface';
 import { useLocation, useNavigate } from 'react-router-dom';
 import {
-  BORDER_RADIUS_LARGE,
   COLLECTION_ID,
   DATABASE_ID,
   INITIAL_CONTEXT_DATA,
@@ -48,7 +49,6 @@ import {
   Snippet,
   SnippetData,
 } from 'interfaces/AppProvider.interface';
-import { toPng } from 'html-to-image';
 
 const EditorPage = () => {
   const toast = useToast();
@@ -57,7 +57,7 @@ const EditorPage = () => {
   const { onUpdateSelectedNode } = useAppProvider();
 
   // snippet background states
-  const [hideWaterMark, setIsWaterMarkVisible] = useState<boolean>(
+  const [isWaterMarkVisible, setIsWaterMarkVisible] = useState<boolean>(
     INITIAL_CONTEXT_DATA.hideWaterMark
   );
   const [profileData, setProfileData] = useState<ProfileData>(
@@ -132,40 +132,25 @@ const EditorPage = () => {
   };
 
   const handleUpdateSnippetSnapshot = async (snippetId: string) => {
-    const node = document.querySelector('.react-flow');
-    if (node) {
-      try {
-        const imageBase64Url = await toPng(node as HTMLElement, {
-          filter: (node) => {
-            // we don't want to add the minimap and the controls to the image
-            if (
-              node?.classList?.contains('react-flow__minimap') ||
-              node?.classList?.contains('react-flow__controls')
-            ) {
-              return false;
-            }
+    const imageBase64Url = await getSnippetSnapshot();
+    if (!imageBase64Url) return;
 
-            return true;
-          },
-          quality: 1,
-        });
-
-        await API_CLIENT.database.updateDocument(
-          DATABASE_ID,
-          COLLECTION_ID,
-          snippetId,
-          { cover_image_base64_url: imageBase64Url }
-        );
-      } catch (error) {
-        const exception = error as AppwriteException;
-        toast({
-          description: exception.message,
-          status: 'error',
-          duration: 9000,
-          isClosable: true,
-          position: 'top-right',
-        });
-      }
+    try {
+      await API_CLIENT.database.updateDocument(
+        DATABASE_ID,
+        COLLECTION_ID,
+        snippetId,
+        { cover_image_base64_url: imageBase64Url }
+      );
+    } catch (error) {
+      const exception = error as AppwriteException;
+      toast({
+        description: exception.message,
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+        position: 'top-right',
+      });
     }
   };
 
@@ -180,7 +165,10 @@ const EditorPage = () => {
       handleSnippetDataInit(data);
       setIsLoading(false);
 
-      handleUpdateSnippetSnapshot(data.$id);
+      // if cover image is not available then update the cover image on initialization
+      if (!data.cover_image_base64_url) {
+        handleUpdateSnippetSnapshot(data.$id);
+      }
     } catch (error) {
       const exception = error as AppwriteException;
       toast({
@@ -195,14 +183,23 @@ const EditorPage = () => {
   };
 
   const updateSnippetData = async (updatedData: Partial<Snippet>) => {
-    if (snippetData?.$id) {
+    const imageBase64Url = await getSnippetSnapshot();
+    /**
+     * only update the snippet data if updated data is different from the existing data
+     * and snapshot image base64 url is available
+     */
+    if (
+      snippetData?.$id &&
+      isAllowedToUpdate(snippetData, updatedData) &&
+      imageBase64Url
+    ) {
       try {
         setIsUpdating(true);
         const data = await API_CLIENT.database.updateDocument<SnippetData>(
           DATABASE_ID,
           COLLECTION_ID,
           snippetData.$id,
-          updatedData
+          { ...updatedData, cover_image_base64_url: imageBase64Url }
         );
 
         setSnippetData(data);
@@ -374,18 +371,17 @@ const EditorPage = () => {
       }
     };
 
-    window.addEventListener('beforeunload', handleBeforeUnload);
+    // only add event listener if content is unsaved
+    if (isNeedUpdate) {
+      window.addEventListener('beforeunload', handleBeforeUnload);
+    } else {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    }
 
     return () => {
       window.removeEventListener('beforeunload', handleBeforeUnload);
     };
   }, [isNeedUpdate]);
-
-  useEffect(() => {
-    if (!isNeedUpdate && snippetData) {
-      handleUpdateSnippetSnapshot(snippetData.$id);
-    }
-  }, [isNeedUpdate, snippetData]);
 
   if (isLoading) {
     return <Loader />;
@@ -413,7 +409,6 @@ const EditorPage = () => {
             nodes={nodes}
             style={{
               background,
-              borderRadius: BORDER_RADIUS_LARGE,
             }}
             onInit={handleOnInit}
             onDrop={onDrop}
@@ -421,14 +416,14 @@ const EditorPage = () => {
             deleteKeyCode={['Delete', 'Backspace']}
             // this is to disable multi select
             multiSelectionKeyCode={null}>
-            <WatermarkPanel hideWaterMark={hideWaterMark} />
+            <WatermarkPanel hideWaterMark={isWaterMarkVisible} />
             <ProfilePanel profile={profileData} />
           </ReactFlow>
         </Box>
       </Box>
       <EditorSidebar
         background={background}
-        hideWaterMark={hideWaterMark}
+        hideWaterMark={isWaterMarkVisible}
         profile={profileData}
         onUpdateBackground={handleUpdateBackground}
         onUpdateProfileData={handleUpdateProfileData}
