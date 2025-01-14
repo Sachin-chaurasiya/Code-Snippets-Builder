@@ -18,6 +18,11 @@ const ExportButton = () => {
   const toast = useToast();
   const [isDownLoading, setIsDownLoading] = useState<boolean>(false);
 
+  /**
+   * Downloads an image from a data URL
+   * @param dataUrl The data URL of the image to download
+   * @param extension The extension of the image to download
+   */
   const downloadImage = (dataUrl: string, extension: string) => {
     const a = document.createElement('a');
 
@@ -25,6 +30,7 @@ const ExportButton = () => {
     a.setAttribute('href', dataUrl);
     a.click();
   };
+
   const EXPORT_IMAGE_CONFIG: ExportImageConfig = {
     node: document.querySelector('.react-flow') as HTMLElement,
     options: {
@@ -40,6 +46,9 @@ const ExportButton = () => {
         return true;
       },
       quality: 1,
+      skipAutoScale: true,
+      // for better quality, we set the pixelRatio to 6
+      pixelRatio: 6,
     },
   };
 
