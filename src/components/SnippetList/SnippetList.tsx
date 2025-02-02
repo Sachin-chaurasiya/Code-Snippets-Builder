@@ -19,6 +19,7 @@ import { useAppProvider } from 'AppProvider';
 import { API_CLIENT } from 'api';
 import { AppwriteException, Models, Query } from 'appwrite';
 import SpinnerLoader from 'components/Common/Loader/SpinnerLoader';
+import NoSnippets from 'components/NoSnippets/NoSnippets';
 import Pagination from 'components/Pagination/Pagination';
 import Sorting, { SORTING_OPTIONS } from 'components/Sorting/Sorting';
 import {
@@ -38,7 +39,6 @@ import {
   SnippetData,
 } from 'interfaces/AppProvider.interface';
 import { map } from 'lodash';
-import NoSnippetsPage from 'pages/NoSnippetsPage/NoSnippetsPage';
 import React, { useEffect, useState } from 'react';
 import { MdDelete } from 'react-icons/md';
 import { RxCopy } from 'react-icons/rx';
@@ -267,7 +267,7 @@ const SnippetList = () => {
           <>
             {snippets?.total === 0 ? (
               <GridItem colSpan={4}>
-                <NoSnippetsPage />
+                <NoSnippets />
               </GridItem>
             ) : (
               map(snippets?.documents, (snippet) => (

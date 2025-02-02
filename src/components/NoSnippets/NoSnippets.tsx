@@ -2,12 +2,12 @@ import React from 'react';
 import { Text, VStack, Icon } from '@chakra-ui/react';
 import { FiFilePlus } from 'react-icons/fi';
 
-const NoSnippetsPage: React.FC = () => {
+const NoSnippets: React.FC = () => {
   return (
     <VStack spacing={6} minHeight="100vh" p={4}>
       <Icon as={FiFilePlus} boxSize={24} color="gray.400" />
       <Text fontSize="xl" fontWeight="semibold">
-        Oops! Looks like you&apos;re starting with a clean slate.
+        Looks like you&apos;re starting with a clean slate.
       </Text>
       <Text fontSize="lg" textAlign="center">
         No snippets have been created yet. Start by adding your first snippet
@@ -17,4 +17,4 @@ const NoSnippetsPage: React.FC = () => {
   );
 };
 
-export default NoSnippetsPage;
+export default NoSnippets;
