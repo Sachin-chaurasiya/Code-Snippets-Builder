@@ -13,11 +13,13 @@ import {
   Skeleton,
   Stack,
   useToast,
+  GridItem,
 } from '@chakra-ui/react';
 import { useAppProvider } from 'AppProvider';
 import { API_CLIENT } from 'api';
 import { AppwriteException, Models, Query } from 'appwrite';
 import SpinnerLoader from 'components/Common/Loader/SpinnerLoader';
+import NoSnippets from 'components/NoSnippets/NoSnippets';
 import Pagination from 'components/Pagination/Pagination';
 import Sorting, { SORTING_OPTIONS } from 'components/Sorting/Sorting';
 import {
@@ -263,78 +265,84 @@ const SnippetList = () => {
           </>
         ) : (
           <>
-            {map(snippets?.documents, (snippet) => (
-              <AspectRatio
-                as={motion.div}
-                whileHover={{
-                  scale: 1.1,
-                }}
-                maxHeight="200px"
-                maxWidth="300px"
-                key={snippet.$id}
-                ratio={1}
-                borderRadius={BORDER_RADIUS_LARGE}>
-                <Button
-                  role="group"
-                  position="relative"
-                  bg="transparent"
-                  _hover={{ bg: 'transparent' }}
-                  onClick={() => {
-                    handleNavigate(snippet.$id);
-                  }}>
-                  <Stack
-                    zIndex={5}
-                    _groupHover={{ display: 'flex' }}
-                    position="absolute"
-                    direction="row"
-                    display={'none'}>
-                    <Button
-                      variant="ghost"
-                      color="white"
-                      _hover={{ color: 'gray.600', bg: 'gray.100' }}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        setDeleteId(snippet.$id);
-                      }}>
-                      <MdDelete />
-                    </Button>
-                    <Button
-                      isLoading={isDuplicating}
-                      variant="ghost"
-                      color="white"
-                      _hover={{ color: 'gray.600', bg: 'gray.100' }}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        duplicateSnippet({
-                          background: snippet.background,
-                          hideWaterMark: snippet.hideWaterMark,
-                          profileInfo: snippet.profileInfo,
-                          nodes: snippet.nodes,
-                          creator: snippet.creator,
-                          snapshot: snippet.snapshot,
-                          cover_image_base64_url:
-                            snippet.cover_image_base64_url,
-                        });
-                      }}>
-                      <RxCopy />
-                    </Button>
-                  </Stack>
-                  <Image
-                    _groupHover={{ opacity: 0.8 }}
-                    borderRadius={BORDER_RADIUS_MEDIUM}
-                    src={
-                      snippet?.cover_image_base64_url ??
-                      API_CLIENT.storage.getFilePreview(
-                        BUCKET_ID,
-                        snippet.snapshot
-                      ).href
-                    }
-                  />
-                </Button>
-              </AspectRatio>
-            ))}
+            {snippets?.total === 0 ? (
+              <GridItem colSpan={4}>
+                <NoSnippets />
+              </GridItem>
+            ) : (
+              map(snippets?.documents, (snippet) => (
+                <AspectRatio
+                  as={motion.div}
+                  whileHover={{
+                    scale: 1.1,
+                  }}
+                  maxHeight="200px"
+                  maxWidth="300px"
+                  key={snippet.$id}
+                  ratio={1}
+                  borderRadius={BORDER_RADIUS_LARGE}>
+                  <Button
+                    role="group"
+                    position="relative"
+                    bg="transparent"
+                    _hover={{ bg: 'transparent' }}
+                    onClick={() => {
+                      handleNavigate(snippet.$id);
+                    }}>
+                    <Stack
+                      zIndex={5}
+                      _groupHover={{ display: 'flex' }}
+                      position="absolute"
+                      direction="row"
+                      display={'none'}>
+                      <Button
+                        variant="ghost"
+                        color="white"
+                        _hover={{ color: 'gray.600', bg: 'gray.100' }}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          setDeleteId(snippet.$id);
+                        }}>
+                        <MdDelete />
+                      </Button>
+                      <Button
+                        isLoading={isDuplicating}
+                        variant="ghost"
+                        color="white"
+                        _hover={{ color: 'gray.600', bg: 'gray.100' }}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          duplicateSnippet({
+                            background: snippet.background,
+                            hideWaterMark: snippet.hideWaterMark,
+                            profileInfo: snippet.profileInfo,
+                            nodes: snippet.nodes,
+                            creator: snippet.creator,
+                            snapshot: snippet.snapshot,
+                            cover_image_base64_url:
+                              snippet.cover_image_base64_url,
+                          });
+                        }}>
+                        <RxCopy />
+                      </Button>
+                    </Stack>
+                    <Image
+                      _groupHover={{ opacity: 0.8 }}
+                      borderRadius={BORDER_RADIUS_MEDIUM}
+                      src={
+                        snippet?.cover_image_base64_url ??
+                        API_CLIENT.storage.getFilePreview(
+                          BUCKET_ID,
+                          snippet.snapshot
+                        ).href
+                      }
+                    />
+                  </Button>
+                </AspectRatio>
+              ))
+            )}
           </>
         )}
       </Grid>
