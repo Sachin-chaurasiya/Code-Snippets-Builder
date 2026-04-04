@@ -228,7 +228,52 @@ export const THEME_OPTIONS = ['dark', 'light']
   .filter((item) => typeof themes[item as keyof typeof themes] !== 'function')
   .filter((item) => !/^(defaultSettings)/.test(item as keyof typeof themes));
 
-export const LANGUAGE_OPTIONS = sortBy(languages);
+// Curated language list with readable labels
+const LANGUAGE_MAP: Record<string, string> = {
+  bash: 'Bash',
+  c: 'C',
+  'c++': 'C++',
+  cjs: 'CommonJS',
+  clj: 'Clojure',
+  cmake: 'CMake',
+  css: 'CSS',
+  dart: 'Dart',
+  elm: 'Elm',
+  erl: 'Erlang',
+  go: 'Go',
+  html: 'HTML',
+  java: 'Java',
+  js: 'JavaScript',
+  json: 'JSON',
+  jsx: 'JSX',
+  less: 'Less',
+  lua: 'Lua',
+  markdown: 'Markdown',
+  mjs: 'ES Module',
+  php: 'PHP',
+  proto: 'Protobuf',
+  python: 'Python',
+  r: 'R',
+  sass: 'Sass',
+  scala: 'Scala',
+  scss: 'SCSS',
+  sql: 'SQL',
+  svelte: 'Svelte',
+  swift: 'Swift',
+  toml: 'TOML',
+  tsx: 'TSX',
+  vue: 'Vue',
+  xml: 'XML',
+  yaml: 'YAML',
+};
+
+// Filter to only languages that exist in the CodeMirror langs object
+const availableLangs = new Set<string>(languages);
+export const LANGUAGE_OPTIONS = sortBy(
+  Object.keys(LANGUAGE_MAP).filter((key) => availableLangs.has(key))
+);
+
+export const LANGUAGE_LABELS: Record<string, string> = LANGUAGE_MAP;
 
 export const TOOL_BAR_ITEMS: ToolBarItemsProps[] = [
   {

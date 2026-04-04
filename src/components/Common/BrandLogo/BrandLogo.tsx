@@ -31,17 +31,23 @@ const BrandLogo: FC<BrandLogoProps> = ({
     }
   }, [logoSize]);
 
+  const defaultFontSize = logoSize === 'x-small' ? 'md' : 'xl';
+
   return (
-    <Flex h="20" alignItems="center" gap={2} {...rest}>
+    <Flex
+      h={logoSize === 'x-small' ? '12' : '20'}
+      alignItems="center"
+      gap={1}
+      {...rest}>
       <Image
         boxSize={boxSize}
         src={logoType === 'dark' ? LogoImage : LightLogoImage}
         objectFit="contain"
       />
       <Text
-        ml="-16px"
-        mb="4px"
-        fontSize={textFontSize ?? 'xl'}
+        ml={logoSize === 'x-small' ? '-4px' : '-12px'}
+        mb="2px"
+        fontSize={textFontSize ?? defaultFontSize}
         fontWeight={textFontWeight ?? 'bold'}
         color={textColor ?? 'brand.500'}>
         <span>Snippet</span>

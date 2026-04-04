@@ -1,6 +1,6 @@
 export const Server = {
-  endpoint: process.env.REACT_APP_ENDPOINT,
-  project: process.env.REACT_APP_PROJECT_ID,
-  collectionID: process.env.REACT_APP_COLLECTION_ID,
-  databaseID: process.env.REACT_APP_DATABASE_ID,
+  endpoint: import.meta.env.VITE_ENDPOINT,
+  project: import.meta.env.VITE_PROJECT_ID,
+  collectionID: import.meta.env.VITE_COLLECTION_ID,
+  databaseID: import.meta.env.VITE_DATABASE_ID,
 };

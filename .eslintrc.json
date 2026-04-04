@@ -32,6 +32,7 @@
     "@typescript-eslint/no-floating-promises": "off",
     "no-console": "error"
   },
+  "ignorePatterns": ["vite.config.ts"],
   "settings": {
     "import/resolver": {
       "typescript": {}

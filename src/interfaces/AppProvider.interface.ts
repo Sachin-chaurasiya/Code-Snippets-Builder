@@ -32,6 +32,9 @@ export interface AppContextProps {
   onUpdateSession: (session: string | undefined) => void;
   onStartTour: () => void;
   handleUpdateLoggedInUser: (payload: Models.User<Models.Preferences>) => void;
+
+  isSidebarCollapsed: boolean;
+  onToggleSidebar: () => void;
 }
 
 export interface Snippet {

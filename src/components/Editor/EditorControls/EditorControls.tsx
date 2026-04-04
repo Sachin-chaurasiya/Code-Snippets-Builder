@@ -8,20 +8,19 @@ import {
   Box,
   Button,
   Flex,
+  HStack,
   Slider,
   SliderFilledTrack,
   SliderThumb,
   SliderTrack,
   Spinner,
-  Stack,
   Text,
   Tooltip,
 } from '@chakra-ui/react';
 import PlusIcon from '../../Common/Icons/PlusIcon';
 import MinusIcon from '../../Common/Icons/MinusIcon';
-import { BORDER_RADIUS_LARGE, BORDER_RADIUS_MEDIUM } from 'constants/common';
 
-import { FcCheckmark } from 'react-icons/fc';
+import { FiCheck } from 'react-icons/fi';
 
 const selector = (s: ReactFlowState) => ({
   isInteractive: s.nodesDraggable || s.nodesConnectable || s.elementsSelectable,
@@ -78,86 +77,100 @@ const EditorControls = ({ isUpdating }: { isUpdating: boolean }) => {
   }, []);
 
   return (
-    <Box as={Flex} mb={4} justifyContent="space-between">
-      <Flex gap={2} flex={1}>
-        <Tooltip label="Fit view" borderRadius={BORDER_RADIUS_MEDIUM}>
+    <Flex mb={4} justifyContent="space-between" align="center">
+      <HStack spacing={2}>
+        <Tooltip label="Fit view" borderRadius="lg" fontSize="xs">
           <Button
-            shadow="md"
-            _hover={{ background: 'white' }}
+            variant="ghost"
+            size="sm"
+            borderRadius="lg"
             bg="white"
+            border="1px solid"
+            borderColor="gray.100"
             onClick={onFitViewHandler}
             aria-label="fit view">
             <FitViewIcon />
           </Button>
         </Tooltip>
 
-        <Tooltip
-          label="Toggle interactivity"
-          borderRadius={BORDER_RADIUS_MEDIUM}>
+        <Tooltip label="Toggle interactivity" borderRadius="lg" fontSize="xs">
           <Button
-            shadow="md"
-            _hover={{ background: 'white' }}
+            variant="ghost"
+            size="sm"
+            borderRadius="lg"
             bg="white"
+            border="1px solid"
+            borderColor="gray.100"
             onClick={onToggleInteractivity}
             aria-label="toggle interactivity">
             {isInteractive ? <UnlockIcon /> : <LockIcon />}
           </Button>
         </Tooltip>
-      </Flex>
-      <Stack w="full" flex={0.5} direction="row" spacing={4}>
-        <Stack direction="row" spacing={2} align="center">
+      </HStack>
+
+      <HStack spacing={4}>
+        <HStack spacing={2}>
           {isUpdating ? (
             <>
-              <Spinner size="sm" />
-              <Text>Saving</Text>
+              <Spinner size="xs" color="gray.400" />
+              <Text fontSize="xs" color="gray.400">
+                Saving
+              </Text>
             </>
           ) : (
             <>
-              <FcCheckmark />
-              <Text>Saved</Text>
+              <Box color="green.500">
+                <FiCheck size={14} />
+              </Box>
+              <Text fontSize="xs" color="gray.500">
+                Saved
+              </Text>
             </>
           )}
-        </Stack>
+        </HStack>
         <Flex
-          flex={1}
           bg="white"
-          justifyContent="space-between"
-          borderRadius={BORDER_RADIUS_LARGE}
-          shadow="md">
-          <Tooltip label="Zoom out" borderRadius={BORDER_RADIUS_MEDIUM}>
+          align="center"
+          borderRadius="lg"
+          border="1px solid"
+          borderColor="gray.100"
+          px={1}>
+          <Tooltip label="Zoom out" borderRadius="lg" fontSize="xs">
             <Button
-              _hover={{ background: 'transparent' }}
+              variant="ghost"
+              size="xs"
               onClick={onZoomOutHandler}
               aria-label="zoom out"
-              disabled={minZoomReached}
-              variant="ghost">
+              disabled={minZoomReached}>
               <MinusIcon />
             </Button>
           </Tooltip>
-          <Slider
-            step={0.1}
-            value={currentZoom}
-            min={state.minZoom}
-            max={state.maxZoom}
-            onChange={handleZoomTo}>
-            <SliderTrack>
-              <SliderFilledTrack bg="brand.500" />
-            </SliderTrack>
-            <SliderThumb />
-          </Slider>
-          <Tooltip label="Zoom in" borderRadius={BORDER_RADIUS_MEDIUM}>
+          <Box w="120px" px={2}>
+            <Slider
+              step={0.1}
+              value={currentZoom}
+              min={state.minZoom}
+              max={state.maxZoom}
+              onChange={handleZoomTo}>
+              <SliderTrack h="4px" borderRadius="full">
+                <SliderFilledTrack bg="brand.500" />
+              </SliderTrack>
+              <SliderThumb boxSize={3} />
+            </Slider>
+          </Box>
+          <Tooltip label="Zoom in" borderRadius="lg" fontSize="xs">
             <Button
-              _hover={{ background: 'transparent' }}
+              variant="ghost"
+              size="xs"
               onClick={onZoomInHandler}
               aria-label="zoom in"
-              disabled={maxZoomReached}
-              variant="ghost">
+              disabled={maxZoomReached}>
               <PlusIcon />
             </Button>
           </Tooltip>
         </Flex>
-      </Stack>
-    </Box>
+      </HStack>
+    </Flex>
   );
 };
 

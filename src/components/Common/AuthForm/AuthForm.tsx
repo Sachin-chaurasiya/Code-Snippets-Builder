@@ -1,5 +1,4 @@
 import {
-  AbsoluteCenter,
   Alert,
   AlertDescription,
   AlertIcon,
@@ -16,13 +15,11 @@ import {
   Text,
   useToast,
   useDisclosure,
+  VStack,
+  AbsoluteCenter,
+  Icon,
 } from '@chakra-ui/react';
-import {
-  BORDER_RADIUS_MEDIUM,
-  BRAND_BORDER_RADIUS,
-  ROUTES,
-  SESSION_KEY,
-} from 'constants/common';
+import { ROUTES, SESSION_KEY } from 'constants/common';
 import React, { ChangeEvent, FC, useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import GoogleIcon from '../Icons/GoogleIcon';
@@ -41,6 +38,7 @@ import Cookies from 'js-cookie';
 import { validateForm } from 'utils/FormUtils';
 import { useAppProvider } from 'AppProvider';
 import PasswordInput from '../PasswordInput';
+import { FiCode } from 'react-icons/fi';
 
 const AuthForm: FC<AuthFormProps> = ({ formType }) => {
   const { onUpdateSession } = useAppProvider();
@@ -68,10 +66,6 @@ const AuthForm: FC<AuthFormProps> = ({ formType }) => {
       : API_CLIENT.emailSignUp;
   }, [formType]);
 
-  /**
-   * handle the form input changes
-   * @param e ChangeEvent<HTMLInputElement>
-   */
   const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
@@ -83,21 +77,15 @@ const AuthForm: FC<AuthFormProps> = ({ formType }) => {
     }));
   };
 
-  /**
-   * handle the form submit
-   */
   const handleSubmit = async () => {
-    // reset the api error first
     setFormAPIError('');
 
-    // validate the form data
     const { isValid, errorObj } = validateForm<AuthFormData, AuthFormError>(
       formData
     );
 
     setFormError(errorObj);
 
-    // make api call if form data is valid
     if (isValid) {
       try {
         setIsSubmitting(true);
@@ -106,7 +94,7 @@ const AuthForm: FC<AuthFormProps> = ({ formType }) => {
         if (formType === 'signup') {
           navigate(ROUTES.SIGN_IN, { replace: true });
           toast({
-            title: 'Singed Up',
+            title: 'Account Created',
             description: 'Account created successfully!',
             status: 'success',
             duration: 9000,
@@ -117,8 +105,8 @@ const AuthForm: FC<AuthFormProps> = ({ formType }) => {
           const session = await API_CLIENT.getLoggedInUserSession();
 
           toast({
-            title: 'Singed In',
-            description: 'Logged In successfully!',
+            title: 'Welcome Back',
+            description: 'Logged in successfully!',
             status: 'success',
             duration: 9000,
             isClosable: true,
@@ -127,16 +115,9 @@ const AuthForm: FC<AuthFormProps> = ({ formType }) => {
 
           const expiry = getDateByDateString(session.expire);
 
-          // store the session
           Cookies.set(SESSION_KEY, session.userId, { expires: expiry });
-
-          // update the session
           onUpdateSession(session.userId);
-
-          // navigate to home
           navigate(ROUTES.HOME, { replace: true });
-
-          // reload the page
           navigate(0);
         }
       } catch (error) {
@@ -158,125 +139,200 @@ const AuthForm: FC<AuthFormProps> = ({ formType }) => {
   };
 
   return (
-    <Flex
-      minH="100vh"
-      paddingTop="100px"
-      align="center"
-      justify="center"
-      bg="white">
-      <Stack
-        border="1px solid #dce1f9"
-        spacing={8}
+    <Flex minH="100vh">
+      {/* Left side - branding */}
+      <Flex
+        display={{ base: 'none', lg: 'flex' }}
+        flex={1}
+        bgGradient="linear(135deg, brand.600, brand.500, brand.400)"
+        align="center"
+        justify="center"
+        position="relative"
+        overflow="hidden">
+        {/* Decorative elements */}
+        <Box
+          position="absolute"
+          top="15%"
+          left="10%"
+          w="200px"
+          h="200px"
+          bg="whiteAlpha.100"
+          borderRadius="full"
+        />
+        <Box
+          position="absolute"
+          bottom="20%"
+          right="15%"
+          w="150px"
+          h="150px"
+          bg="whiteAlpha.100"
+          borderRadius="full"
+        />
+
+        <VStack spacing={6} px={12} position="relative" maxW="480px">
+          <Flex
+            w={16}
+            h={16}
+            borderRadius="2xl"
+            bg="whiteAlpha.200"
+            align="center"
+            justify="center">
+            <Icon as={FiCode} fontSize="2xl" color="white" />
+          </Flex>
+          <Heading color="white" size="xl" textAlign="center" lineHeight="1.2">
+            Build stunning code snippets in seconds
+          </Heading>
+          <Text
+            color="whiteAlpha.800"
+            textAlign="center"
+            fontSize="md"
+            lineHeight="tall">
+            Drag and drop elements, customize themes, and export beautiful code
+            presentations for your blog, docs, or social media.
+          </Text>
+        </VStack>
+      </Flex>
+
+      {/* Right side - form */}
+      <Flex
+        flex={1}
+        align="center"
+        justify="center"
         bg="white"
-        px={4}
-        py={6}
-        flex={{ lg: 0.35, md: 0.5, sm: 0.8 }}
-        shadow="md"
-        borderRadius={BORDER_RADIUS_MEDIUM}>
-        <Stack spacing={4}>
-          <Box alignSelf="center">
-            <Heading pb={2} as="h3" size="lg" textAlign="center">
-              {formType === 'signin' ? 'Sign In' : 'Sign Up'}
+        px={{ base: 6, md: 12 }}
+        pt={{ base: '100px', lg: 0 }}>
+        <Box w="full" maxW="400px">
+          <VStack spacing={2} align="start" mb={8}>
+            <Heading size="lg" color="gray.900">
+              {formType === 'signin' ? 'Welcome back' : 'Create an account'}
             </Heading>
-            <Text pb={4}>
+            <Text color="gray.500" fontSize="sm">
               {formType === 'signin' ? (
                 <>
-                  Don&apos;t have an account ?{' '}
+                  Don&apos;t have an account?{' '}
                   <Link
                     to={ROUTES.SIGN_UP}
-                    style={{ textDecoration: 'underline' }}>
-                    Sign Up
+                    style={{ color: '#5E71E4', fontWeight: '600' }}>
+                    Sign up
                   </Link>
                 </>
               ) : (
                 <>
-                  Already have an account ?{' '}
+                  Already have an account?{' '}
                   <Link
                     to={ROUTES.SIGN_IN}
-                    style={{ textDecoration: 'underline' }}>
-                    SignIn
+                    style={{ color: '#5E71E4', fontWeight: '600' }}>
+                    Sign in
                   </Link>
                 </>
               )}
             </Text>
-          </Box>
+          </VStack>
 
-          {isOpen && formAPIError ? (
-            <Alert status="error" variant="left-accent">
-              <AlertIcon />
-              <AlertDescription>{formAPIError}</AlertDescription>
-            </Alert>
-          ) : null}
+          <Stack spacing={5}>
+            {isOpen && formAPIError ? (
+              <Alert
+                status="error"
+                variant="left-accent"
+                borderRadius="lg"
+                fontSize="sm">
+                <AlertIcon />
+                <AlertDescription>{formAPIError}</AlertDescription>
+              </Alert>
+            ) : null}
 
-          <FormControl
-            id="email"
-            isInvalid={Boolean(formError.email)}
-            isRequired>
-            <FormLabel>Email address</FormLabel>
-            <Input
-              name="email"
-              type="email"
-              value={formData.email}
-              onChange={handleOnChange}
-              placeholder="Enter your email"
-            />
-            {formError.email && (
-              <FormErrorMessage>{formError.email}</FormErrorMessage>
-            )}
-          </FormControl>
-          <FormControl
-            id="password"
-            isInvalid={Boolean(formError.password)}
-            isRequired>
-            <FormLabel>Password</FormLabel>
-            <PasswordInput
-              value={formData.password}
-              onChange={handleOnChange}
-            />
-            {formError.password && (
-              <FormErrorMessage>{formError.password}</FormErrorMessage>
-            )}
-          </FormControl>
-          <Button
-            _hover={{
-              bg: 'brand.500',
-            }}
-            bg="brand.500"
-            borderRadius={BRAND_BORDER_RADIUS}
-            color="white"
-            onClick={handleSubmit}
-            isLoading={isSubmitting}>
-            {formType === 'signin' ? 'Sign In' : 'Sign Up'}
-          </Button>
-          <Box position="relative" py={4}>
-            <Divider />
-            <AbsoluteCenter bg="white" px="4">
-              OR
-            </AbsoluteCenter>
-          </Box>
-          {/* Social Auth provider : google, github */}
-          <Button
-            _hover={{ bg: 'white' }}
-            leftIcon={<GoogleIcon />}
-            bg="white"
-            border="1px"
-            borderColor={'gray.400'}
-            borderRadius={BRAND_BORDER_RADIUS}
-            onClick={API_CLIENT.googleSignIn}>
-            Continue with Google
-          </Button>
-          <Button
-            _hover={{ bg: 'white' }}
-            leftIcon={<GitHubIcon />}
-            bg="white"
-            border="1px"
-            borderColor={'gray.400'}
-            borderRadius={BRAND_BORDER_RADIUS}
-            onClick={API_CLIENT.githubSignIn}>
-            Continue with GitHub
-          </Button>
-        </Stack>
-      </Stack>
+            {/* Social auth buttons */}
+            <Stack spacing={3}>
+              <Button
+                variant="outline"
+                leftIcon={<GoogleIcon />}
+                borderRadius="lg"
+                borderColor="gray.200"
+                fontWeight="500"
+                fontSize="sm"
+                h="44px"
+                _hover={{ bg: 'gray.50', borderColor: 'gray.300' }}
+                onClick={API_CLIENT.googleSignIn}>
+                Continue with Google
+              </Button>
+              <Button
+                variant="outline"
+                leftIcon={<GitHubIcon />}
+                borderRadius="lg"
+                borderColor="gray.200"
+                fontWeight="500"
+                fontSize="sm"
+                h="44px"
+                _hover={{ bg: 'gray.50', borderColor: 'gray.300' }}
+                onClick={API_CLIENT.githubSignIn}>
+                Continue with GitHub
+              </Button>
+            </Stack>
+
+            <Box position="relative" py={2}>
+              <Divider borderColor="gray.200" />
+              <AbsoluteCenter bg="white" px={4}>
+                <Text fontSize="xs" color="gray.400" fontWeight="500">
+                  OR
+                </Text>
+              </AbsoluteCenter>
+            </Box>
+
+            <FormControl
+              id="email"
+              isInvalid={Boolean(formError.email)}
+              isRequired>
+              <FormLabel fontSize="sm" fontWeight="500" color="gray.700">
+                Email
+              </FormLabel>
+              <Input
+                name="email"
+                type="email"
+                value={formData.email}
+                onChange={handleOnChange}
+                placeholder="you@example.com"
+                size="md"
+                h="44px"
+              />
+              {formError.email && (
+                <FormErrorMessage fontSize="xs">
+                  {formError.email}
+                </FormErrorMessage>
+              )}
+            </FormControl>
+
+            <FormControl
+              id="password"
+              isInvalid={Boolean(formError.password)}
+              isRequired>
+              <FormLabel fontSize="sm" fontWeight="500" color="gray.700">
+                Password
+              </FormLabel>
+              <PasswordInput
+                value={formData.password}
+                onChange={handleOnChange}
+                size="md"
+                h="44px"
+              />
+              {formError.password && (
+                <FormErrorMessage fontSize="xs">
+                  {formError.password}
+                </FormErrorMessage>
+              )}
+            </FormControl>
+
+            <Button
+              variant="brand"
+              w="full"
+              h="44px"
+              fontSize="sm"
+              onClick={handleSubmit}
+              isLoading={isSubmitting}>
+              {formType === 'signin' ? 'Sign In' : 'Create Account'}
+            </Button>
+          </Stack>
+        </Box>
+      </Flex>
     </Flex>
   );
 };

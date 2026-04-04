@@ -1,6 +1,6 @@
-import { Stack, Flex, Button } from '@chakra-ui/react';
+import { Stack, Flex, Button, Box } from '@chakra-ui/react';
 import BrandLogo from 'components/Common/BrandLogo/BrandLogo';
-import { BRAND_BORDER_RADIUS, ROUTES } from 'constants/common';
+import { ROUTES } from 'constants/common';
 import { useNavigate } from 'react-router-dom';
 
 export const Navbar = () => {
@@ -14,39 +14,39 @@ export const Navbar = () => {
     <Flex
       justify="space-between"
       align="center"
-      h="100px"
-      bg="white"
-      px={4}
-      pr={8}
-      py={8}
+      h="72px"
+      bg="rgba(255, 255, 255, 0.8)"
+      backdropFilter="blur(12px)"
+      borderBottom="1px solid"
+      borderColor="gray.100"
+      px={{ base: 4, md: 8 }}
       pos="fixed"
       top="0"
       width="full"
       zIndex="999">
-      <Stack direction={'row'} spacing={4}>
+      <Box>
         <BrandLogo onClick={handleNavigateHome} cursor="pointer" />
-      </Stack>
-      <Stack direction={'row'} spacing={4}>
+      </Box>
+      <Stack direction="row" spacing={3} align="center">
         <Button
-          display={{ base: 'none', md: 'block' }}
-          _hover={{ bg: 'transparent' }}
-          variant={'ghost'}
-          border="1px solid #101828"
-          borderRadius={BRAND_BORDER_RADIUS}
+          display={{ base: 'none', md: 'inline-flex' }}
+          variant="ghost"
+          fontWeight="500"
+          color="gray.600"
+          borderRadius="lg"
+          _hover={{ color: 'gray.900', bg: 'gray.100' }}
           onClick={() => {
             navigate(ROUTES.SIGN_IN);
           }}>
           Sign In
         </Button>
         <Button
-          borderRadius={BRAND_BORDER_RADIUS}
-          _hover={{ bg: 'brand.500' }}
-          bg="brand.500"
-          color="white"
+          variant="brand"
+          size="md"
           onClick={() => {
             navigate(ROUTES.SIGN_UP);
           }}>
-          Sign Up
+          Get Started
         </Button>
       </Stack>
     </Flex>

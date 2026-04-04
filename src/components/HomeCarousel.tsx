@@ -22,10 +22,14 @@ const settings: Settings = {
   slidesToScroll: 1,
 };
 
+const SliderComponent = Slider as unknown as React.ComponentType<
+  Settings & { children: React.ReactNode }
+>;
+
 const HomeCarousel: FC<BoxProps> = (props) => {
   return (
     <Box position="relative" width="auto" height="auto" {...props}>
-      <Slider {...settings}>
+      <SliderComponent {...settings}>
         {CAROUSEL_IMAGES.map((url, index) => (
           <Image
             loading="eager"
@@ -35,7 +39,7 @@ const HomeCarousel: FC<BoxProps> = (props) => {
             objectFit="contain"
           />
         ))}
-      </Slider>
+      </SliderComponent>
     </Box>
   );
 };

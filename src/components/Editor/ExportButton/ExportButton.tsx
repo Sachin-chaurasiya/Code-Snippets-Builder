@@ -12,17 +12,11 @@ import React, { useState } from 'react';
 import { BiClipboard, BiExport } from 'react-icons/bi';
 import { BsImage } from 'react-icons/bs';
 import { ExportImageConfig } from './ExportButton.interface';
-import { BRAND_BORDER_RADIUS } from 'constants/common';
 
 const ExportButton = () => {
   const toast = useToast();
   const [isDownLoading, setIsDownLoading] = useState<boolean>(false);
 
-  /**
-   * Downloads an image from a data URL
-   * @param dataUrl The data URL of the image to download
-   * @param extension The extension of the image to download
-   */
   const downloadImage = (dataUrl: string, extension: string) => {
     const a = document.createElement('a');
 
@@ -35,7 +29,6 @@ const ExportButton = () => {
     node: document.querySelector('.react-flow') as HTMLElement,
     options: {
       filter: (node) => {
-        // we don't want to add the minimap and the controls to the image
         if (
           node?.classList?.contains('react-flow__minimap') ||
           node?.classList?.contains('react-flow__controls')
@@ -47,7 +40,6 @@ const ExportButton = () => {
       },
       quality: 1,
       skipAutoScale: true,
-      // for better quality, we set the pixelRatio to 6
       pixelRatio: 6,
     },
   };
@@ -108,10 +100,10 @@ const ExportButton = () => {
           }),
         ]);
         toast({
-          title: 'Copy Image',
-          description: 'Image copied to clipboard successfully!',
+          title: 'Copied!',
+          description: 'Image copied to clipboard',
           status: 'success',
-          duration: 9000,
+          duration: 3000,
           isClosable: true,
           position: 'top-right',
         });
@@ -129,29 +121,46 @@ const ExportButton = () => {
         <Button
           id="export-button"
           as={Box}
-          _hover={{
-            bg: 'brand.500',
-          }}
-          bg="brand.500"
-          borderRadius={BRAND_BORDER_RADIUS}
-          color="white"
+          variant="brand"
+          size="sm"
           isLoading={isDownLoading}
-          variant="solid"
           leftIcon={<BiExport />}>
           Export
         </Button>
       </MenuButton>
-      <MenuList zIndex={5}>
-        <MenuItem icon={<BsImage />} onClick={handlePngExport}>
+      <MenuList
+        zIndex={5}
+        borderRadius="xl"
+        shadow="lg"
+        border="1px solid"
+        borderColor="gray.100"
+        py={2}>
+        <MenuItem
+          icon={<BsImage />}
+          onClick={handlePngExport}
+          fontSize="sm"
+          _hover={{ bg: 'gray.50' }}>
           Save PNG
         </MenuItem>
-        <MenuItem icon={<BsImage />} onClick={handleJpegExport}>
+        <MenuItem
+          icon={<BsImage />}
+          onClick={handleJpegExport}
+          fontSize="sm"
+          _hover={{ bg: 'gray.50' }}>
           Save JPEG
         </MenuItem>
-        <MenuItem icon={<BsImage />} onClick={handleSvgExport}>
+        <MenuItem
+          icon={<BsImage />}
+          onClick={handleSvgExport}
+          fontSize="sm"
+          _hover={{ bg: 'gray.50' }}>
           Save SVG
         </MenuItem>
-        <MenuItem icon={<BiClipboard />} onClick={handleClipboardExport}>
+        <MenuItem
+          icon={<BiClipboard />}
+          onClick={handleClipboardExport}
+          fontSize="sm"
+          _hover={{ bg: 'gray.50' }}>
           Copy Image
         </MenuItem>
       </MenuList>

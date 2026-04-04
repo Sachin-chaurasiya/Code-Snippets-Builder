@@ -53,17 +53,27 @@ const UnProtectedRoute = ({ children }: { children: ReactNode }) => {
   const { session } = useAppProvider();
 
   if (session) {
-    return <Navigate to={ROUTES.HOME} replace />;
+    return <Navigate to={ROUTES.DASHBOARD} replace />;
   }
 
   return <>{children}</>;
+};
+
+const HomeOrDashboard = () => {
+  const { session } = useAppProvider();
+
+  if (session) {
+    return <Navigate to={ROUTES.DASHBOARD} replace />;
+  }
+
+  return <HomePage />;
 };
 
 const AppRoutes = () => {
   return (
     <Suspense fallback={<Loader />}>
       <Routes>
-        <Route path={ROUTES.HOME} element={<HomePage />} />
+        <Route path={ROUTES.HOME} element={<HomeOrDashboard />} />
         <Route
           path={ROUTES.SIGN_IN}
           element={

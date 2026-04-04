@@ -1,5 +1,4 @@
 import { Button, ButtonProps } from '@chakra-ui/react';
-import { BRAND_BORDER_RADIUS } from 'constants/common';
 import React, { FC } from 'react';
 
 const UpdateButton: FC<ButtonProps> = ({
@@ -11,19 +10,8 @@ const UpdateButton: FC<ButtonProps> = ({
 }) => {
   return (
     <Button
-      _disabled={{
-        bg: 'brand.300',
-        cursor: 'not-allowed',
-        _hover: {
-          bg: 'brand.300',
-        },
-      }}
-      _hover={{
-        bg: 'brand.500',
-      }}
-      bg="brand.500"
-      borderRadius={BRAND_BORDER_RADIUS}
-      color="white"
+      variant="brand"
+      size="sm"
       alignSelf="end"
       isDisabled={isDisabled}
       isLoading={isLoading}

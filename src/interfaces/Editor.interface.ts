@@ -32,6 +32,8 @@ export interface EditorSidebarProps {
   background: string;
   profile: ProfileData;
   hideWaterMark: boolean;
+  isCollapsed: boolean;
+  onToggleCollapse: () => void;
   onUpdateProfileData: (value: ProfileData) => void;
   onUpdateBackground: (value: string) => void;
   onUpdateWaterMark: (value: boolean) => void;

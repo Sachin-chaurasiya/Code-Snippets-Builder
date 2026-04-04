@@ -1,17 +1,9 @@
-import {
-  Box,
-  Button,
-  ButtonGroup,
-  Flex,
-  Icon,
-  Tooltip,
-} from '@chakra-ui/react';
+import { Box, Button, Flex, HStack, Icon, Tooltip } from '@chakra-ui/react';
 import React from 'react';
 
 import { RxDragHandleDots2 } from 'react-icons/rx';
 import ExportButton from 'components/Editor/ExportButton/ExportButton';
 import { toLower } from 'lodash';
-import { BORDER_RADIUS_MEDIUM } from 'constants/common';
 import { TOOL_BAR_ITEMS } from 'constants/editor';
 
 const ToolBar = () => {
@@ -21,44 +13,47 @@ const ToolBar = () => {
   };
 
   return (
-    <Box
-      as={Flex}
+    <Flex
       justifyContent="space-between"
       alignItems="center"
       w="full"
       mb={4}
-      p={4}
+      px={4}
+      py={3}
       bg="white"
-      borderRadius="md"
-      shadow="md">
-      <ButtonGroup>
+      borderRadius="xl"
+      border="1px solid"
+      borderColor="gray.100"
+      boxShadow="0 1px 3px rgba(0, 0, 0, 0.04)">
+      <HStack spacing={2}>
         {TOOL_BAR_ITEMS.map(({ label, icon, nodeType }) => (
           <Tooltip
             key={label}
             label={`Add ${label}`}
-            borderRadius={BORDER_RADIUS_MEDIUM}>
+            borderRadius="lg"
+            fontSize="xs">
             <Button
               id={nodeType}
-              shadow="md"
               aria-label={`drag and drop ${toLower(label)}`}
+              variant="ghost"
+              size="sm"
+              borderRadius="lg"
               _hover={{
-                background: 'white',
+                bg: 'gray.50',
               }}
-              background="white"
-              p={4}
               draggable
               cursor="grab"
-              rightIcon={<RxDragHandleDots2 />}
-              leftIcon={<Icon as={icon} fontSize="20px" />}
+              rightIcon={<RxDragHandleDots2 color="#9CA3AF" />}
+              leftIcon={<Icon as={icon} fontSize="16px" color="gray.600" />}
               onDragStart={(event) => {
                 onDragStart(event, nodeType);
               }}
             />
           </Tooltip>
         ))}
-      </ButtonGroup>
+      </HStack>
       <ExportButton />
-    </Box>
+    </Flex>
   );
 };
 

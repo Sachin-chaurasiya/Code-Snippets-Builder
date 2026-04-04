@@ -7,7 +7,12 @@ import {
   Text,
   VStack,
 } from '@chakra-ui/react';
-import { FONT_SIZES, LANGUAGE_OPTIONS, THEME_OPTIONS } from 'constants/editor';
+import {
+  FONT_SIZES,
+  LANGUAGE_LABELS,
+  LANGUAGE_OPTIONS,
+  THEME_OPTIONS,
+} from 'constants/editor';
 import { COMMON_TEXT_PROPS } from 'constants/text';
 import { NodeData } from 'interfaces/Editor.interface';
 import { map, startCase, toNumber } from 'lodash';
@@ -40,9 +45,9 @@ const EditorConfig: FC<EditorConfigProps> = ({
                 language: e.target.value,
               });
             }}>
-            {map(LANGUAGE_OPTIONS, (language: string) => (
-              <option key={language} value={language}>
-                {startCase(language)}
+            {map(LANGUAGE_OPTIONS, (lang: string) => (
+              <option key={lang} value={lang}>
+                {LANGUAGE_LABELS[lang] ?? startCase(lang)}
               </option>
             ))}
           </Select>

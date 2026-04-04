@@ -1,6 +1,6 @@
 import {
   Button,
-  ButtonGroup,
+  HStack,
   IconButton,
   Menu,
   MenuButton,
@@ -50,13 +50,19 @@ const Sorting: FC<SortingProps> = ({ onChange, isLoading }) => {
   }, [field, order]);
 
   return (
-    <ButtonGroup size="sm" isAttached variant="outline" isDisabled={isLoading}>
+    <HStack spacing={2}>
       <Menu>
         {({ isOpen }) => (
           <>
             <MenuButton
-              isActive={isOpen}
               as={Button}
+              size="sm"
+              variant="ghost"
+              fontWeight="500"
+              fontSize="sm"
+              color="gray.600"
+              borderRadius="lg"
+              isDisabled={isLoading}
               rightIcon={isOpen ? <BiChevronUp /> : <BiChevronDown />}>
               {
                 SORTING_OPTIONS_LABELS[
@@ -64,11 +70,20 @@ const Sorting: FC<SortingProps> = ({ onChange, isLoading }) => {
                 ]
               }
             </MenuButton>
-            <MenuList>
+            <MenuList
+              borderRadius="xl"
+              shadow="lg"
+              border="1px solid"
+              borderColor="gray.100"
+              py={2}>
               {map(SORTING_OPTIONS, (option) => {
                 return (
                   <MenuItem
                     key={option}
+                    fontSize="sm"
+                    bg={field === option ? 'brand.50' : 'transparent'}
+                    color={field === option ? 'brand.600' : 'gray.700'}
+                    _hover={{ bg: 'gray.50' }}
                     onClick={() => {
                       setField(option);
                     }}>
@@ -85,7 +100,12 @@ const Sorting: FC<SortingProps> = ({ onChange, isLoading }) => {
         )}
       </Menu>
       <IconButton
-        aria-label="Sort"
+        aria-label="Sort order"
+        size="sm"
+        variant="ghost"
+        color="gray.500"
+        borderRadius="lg"
+        isDisabled={isLoading}
         icon={order === SORTING_ORDER.ASC ? <BsArrowUp /> : <BsArrowDown />}
         onClick={() => {
           setOrder(
@@ -93,7 +113,7 @@ const Sorting: FC<SortingProps> = ({ onChange, isLoading }) => {
           );
         }}
       />
-    </ButtonGroup>
+    </HStack>
   );
 };
 
