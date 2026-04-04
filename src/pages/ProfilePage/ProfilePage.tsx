@@ -1,26 +1,29 @@
 import {
+  Avatar,
+  Badge,
   Box,
+  Flex,
   FormControl,
   FormLabel,
   Heading,
-  Image,
   Input,
   Stack,
   Text,
   Tooltip,
   useToast,
+  VStack,
+  Icon,
 } from '@chakra-ui/react';
 import { useAppProvider } from 'AppProvider';
 import { API_CLIENT } from 'api';
 import { AppwriteException } from 'appwrite';
 import Loader from 'components/Common/Loader/Loader';
 import UpdateButton from 'components/Common/UpdateButton';
-import { BORDER_RADIUS_LARGE, BORDER_RADIUS_MEDIUM } from 'constants/common';
 import { EMAIL_VERIFICATION_URL } from 'constants/links';
 import { isEqual } from 'lodash';
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { getFormattedDate } from 'utils/DateTimeUtils';
-import { ReactComponent as VerifiedIcon } from 'assets/svg/verified.svg';
+import { FiCheck, FiUser, FiLock, FiShare2 } from 'react-icons/fi';
 
 interface StringDataState {
   current: string;
@@ -48,13 +51,59 @@ const initialPasswordState = {
   oldPassword: '',
 };
 
+const SettingsCard = ({
+  icon,
+  title,
+  description,
+  children,
+}: {
+  icon: React.ElementType;
+  title: string;
+  description: string;
+  children: React.ReactNode;
+}) => (
+  <Box
+    bg="white"
+    borderRadius="xl"
+    border="1px solid"
+    borderColor="gray.100"
+    overflow="hidden">
+    <Stack
+      direction={{ base: 'column', md: 'row' }}
+      spacing={6}
+      p={6}
+      align="start">
+      <VStack align="start" spacing={2} flex={1} minW="200px">
+        <Flex align="center" gap={2}>
+          <Flex
+            w={8}
+            h={8}
+            borderRadius="lg"
+            bg="brand.50"
+            align="center"
+            justify="center">
+            <Icon as={icon} color="brand.500" fontSize="sm" />
+          </Flex>
+          <Heading as="h6" size="sm" color="gray.900">
+            {title}
+          </Heading>
+        </Flex>
+        <Text fontSize="xs" color="gray.500" pl={10}>
+          {description}
+        </Text>
+      </VStack>
+      <Stack direction="column" flex={1.5} spacing={4} w="full">
+        {children}
+      </Stack>
+    </Stack>
+  </Box>
+);
+
 const ProfilePage = () => {
   const toast = useToast();
 
   const { loggedInUser, isFetchingUser, handleUpdateLoggedInUser } =
     useAppProvider();
-
-  const [avatarUrl, setAvatarUrl] = useState<URL>();
 
   const [nameState, setNameState] = useState<StringDataState>(initialNameState);
 
@@ -135,7 +184,7 @@ const ProfilePage = () => {
       const data = await API_CLIENT.account.updateName(nameState.updated);
       handleUpdateLoggedInUser(data);
       toast({
-        description: 'Name updated successful!',
+        description: 'Name updated successfully!',
         status: 'success',
         duration: 2000,
         isClosable: true,
@@ -161,7 +210,7 @@ const ProfilePage = () => {
       const data = await API_CLIENT.account.updatePrefs(prefState);
       handleUpdateLoggedInUser(data);
       toast({
-        description: 'Social usernames updated successful!',
+        description: 'Social usernames updated successfully!',
         status: 'success',
         duration: 2000,
         isClosable: true,
@@ -190,7 +239,7 @@ const ProfilePage = () => {
       );
       handleUpdateLoggedInUser(data);
       toast({
-        description: 'Password updated successful!',
+        description: 'Password updated successfully!',
         status: 'success',
         duration: 2000,
         isClosable: true,
@@ -212,9 +261,6 @@ const ProfilePage = () => {
 
   useEffect(() => {
     if (loggedInUser) {
-      setAvatarUrl(
-        API_CLIENT.getAvatar(loggedInUser.name || loggedInUser.email)
-      );
       setNameState((prev) => ({
         ...prev,
         current: loggedInUser.name,
@@ -229,74 +275,85 @@ const ProfilePage = () => {
   }
 
   return (
-    <Stack spacing={4} p={4} bg="white">
-      <Box
-        shadow="sm"
-        direction="row"
-        justifyContent="space-between"
-        as={Stack}
-        bg="white"
-        p={4}
-        width="full"
-        border="1px solid #dce1f9"
-        borderRadius={BORDER_RADIUS_LARGE}>
-        <Stack direction="row" spacing={2} alignItems="center">
-          <Image
-            src={avatarUrl?.href}
-            borderRadius="50%"
-            height={16}
-            width={16}
-          />
-          <Heading as="h6" size="sm">
-            {loggedInUser?.name}
-          </Heading>
-        </Stack>
-        <Stack direction="column" spacing={2}>
-          <Text>{loggedInUser?.email}</Text>
-          <Text>{`Joined: ${getFormattedDate(
-            loggedInUser?.$createdAt ?? ''
-          )}`}</Text>
-        </Stack>
-        <Stack align="center" justify="center">
-          {loggedInUser?.emailVerification ? (
-            <Tooltip
-              label="Email verified"
-              aria-label="Email verified"
-              borderRadius={BORDER_RADIUS_MEDIUM}>
-              <VerifiedIcon height={32} width={32} />
-            </Tooltip>
-          ) : (
-            <UpdateButton
-              size="sm"
-              isLoading={isSending}
-              onClick={handleSendVerification}>
-              Verify account
-            </UpdateButton>
-          )}
-        </Stack>
-      </Box>
-      <Box
-        shadow="sm"
-        direction="row"
-        justifyContent="space-between"
-        as={Stack}
-        bg="white"
-        p={4}
-        width="full"
-        border="1px solid #dce1f9"
-        borderRadius={BORDER_RADIUS_LARGE}>
-        <Stack flex={1}>
-          <Heading as="h6" size="sm">
-            Update Name
-          </Heading>
-          <Text>These name will be shown on left sidebar.</Text>
-        </Stack>
-        <Stack direction="column" flex={1}>
+    <Box p={{ base: 4, md: 8 }} w="full">
+      <Heading as="h3" size="lg" color="gray.900" mb={2}>
+        Settings
+      </Heading>
+      <Text color="gray.500" fontSize="sm" mb={8}>
+        Manage your account and preferences
+      </Text>
+
+      <Stack spacing={4}>
+        {/* Profile header card */}
+        <Box
+          bg="white"
+          borderRadius="xl"
+          border="1px solid"
+          borderColor="gray.100"
+          p={6}>
+          <Flex align="center" justify="space-between" flexWrap="wrap" gap={4}>
+            <Flex align="center" gap={4}>
+              <Avatar
+                size="lg"
+                name={loggedInUser?.name ?? loggedInUser?.email}
+                bg="brand.500"
+                color="white"
+              />
+              <VStack align="start" spacing={0}>
+                <Flex align="center" gap={2}>
+                  <Heading as="h5" size="sm" color="gray.900">
+                    {loggedInUser?.name}
+                  </Heading>
+                  {loggedInUser?.emailVerification && (
+                    <Tooltip label="Email verified" borderRadius="lg">
+                      <Badge
+                        colorScheme="green"
+                        borderRadius="full"
+                        px={2}
+                        py={0.5}
+                        fontSize="2xs"
+                        display="flex"
+                        alignItems="center"
+                        gap={1}>
+                        <FiCheck size={10} />
+                        Verified
+                      </Badge>
+                    </Tooltip>
+                  )}
+                </Flex>
+                <Text fontSize="sm" color="gray.500">
+                  {loggedInUser?.email}
+                </Text>
+                <Text fontSize="xs" color="gray.400">
+                  Joined {getFormattedDate(loggedInUser?.$createdAt ?? '')}
+                </Text>
+              </VStack>
+            </Flex>
+
+            {!loggedInUser?.emailVerification && (
+              <UpdateButton
+                isLoading={isSending}
+                onClick={handleSendVerification}>
+                Verify Email
+              </UpdateButton>
+            )}
+          </Flex>
+        </Box>
+
+        {/* Name settings */}
+        <SettingsCard
+          icon={FiUser}
+          title="Display Name"
+          description="This name appears in the sidebar and on your snippets.">
           <FormControl id="name">
-            <FormLabel>Name</FormLabel>
+            <FormLabel fontSize="sm" fontWeight="500" color="gray.700">
+              Name
+            </FormLabel>
             <Input
               name="name"
               type="text"
+              size="sm"
+              borderRadius="lg"
               value={nameState.updated}
               onChange={handleOnChange}
             />
@@ -305,55 +362,53 @@ const ProfilePage = () => {
             isDisabled={!nameState.hasChanged}
             isLoading={nameState.isUpdating}
             onClick={handleNameUpdate}>
-            Update
+            Save Changes
           </UpdateButton>
-        </Stack>
-      </Box>
-      <Box
-        shadow="sm"
-        direction="row"
-        justifyContent="space-between"
-        as={Stack}
-        bg="white"
-        p={4}
-        width="full"
-        border="1px solid #dce1f9"
-        borderRadius={BORDER_RADIUS_LARGE}>
-        <Stack flex={1}>
-          <Heading as="h6" size="sm">
-            Update Social usernames
-          </Heading>
-          <Text>
-            These usernames will be use to show the profile info on snippet.
-          </Text>
-        </Stack>
-        <Stack direction="column" flex={1}>
+        </SettingsCard>
+
+        {/* Social settings */}
+        <SettingsCard
+          icon={FiShare2}
+          title="Social Profiles"
+          description="Displayed on your snippet's profile badge.">
           <FormControl id="twitter">
-            <FormLabel>Twitter</FormLabel>
+            <FormLabel fontSize="sm" fontWeight="500" color="gray.700">
+              Twitter
+            </FormLabel>
             <Input
               name="twitter"
               type="text"
-              placeholder="@snippetbuilder"
+              size="sm"
+              borderRadius="lg"
+              placeholder="@username"
               value={prefState?.twitter ?? ''}
               onChange={handlePrefChange}
             />
           </FormControl>
           <FormControl id="github">
-            <FormLabel>GitHub</FormLabel>
+            <FormLabel fontSize="sm" fontWeight="500" color="gray.700">
+              GitHub
+            </FormLabel>
             <Input
               name="github"
               type="text"
-              placeholder="OpenSource-Journey"
+              size="sm"
+              borderRadius="lg"
+              placeholder="username"
               value={prefState?.github ?? ''}
               onChange={handlePrefChange}
             />
           </FormControl>
           <FormControl id="linkedin">
-            <FormLabel>LinkedIn</FormLabel>
+            <FormLabel fontSize="sm" fontWeight="500" color="gray.700">
+              LinkedIn
+            </FormLabel>
             <Input
               name="linkedin"
               type="text"
-              placeholder="Snippet Builder"
+              size="sm"
+              borderRadius="lg"
+              placeholder="username"
               value={prefState?.linkedin ?? ''}
               onChange={handlePrefChange}
             />
@@ -362,42 +417,38 @@ const ProfilePage = () => {
             onClick={handlePrefUpdate}
             isLoading={isUpdatingPrefs}
             isDisabled={isEqual(loggedInUser?.prefs, prefState)}>
-            Update
+            Save Changes
           </UpdateButton>
-        </Stack>
-      </Box>
-      <Box
-        shadow="sm"
-        direction="row"
-        justifyContent="space-between"
-        as={Stack}
-        bg="white"
-        p={4}
-        width="full"
-        border="1px solid #dce1f9"
-        borderRadius={BORDER_RADIUS_LARGE}>
-        <Stack flex={1}>
-          <Heading as="h6" size="sm">
-            Update Password
-          </Heading>
-          <Text>A password must contain at least 8 characters.</Text>
-        </Stack>
-        <Stack direction="column" flex={1}>
+        </SettingsCard>
+
+        {/* Password settings */}
+        <SettingsCard
+          icon={FiLock}
+          title="Password"
+          description="Must be at least 8 characters long.">
           <FormControl id="oldpassword">
-            <FormLabel>Old Password</FormLabel>
+            <FormLabel fontSize="sm" fontWeight="500" color="gray.700">
+              Current Password
+            </FormLabel>
             <Input
               name="oldpassword"
               type="password"
-              placeholder="Enter old password"
+              size="sm"
+              borderRadius="lg"
+              placeholder="Enter current password"
               value={passwordState.oldPassword}
               onChange={handleOnChange}
             />
           </FormControl>
           <FormControl id="password">
-            <FormLabel>New Password</FormLabel>
+            <FormLabel fontSize="sm" fontWeight="500" color="gray.700">
+              New Password
+            </FormLabel>
             <Input
               name="password"
               type="password"
+              size="sm"
+              borderRadius="lg"
               placeholder="Enter new password"
               value={passwordState.updated}
               onChange={handleOnChange}
@@ -407,11 +458,11 @@ const ProfilePage = () => {
             isDisabled={!passwordState.hasChanged}
             isLoading={passwordState.isUpdating}
             onClick={handlePasswordUpdate}>
-            Update
+            Update Password
           </UpdateButton>
-        </Stack>
-      </Box>
-    </Stack>
+        </SettingsCard>
+      </Stack>
+    </Box>
   );
 };
 

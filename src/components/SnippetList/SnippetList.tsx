@@ -1,5 +1,4 @@
 import {
-  AspectRatio,
   Box,
   Button,
   Grid,
@@ -14,6 +13,10 @@ import {
   Stack,
   useToast,
   GridItem,
+  Flex,
+  IconButton,
+  Text,
+  Tooltip,
 } from '@chakra-ui/react';
 import { useAppProvider } from 'AppProvider';
 import { API_CLIENT } from 'api';
@@ -23,8 +26,6 @@ import NoSnippets from 'components/NoSnippets/NoSnippets';
 import Pagination from 'components/Pagination/Pagination';
 import Sorting, { SORTING_OPTIONS } from 'components/Sorting/Sorting';
 import {
-  BORDER_RADIUS_LARGE,
-  BORDER_RADIUS_MEDIUM,
   BUCKET_ID,
   COLLECTION_ID,
   DATABASE_ID,
@@ -32,7 +33,6 @@ import {
   ROUTES,
 } from 'constants/common';
 import { DEFAULT_TEMPLATE } from 'constants/templates';
-import { motion } from 'framer-motion';
 import {
   Pagination as PaginationType,
   Snippet,
@@ -42,8 +42,10 @@ import { map } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { MdDelete } from 'react-icons/md';
 import { RxCopy } from 'react-icons/rx';
+import { FiPlus } from 'react-icons/fi';
 import { useNavigate } from 'react-router-dom';
 import { getUniqueId } from 'utils/EditorUtils';
+import { getFormattedDate } from 'utils/DateTimeUtils';
 
 const SnippetList = () => {
   const toast = useToast();
@@ -219,128 +221,149 @@ const SnippetList = () => {
   if (isFetchingUser) return <SpinnerLoader />;
 
   return (
-    <Box p={4} w="full" h="full">
-      <Stack
-        direction="row"
-        justifyContent="space-between"
-        mb={4}
-        px={isFetching ? 0 : 4}>
+    <Box w="full" h="full">
+      <Flex justify="space-between" align="center" mb={6}>
         <Button
-          _hover={{ bg: 'brand.500' }}
-          borderRadius={BORDER_RADIUS_MEDIUM}
-          bg="brand.500"
-          color="white"
+          variant="brand"
+          leftIcon={<FiPlus />}
           isLoading={isCreating}
           isDisabled={isFetching}
           size="sm"
           onClick={() => {
             createSnippet(DEFAULT_TEMPLATE);
           }}>
-          Create Snippet
+          New Snippet
         </Button>
         <Sorting isLoading={isFetching} onChange={setSortingQuery} />
-      </Stack>
+      </Flex>
 
-      <Grid templateColumns="repeat(4, 1fr)" gap={4} id="your-snippets">
+      <Grid
+        templateColumns={{
+          base: 'repeat(1, 1fr)',
+          sm: 'repeat(2, 1fr)',
+          md: 'repeat(2, 1fr)',
+          lg: 'repeat(3, 1fr)',
+          xl: 'repeat(4, 1fr)',
+        }}
+        gap={5}
+        id="your-snippets">
         {isFetching ? (
           <>
             {map(Array.from(Array(12).keys()), (index) => (
-              <AspectRatio
-                key={index}
-                ratio={1}
-                maxHeight="200px"
-                maxWidth="250px"
-                borderRadius={BORDER_RADIUS_LARGE}>
+              <Box key={index}>
                 <Skeleton
-                  borderRadius={BORDER_RADIUS_LARGE}
-                  startColor="gray.200"
-                  endColor="gray.100"
-                  isLoaded={false}
-                  bg="gray.500"
-                  color="white"
-                  fadeDuration={1}
+                  borderRadius="xl"
+                  height="180px"
+                  startColor="gray.100"
+                  endColor="gray.50"
                 />
-              </AspectRatio>
+              </Box>
             ))}
           </>
         ) : (
           <>
             {snippets?.total === 0 ? (
               <GridItem colSpan={4}>
-                <NoSnippets />
+                <NoSnippets
+                  onCreateSnippet={createSnippet}
+                  isCreating={isCreating}
+                />
               </GridItem>
             ) : (
               map(snippets?.documents, (snippet) => (
-                <AspectRatio
-                  as={motion.div}
-                  whileHover={{
-                    scale: 1.1,
-                  }}
-                  maxHeight="200px"
-                  maxWidth="300px"
+                <Box
                   key={snippet.$id}
-                  ratio={1}
-                  borderRadius={BORDER_RADIUS_LARGE}>
-                  <Button
-                    role="group"
-                    position="relative"
-                    bg="transparent"
-                    _hover={{ bg: 'transparent' }}
-                    onClick={() => {
-                      handleNavigate(snippet.$id);
-                    }}>
-                    <Stack
-                      zIndex={5}
-                      _groupHover={{ display: 'flex' }}
-                      position="absolute"
-                      direction="row"
-                      display={'none'}>
-                      <Button
-                        variant="ghost"
-                        color="white"
-                        _hover={{ color: 'gray.600', bg: 'gray.100' }}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          e.stopPropagation();
-                          setDeleteId(snippet.$id);
-                        }}>
-                        <MdDelete />
-                      </Button>
-                      <Button
-                        isLoading={isDuplicating}
-                        variant="ghost"
-                        color="white"
-                        _hover={{ color: 'gray.600', bg: 'gray.100' }}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          e.stopPropagation();
-                          duplicateSnippet({
-                            background: snippet.background,
-                            hideWaterMark: snippet.hideWaterMark,
-                            profileInfo: snippet.profileInfo,
-                            nodes: snippet.nodes,
-                            creator: snippet.creator,
-                            snapshot: snippet.snapshot,
-                            cover_image_base64_url:
-                              snippet.cover_image_base64_url,
-                          });
-                        }}>
-                        <RxCopy />
-                      </Button>
-                    </Stack>
+                  role="group"
+                  bg="white"
+                  borderRadius="xl"
+                  border="1px solid"
+                  borderColor="gray.100"
+                  overflow="hidden"
+                  cursor="pointer"
+                  transition="all 0.2s"
+                  _hover={{
+                    borderColor: 'brand.200',
+                    transform: 'translateY(-2px)',
+                    boxShadow: '0 8px 30px rgba(0, 0, 0, 0.06)',
+                  }}
+                  onClick={() => {
+                    handleNavigate(snippet.$id);
+                  }}>
+                  <Box position="relative" overflow="hidden">
                     <Image
-                      _groupHover={{ opacity: 0.8 }}
-                      borderRadius={BORDER_RADIUS_MEDIUM}
+                      h="160px"
+                      w="full"
+                      objectFit="cover"
+                      bg="gray.50"
                       src={
                         snippet?.cover_image_base64_url ??
-                        API_CLIENT.storage.getFilePreview(
-                          BUCKET_ID,
-                          snippet.snapshot
-                        ).href
+                        API_CLIENT.storage
+                          .getFilePreview(BUCKET_ID, snippet.snapshot)
+                          .toString()
                       }
                     />
-                  </Button>
-                </AspectRatio>
+                    {/* Hover actions overlay */}
+                    <Flex
+                      position="absolute"
+                      top={0}
+                      left={0}
+                      right={0}
+                      bottom={0}
+                      bg="blackAlpha.400"
+                      opacity={0}
+                      _groupHover={{ opacity: 1 }}
+                      transition="opacity 0.2s"
+                      align="center"
+                      justify="center"
+                      gap={2}>
+                      <Tooltip label="Delete" borderRadius="lg">
+                        <IconButton
+                          aria-label="Delete snippet"
+                          icon={<MdDelete />}
+                          size="sm"
+                          colorScheme="whiteAlpha"
+                          color="white"
+                          borderRadius="lg"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            setDeleteId(snippet.$id);
+                          }}
+                        />
+                      </Tooltip>
+                      <Tooltip label="Duplicate" borderRadius="lg">
+                        <IconButton
+                          aria-label="Duplicate snippet"
+                          icon={<RxCopy />}
+                          size="sm"
+                          colorScheme="whiteAlpha"
+                          color="white"
+                          borderRadius="lg"
+                          isLoading={isDuplicating}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            duplicateSnippet({
+                              background: snippet.background,
+                              hideWaterMark: snippet.hideWaterMark,
+                              profileInfo: snippet.profileInfo,
+                              nodes: snippet.nodes,
+                              creator: snippet.creator,
+                              snapshot: snippet.snapshot,
+                              cover_image_base64_url:
+                                snippet.cover_image_base64_url,
+                            });
+                          }}
+                        />
+                      </Tooltip>
+                    </Flex>
+                  </Box>
+                  <Box px={4} py={3}>
+                    <Text fontSize="xs" color="gray.400">
+                      {getFormattedDate(snippet.$createdAt)}
+                    </Text>
+                  </Box>
+                </Box>
               ))
             )}
           </>
@@ -353,35 +376,39 @@ const SnippetList = () => {
         onChange={fetchSnippets}
         isFetching={isFetching}
       />
+
       {deleteId ? (
         <Modal
           isCentered
           isOpen={Boolean(deleteId)}
           onClose={() => {
-            setIsDeleting(false);
+            setDeleteId('');
           }}>
-          <ModalOverlay />
-          <ModalContent>
-            <ModalHeader>Are you sure?</ModalHeader>
+          <ModalOverlay bg="blackAlpha.400" backdropFilter="blur(4px)" />
+          <ModalContent borderRadius="2xl" mx={4}>
+            <ModalHeader fontSize="lg" fontWeight="700" pt={6}>
+              Delete snippet?
+            </ModalHeader>
 
-            <ModalBody>
-              The snippet will be permanently deleted. This action is
-              irreversible.
+            <ModalBody color="gray.600" fontSize="sm">
+              This will permanently delete the snippet. Are you sure?
             </ModalBody>
 
-            <ModalFooter>
+            <ModalFooter pb={6} gap={3}>
               <Button
                 variant="ghost"
-                mr={3}
+                size="sm"
+                borderRadius="lg"
                 onClick={() => {
                   setDeleteId('');
                 }}>
-                Close
+                Cancel
               </Button>
               <Button
                 isLoading={isDeleting}
-                variant="solid"
                 colorScheme="red"
+                size="sm"
+                borderRadius="lg"
                 onClick={() => {
                   deleteSnippet(deleteId);
                 }}>

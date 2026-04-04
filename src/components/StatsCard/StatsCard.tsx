@@ -1,7 +1,5 @@
-import { Box, Heading, Image, Text } from '@chakra-ui/react';
+import { Box, Heading, Text } from '@chakra-ui/react';
 import { FC } from 'react';
-import StatsImage from 'assets/svg/stats.svg';
-import SpikesImage from 'assets/svg/spikes.svg';
 import CountUp from 'react-countup';
 
 interface StatsCardProps {
@@ -10,33 +8,38 @@ interface StatsCardProps {
   index: number;
 }
 
-const StatsCard: FC<StatsCardProps> = ({ count, description, index }) => {
+const StatsCard: FC<StatsCardProps> = ({ count, description }) => {
   return (
     <Box
-      css={{
-        backgroundColor: '#fcfcfc',
-        border: '1px solid #dce1f9',
-        borderRadius: '1.25rem',
-        padding: '2rem',
-        position: 'relative',
-        boxShadow: '0 0 52px rgba(30,34,52,.1)',
+      bg="white"
+      border="1px solid"
+      borderColor="gray.100"
+      borderRadius="2xl"
+      p={8}
+      position="relative"
+      overflow="hidden"
+      transition="all 0.2s"
+      _hover={{
+        borderColor: 'brand.200',
+        transform: 'translateY(-2px)',
+        boxShadow: '0 8px 30px rgba(94, 113, 228, 0.08)',
       }}>
-      <Heading as="h2" mb="1rem" color="brand.500">
+      <Box
+        position="absolute"
+        top={0}
+        right={0}
+        w="80px"
+        h="80px"
+        bg="brand.50"
+        borderBottomLeftRadius="full"
+        opacity={0.6}
+      />
+      <Heading as="h2" fontSize="3xl" mb={2} color="brand.500" fontWeight="800">
         <CountUp end={count} suffix="+" duration={5} />
       </Heading>
-      <Text fontWeight={400} fontSize="1.125rem">
+      <Text fontWeight="500" fontSize="sm" color="gray.500">
         {description}
       </Text>
-      <Image
-        src={index % 2 === 0 ? StatsImage : SpikesImage}
-        position="absolute"
-        top="1rem"
-        bottom="auto"
-        right="1rem"
-        left="auto"
-        width="2.25rem"
-        height="2.25rem"
-      />
     </Box>
   );
 };

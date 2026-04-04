@@ -7,6 +7,7 @@ export interface NavItemProps extends FlexProps {
   children: ReactNode;
   path: string;
   handleClick?: () => void;
+  isCollapsed?: boolean;
 }
 
 export interface LinkItemProps {

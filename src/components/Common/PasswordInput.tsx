@@ -1,5 +1,5 @@
 import {
-  Button,
+  IconButton,
   Input,
   InputGroup,
   InputProps,
@@ -18,15 +18,21 @@ const PasswordInput: FC<InputProps> = (props) => {
     <InputGroup>
       <Input
         name="password"
-        pr="4rem"
+        pr="3rem"
         type={show ? 'text' : 'password'}
         placeholder="Enter your password"
         {...props}
       />
-      <InputRightElement width="4rem">
-        <Button h="1.75rem" size="sm" onClick={handleClick}>
-          {show ? <BiHide /> : <BiShow />}
-        </Button>
+      <InputRightElement>
+        <IconButton
+          aria-label={show ? 'Hide password' : 'Show password'}
+          variant="ghost"
+          size="sm"
+          color="gray.400"
+          _hover={{ color: 'gray.600' }}
+          icon={show ? <BiHide /> : <BiShow />}
+          onClick={handleClick}
+        />
       </InputRightElement>
     </InputGroup>
   );

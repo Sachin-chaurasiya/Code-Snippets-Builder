@@ -37,10 +37,14 @@ const CodeEditor: FC<CodeEditorProps> = ({
     [editorTheme]
   );
 
-  const extensions = useMemo(
-    () => [langs[language as keyof typeof langs]()],
-    [language]
-  );
+  const extensions = useMemo(() => {
+    const langFn = langs[language as keyof typeof langs];
+    if (typeof langFn === 'function') {
+      return [langFn()];
+    }
+    // Fallback to js if the language is not available
+    return [langs.jsx()];
+  }, [language]);
 
   useEffect(() => {
     const element = document.querySelector('[contenteditable="true"]');

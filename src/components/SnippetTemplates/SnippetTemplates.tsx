@@ -1,6 +1,5 @@
 import {
-  AspectRatio,
-  Button,
+  Box,
   Grid,
   Heading,
   Image,
@@ -8,19 +7,13 @@ import {
   Stack,
   Text,
   useToast,
+  Flex,
 } from '@chakra-ui/react';
 import { useAppProvider } from 'AppProvider';
 import { API_CLIENT } from 'api';
 import { AppwriteException } from 'appwrite';
-import {
-  BORDER_RADIUS_LARGE,
-  BORDER_RADIUS_MEDIUM,
-  COLLECTION_ID,
-  DATABASE_ID,
-  ROUTES,
-} from 'constants/common';
+import { COLLECTION_ID, DATABASE_ID, ROUTES } from 'constants/common';
 import { TEMPLATES } from 'constants/templates';
-import { motion } from 'framer-motion';
 import { Snippet } from 'interfaces/AppProvider.interface';
 import { map, startCase } from 'lodash';
 import React, { useState } from 'react';
@@ -77,43 +70,63 @@ const SnippetTemplates = () => {
   };
 
   return (
-    <Stack spacing={4} id="templates">
-      <Heading as="h4" size="md">
-        Templates
-      </Heading>
-      <Grid templateColumns="repeat(4, 1fr)" gap={4}>
+    <Stack spacing={6} id="templates">
+      <Box>
+        <Heading as="h4" size="md" color="gray.900" mb={1}>
+          Templates
+        </Heading>
+        <Text fontSize="sm" color="gray.500">
+          Start with a pre-built template to save time
+        </Text>
+      </Box>
+      <Grid
+        templateColumns={{
+          base: 'repeat(1, 1fr)',
+          sm: 'repeat(2, 1fr)',
+          md: 'repeat(3, 1fr)',
+          lg: 'repeat(4, 1fr)',
+        }}
+        gap={5}>
         {map(TEMPLATES, (template) => (
-          <AspectRatio
+          <Box
             key={template.name}
-            as={motion.div}
-            whileHover={{
-              scale: 1.1,
+            bg="white"
+            borderRadius="xl"
+            border="1px solid"
+            borderColor="gray.100"
+            overflow="hidden"
+            cursor="pointer"
+            transition="all 0.2s"
+            _hover={{
+              borderColor: 'brand.200',
+              transform: 'translateY(-2px)',
+              boxShadow: '0 8px 30px rgba(0, 0, 0, 0.06)',
             }}
-            ratio={1}
-            borderRadius={BORDER_RADIUS_LARGE}>
-            <Button
-              aspectRatio="auto"
-              bg="transparent"
-              _hover={{ background: 'transparent' }}
-              onClick={() => {
-                setSelectedTemplate(template.name);
-                createSnippet(template.data);
-              }}>
-              {template.name === selectedTemplate && isCreating ? (
-                <Spinner />
-              ) : (
-                <Stack>
-                  <Image
-                    borderRadius={BORDER_RADIUS_MEDIUM}
-                    src={template.image}
-                    width="100%"
-                    height="100%"
-                  />
-                  <Text fontWeight={400}>{startCase(template.name)}</Text>
-                </Stack>
-              )}
-            </Button>
-          </AspectRatio>
+            onClick={() => {
+              setSelectedTemplate(template.name);
+              createSnippet(template.data);
+            }}>
+            {template.name === selectedTemplate && isCreating ? (
+              <Flex h="160px" align="center" justify="center">
+                <Spinner color="brand.500" />
+              </Flex>
+            ) : (
+              <>
+                <Image
+                  src={template.image}
+                  w="full"
+                  h="160px"
+                  objectFit="cover"
+                  bg="gray.50"
+                />
+                <Box px={4} py={3}>
+                  <Text fontSize="sm" fontWeight="600" color="gray.700">
+                    {startCase(template.name)}
+                  </Text>
+                </Box>
+              </>
+            )}
+          </Box>
         ))}
       </Grid>
     </Stack>

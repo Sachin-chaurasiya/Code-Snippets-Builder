@@ -1,4 +1,3 @@
-export enum AuthProvider {
-  GOOGLE = 'google',
-  GITHUB = 'github',
-}
+import { OAuthProvider } from 'appwrite';
+
+export { OAuthProvider as AuthProvider };

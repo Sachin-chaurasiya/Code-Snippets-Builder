@@ -1,6 +1,7 @@
 import React, {
   ReactNode,
   createContext,
+  useCallback,
   useContext,
   useEffect,
   useMemo,
@@ -33,21 +34,33 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
 
   const [selectedNode, setSelectedNode] = useState<Node<NodeData>>();
 
-  const handleUpdateSelectedNode = (selectedNode?: Node<NodeData>) => {
-    setSelectedNode(selectedNode);
-  };
+  const handleUpdateSelectedNode = useCallback(
+    (selectedNode?: Node<NodeData>) => {
+      setSelectedNode(selectedNode);
+    },
+    []
+  );
 
   const [session, setSession] = useState(Cookies.get(SESSION_KEY));
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState<boolean>(false);
 
-  const handleUpdateSession = (updatedSession: string | undefined) => {
-    setSession(updatedSession);
-  };
+  const handleUpdateSession = useCallback(
+    (updatedSession: string | undefined) => {
+      setSession(updatedSession);
+    },
+    []
+  );
 
-  const handleUpdateLoggedInUser = (
-    payload: Models.User<Models.Preferences>
-  ) => {
-    setLoggedInUser(payload);
-  };
+  const handleToggleSidebar = useCallback(() => {
+    setIsSidebarCollapsed((prev) => !prev);
+  }, []);
+
+  const handleUpdateLoggedInUser = useCallback(
+    (payload: Models.User<Models.Preferences>) => {
+      setLoggedInUser(payload);
+    },
+    []
+  );
 
   const contextValues: AppContextProps = useMemo(
     () => ({
@@ -63,8 +76,10 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
         setRunTour(true);
       },
       handleUpdateLoggedInUser,
+      isSidebarCollapsed,
+      onToggleSidebar: handleToggleSidebar,
     }),
-    [selectedNode, loggedInUser, isFetchingUser]
+    [selectedNode, loggedInUser, isFetchingUser, isSidebarCollapsed]
   );
 
   const [runTour, setRunTour] = useState<boolean>(false);

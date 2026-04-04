@@ -7,6 +7,5 @@ export const EMAIL_VERIFICATION_URL = `${window.location.origin}${ROUTES.EMAIL_V
 export const GITHUB_CONTRIBUTORS =
   'https://github.com/Sachin-chaurasiya/Code-Snippets-Builder/graphs/contributors';
 
-export const TWITTER_LINK = 'https://twitter.com/snippetbuilder';
 export const GITHUB_LINK =
   'https://github.com/Sachin-chaurasiya/Code-Snippets-Builder';

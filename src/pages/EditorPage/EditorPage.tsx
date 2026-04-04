@@ -84,6 +84,8 @@ const EditorPage = () => {
   const [timeoutId, setTimeoutId] = useState<number>();
 
   const [isUpdating, setIsUpdating] = useState<boolean>(false);
+  const [isRightPanelCollapsed, setIsRightPanelCollapsed] =
+    useState<boolean>(false);
 
   /**
    * update the node data of given nodeId
@@ -305,7 +307,7 @@ const EditorPage = () => {
 
       setTimeoutId(toNumber(id));
     },
-    [onNodesChange, nodesRef, timeoutId]
+    [onNodesChange, nodesRef, timeoutId, onUpdateSelectedNode]
   );
 
   const onDrop = useCallback(
@@ -389,7 +391,10 @@ const EditorPage = () => {
 
   return (
     <Fragment>
-      <Box mr={80} p={4}>
+      <Box
+        mr={isRightPanelCollapsed ? '48px' : 80}
+        p={4}
+        transition="margin-right 0.2s ease">
         <ToolBar />
         <EditorControls isUpdating={isUpdating} />
         <Box
@@ -425,6 +430,10 @@ const EditorPage = () => {
         background={background}
         hideWaterMark={isWaterMarkVisible}
         profile={profileData}
+        isCollapsed={isRightPanelCollapsed}
+        onToggleCollapse={() => {
+          setIsRightPanelCollapsed((prev) => !prev);
+        }}
         onUpdateBackground={handleUpdateBackground}
         onUpdateProfileData={handleUpdateProfileData}
         onUpdateWaterMark={handleUpdateWaterMark}

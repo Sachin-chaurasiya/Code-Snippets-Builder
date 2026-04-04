@@ -1,25 +1,29 @@
-import { Box, Heading, Stack } from '@chakra-ui/react';
+import { Box, Heading, Stack, Text } from '@chakra-ui/react';
 import { useAppProvider } from 'AppProvider';
 import { withVerifiedUser } from 'Hoc/withVerifiedUser';
 import Loader from 'components/Common/Loader/Loader';
 import SnippetList from 'components/SnippetList/SnippetList';
-import { BORDER_RADIUS_LARGE } from 'constants/common';
 
 const DashboardPage = () => {
-  const { isFetchingUser } = useAppProvider();
+  const { isFetchingUser, loggedInUser } = useAppProvider();
 
   if (isFetchingUser) {
     return <Loader />;
   }
 
+  const firstName = loggedInUser?.name?.split(' ')[0];
+
   return (
-    <Box bg="white" minH="100vh" borderRadius={BORDER_RADIUS_LARGE} p={4}>
-      <Stack spacing={6}>
-        <Heading as="h4" size="md">
-          Your Snippets
+    <Box minH="100vh" p={{ base: 4, md: 8 }}>
+      <Stack spacing={1} mb={8}>
+        <Heading as="h3" size="lg" color="gray.900">
+          {firstName ? `Welcome back, ${firstName}` : 'Your Snippets'}
         </Heading>
-        <SnippetList />
+        <Text color="gray.500" fontSize="sm">
+          Manage and organize your code snippets
+        </Text>
       </Stack>
+      <SnippetList />
     </Box>
   );
 };

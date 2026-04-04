@@ -1,18 +1,20 @@
 import { Box } from '@chakra-ui/react';
 import LeftSidebar from './components/Sidebar/LeftSideBar';
 import AppRoutes from './AppRoutes';
-import { APP_TEXT_COLOR } from 'constants/common';
 import { Navbar } from 'components/Navbar/Navbar';
 import { useAppProvider } from 'AppProvider';
 
+const SIDEBAR_WIDTH = '240px';
+const SIDEBAR_COLLAPSED_WIDTH = '72px';
+
 export const App = () => {
-  const { session } = useAppProvider();
+  const { session, isSidebarCollapsed } = useAppProvider();
 
   if (!session) {
     return (
-      <Box color={APP_TEXT_COLOR} bg={'gray.100'}>
+      <Box minHeight="100vh" bg="gray.50">
         <Navbar />
-        <Box as="main" css={{ height: 'calc(100% - 64px)' }}>
+        <Box as="main">
           <AppRoutes />
         </Box>
       </Box>
@@ -20,9 +22,15 @@ export const App = () => {
   }
 
   return (
-    <Box color={APP_TEXT_COLOR} minHeight="100vh" bg={'gray.100'}>
+    <Box minHeight="100vh" bg="gray.50">
       <LeftSidebar />
-      <Box as="main" ml={60}>
+      <Box
+        as="main"
+        ml={{
+          base: 0,
+          md: isSidebarCollapsed ? SIDEBAR_COLLAPSED_WIDTH : SIDEBAR_WIDTH,
+        }}
+        transition="margin-left 0.2s ease">
         <AppRoutes />
       </Box>
     </Box>

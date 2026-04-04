@@ -1,6 +1,7 @@
-import { Button, Stack } from '@chakra-ui/react';
+import { Button, HStack, IconButton, Text } from '@chakra-ui/react';
 import { PAGE_SIZE } from 'constants/common';
 import React, { FC } from 'react';
+import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 
 interface PaginationProps {
   currentPage: number;
@@ -14,27 +15,43 @@ const Pagination: FC<PaginationProps> = ({
   totalPages,
   isFetching,
 }) => {
+  if (totalPages <= 1) return null;
+
   return (
-    <Stack direction="row" justifyContent="center" mt={4}>
-      <Button
+    <HStack justifyContent="center" mt={8} spacing={3}>
+      <IconButton
+        aria-label="Previous page"
+        icon={<FiChevronLeft />}
+        size="sm"
+        variant="ghost"
+        borderRadius="lg"
+        color="gray.500"
+        isDisabled={currentPage === 1 || isFetching}
         onClick={() => {
           onChange((currentPage - 2) * PAGE_SIZE);
         }}
-        isDisabled={currentPage === 1 || isFetching}>
-        Previous
-      </Button>
-
-      <Button variant="ghost" _hover={{ background: 'transparent' }}>
-        {currentPage} / {totalPages}
-      </Button>
-      <Button
+      />
+      <Text
+        fontSize="sm"
+        color="gray.500"
+        fontWeight="500"
+        minW="80px"
+        textAlign="center">
+        Page {currentPage} of {totalPages}
+      </Text>
+      <IconButton
+        aria-label="Next page"
+        icon={<FiChevronRight />}
+        size="sm"
+        variant="ghost"
+        borderRadius="lg"
+        color="gray.500"
+        isDisabled={currentPage === totalPages || isFetching}
         onClick={() => {
           onChange(currentPage * PAGE_SIZE);
         }}
-        isDisabled={currentPage === totalPages || isFetching}>
-        Next
-      </Button>
-    </Stack>
+      />
+    </HStack>
   );
 };
 

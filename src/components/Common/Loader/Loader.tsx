@@ -1,19 +1,15 @@
-import { Box, Flex, Spinner } from '@chakra-ui/react';
+import { Flex, Spinner, VStack } from '@chakra-ui/react';
 import React from 'react';
 import BrandLogo from '../BrandLogo/BrandLogo';
 
 const Loader = () => {
   return (
-    <Box
-      height="100vh"
-      margin="auto"
-      direction="column"
-      as={Flex}
-      justifyContent="center"
-      alignItems="center">
-      <BrandLogo logoSize="large" />
-      <Spinner size="lg" />
-    </Box>
+    <Flex height="100vh" justifyContent="center" alignItems="center">
+      <VStack spacing={6}>
+        <BrandLogo logoSize="large" />
+        <Spinner size="md" color="brand.500" thickness="3px" />
+      </VStack>
+    </Flex>
   );
 };
 

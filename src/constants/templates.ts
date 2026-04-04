@@ -2,6 +2,7 @@ import { DEFAULT_EDITOR_BG_COLOR, INITIAL_NODES } from './editor';
 import SimpleGradientImage from 'assets/templates/simple-gradient.svg';
 import SimpleGradientWithCodeEditorImage from 'assets/templates/simple-gradient-with-code-editor.svg';
 import SimpleGradientWithDevIconImage from 'assets/templates/simple-gradient-dev-icon.svg';
+import JavaScriptIcon from 'assets/dev-icons/javascript.svg';
 import { Snippet } from 'interfaces/AppProvider.interface';
 import { getStringifiedValue } from 'utils/EditorUtils';
 
@@ -47,10 +48,39 @@ export const SIMPLE_GRADIENT_WITH_CODE_EDITOR: Snippet = {
 export const SIMPLE_GRADIENT_WITH_DEV_ICON: Snippet = {
   background: 'linear-gradient(354deg, rgb(255, 117, 181), rgb(255, 184, 108))',
   hideWaterMark: false,
-  profileInfo:
-    '{"platform":"twitter","username":"sachindotcom","isVisible":true}',
-  nodes:
-    '[{"width":294,"height":115,"id":"92e95dcd-a25f-47a4-950d-e271dd3efd4c","position":{"x":141,"y":95},"data":{"code":"","fontSize":14,"language":"javascript","theme":"dracula","snippetName":""},"type":"editorNode","dragHandle":".node-drag-handle","positionAbsolute":{"x":141,"y":95},"selected":false,"dragging":false},{"width":300,"height":300,"id":"1de540c8-0b77-4c70-b56b-e0b3a9a09c8c","type":"imageNode","position":{"x":478,"y":198},"data":{"borderRadius":"4px","imageSource":"/static/media/javascript.702157f763aa08edb2d55978b5d19240.svg"},"selected":false,"dragging":false,"positionAbsolute":{"x":478,"y":198}}]',
+  profileInfo: getStringifiedValue({
+    platform: 'twitter',
+    username: '',
+    isVisible: true,
+  }),
+  nodes: getStringifiedValue([
+    {
+      width: 294,
+      height: 115,
+      id: '92e95dcd-a25f-47a4-950d-e271dd3efd4c',
+      position: { x: 141, y: 95 },
+      data: {
+        code: '',
+        fontSize: 14,
+        language: 'jsx',
+        theme: 'dracula',
+        snippetName: '',
+      },
+      type: 'editorNode',
+      dragHandle: '.node-drag-handle',
+    },
+    {
+      width: 300,
+      height: 300,
+      id: '1de540c8-0b77-4c70-b56b-e0b3a9a09c8c',
+      type: 'imageNode',
+      position: { x: 478, y: 198 },
+      data: {
+        borderRadius: '4px',
+        imageSource: JavaScriptIcon,
+      },
+    },
+  ]),
   creator: '',
   snapshot: '',
 };

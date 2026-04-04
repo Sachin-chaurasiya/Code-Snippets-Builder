@@ -1,5 +1,4 @@
 import { Box, Heading, Stack, Text } from '@chakra-ui/react';
-import { APP_TEXT_COLOR } from 'constants/common';
 import { motion } from 'framer-motion';
 import { FC, ReactNode } from 'react';
 
@@ -13,21 +12,32 @@ export const Feature: FC<FeatureProps> = ({ icon, title, description }) => (
   <Stack
     as={motion.div}
     whileHover={{
-      scale: 1.1,
+      y: -4,
     }}
-    spacing={4}
-    bg="white"
-    align="center"
-    justifyContent="center"
-    border="1px solid transparent"
-    borderRadius="1.25rem"
-    p={4}>
-    <Box boxSize={10}>{icon}</Box>
-    <Stack spacing={4} align="center" justifyContent="center">
-      <Heading size="md" color={APP_TEXT_COLOR}>
+    spacing={5}
+    bg="rgba(255, 255, 255, 0.1)"
+    backdropFilter="blur(10px)"
+    border="1px solid rgba(255, 255, 255, 0.15)"
+    borderRadius="2xl"
+    p={8}
+    cursor="default"
+    transition="all 0.3s ease">
+    <Box
+      w={14}
+      h={14}
+      borderRadius="xl"
+      bg="white"
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
+      boxShadow="0 4px 14px rgba(94, 113, 228, 0.15)">
+      {icon}
+    </Box>
+    <Stack spacing={3}>
+      <Heading size="md" color="white" fontWeight="700">
         {title}
       </Heading>
-      <Text color={APP_TEXT_COLOR} textAlign="center">
+      <Text color="whiteAlpha.800" lineHeight="tall" fontSize="sm">
         {description}
       </Text>
     </Stack>

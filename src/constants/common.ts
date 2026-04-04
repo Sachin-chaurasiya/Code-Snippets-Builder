@@ -14,7 +14,7 @@ export const ROUTES = {
 
 export const INITIAL_CONTEXT_DATA = {
   editor: {
-    language: 'javascript',
+    language: 'jsx',
     theme: 'dracula',
     fontSize: 14,
   },
